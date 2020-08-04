@@ -1,11 +1,7 @@
 # Template Website
 
 Frontend
- * Angular CLI 8.2.1
- * Angular: 8.2.2
- * RxJS 6.5.2
- * Typescript 3.5.3
- * Webpack 4.38.0
+  *
  
 Backend
   * .NET Core 3.1
