@@ -23,7 +23,7 @@ namespace Theater.Application.UsersModule
         Task<bool> DeleteAsync(UserDeleteCommand command);
         Task<bool> Update(UserUpdateCommand command);
 
-        Task<string> AuthenticateAsync(UserAuthenticateCommand command);
+        Task<AuthenticatedUserModel> AuthenticateAsync(UserAuthenticateCommand command);
     }
 
     public class UserService : AppServiceBase<IUserRepository>, IUserService
@@ -78,7 +78,7 @@ namespace Theater.Application.UsersModule
             return _mapper.Map<UserModel>(user);
         }
 
-        public async Task<string> AuthenticateAsync(UserAuthenticateCommand command)
+        public async Task<AuthenticatedUserModel> AuthenticateAsync(UserAuthenticateCommand command)
         {
             var user = await _repository.SingleOrDefaultAsync(x => x.Username.Equals(command.Username));
             Guard.Against(user, ErrorType.UserNotFound);
@@ -105,7 +105,7 @@ namespace Theater.Application.UsersModule
 
             await CommitAsync();
 
-            return user.Token;
+            return _mapper.Map<AuthenticatedUserModel>(user);
         }
     }
 }

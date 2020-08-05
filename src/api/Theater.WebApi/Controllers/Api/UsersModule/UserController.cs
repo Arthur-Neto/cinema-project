@@ -22,7 +22,7 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(AuthenticatedUserModel), 200)]
         public async Task<IActionResult> AuthenticateAsync([FromBody] UserAuthenticateCommand command)
         {
             var user = await _userService.AuthenticateAsync(command);

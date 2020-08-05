@@ -1,0 +1,22 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-toolbar color="primary">
+        <button mat-icon-button
+                aria-label="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>PlaceholderCompany</span>
+        <button mat-button
+                aria-label="dashboard"
+                [routerLink]="['dashboard']">
+            <span>Dashboard</span>
+        </button>
+        <button mat-button
+                aria-label="login"
+                [routerLink]="['login']">
+            <span>Login</span>
+        </button>
+    </mat-toolbar>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+</mat-sidenav-container>
