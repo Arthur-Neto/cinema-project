@@ -4,6 +4,8 @@ using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Theater.Application.UsersModule;
 using Theater.Application.UsersModule.Models;
+using Theater.Domain.UsersModule.Enums;
+using Theater.WebApi.Attributes;
 
 namespace Theater.WebApi.Controllers.OData
 {
@@ -17,6 +19,7 @@ namespace Theater.WebApi.Controllers.OData
             _userService = userService;
         }
 
+        [AuthorizeRoles(Role.Manager)]
         [HttpGet]
         [EnableQuery]
         [ProducesResponseType(typeof(IEnumerable<UserModel>), 200)]

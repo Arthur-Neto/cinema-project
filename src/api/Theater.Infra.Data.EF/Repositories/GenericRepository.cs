@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Theater.Domain;
@@ -11,13 +13,19 @@ namespace Theater.Infra.Data.EF.Repositories
         IRetrieveByIDRepository<TEntity, KeyType>,
         IRetrieveAllRepository<TEntity>,
         IUpdateRepository<TEntity>,
-        IDeleteByIDRepository<TEntity, KeyType> where TEntity : class
+        IDeleteByIDRepository<TEntity, KeyType>,
+        ISingleOrDefaultRepository<TEntity> where TEntity : class
     {
         public IDatabaseContext Context { get; private set; }
 
         public GenericRepository(IDatabaseContext context)
         {
             Context = context;
+        }
+
+        public void Dispose()
+        {
+            Context.Dispose();
         }
 
         public async Task<TEntity> CreateAsync(TEntity entity)
@@ -49,9 +57,9 @@ namespace Theater.Infra.Data.EF.Repositories
             entities.Remove(entity);
         }
 
-        public void Dispose()
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            Context.Dispose();
+            return await Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Theater.WebApi
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -29,6 +29,7 @@ namespace Theater.WebApi
                 {
                     builder.AllowAnyOrigin();
                     builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
                 })
             );
 
@@ -38,6 +39,8 @@ namespace Theater.WebApi
                 options.IncludeSubDomains = true;
                 options.MaxAge = TimeSpan.FromDays(60);
             });
+
+            services.ConfigAuthorization(Configuration);
 
             services.AddDependencies();
 
@@ -70,8 +73,9 @@ namespace Theater.WebApi
             else
             {
                 app.UseHsts();
-                app.UseExceptionHandler("/Error");
             }
+
+            app.ConfigExceptionHandler();
 
             app.SeedData();
 
@@ -84,6 +88,8 @@ namespace Theater.WebApi
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

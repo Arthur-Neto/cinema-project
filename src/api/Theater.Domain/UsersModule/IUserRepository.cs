@@ -5,6 +5,7 @@
         IDeleteByIDRepository<User, int>,
         IRetrieveAllRepository<User>,
         IRetrieveByIDRepository<User, int>,
-        IUpdateRepository<User>
+        IUpdateRepository<User>,
+        ISingleOrDefaultRepository<User>
     { }
 }

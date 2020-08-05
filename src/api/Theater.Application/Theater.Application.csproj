@@ -7,10 +7,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.0.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Theater.Domain\Theater.Domain.csproj" />
+    <ProjectReference Include="..\Theater.Infra.Crosscutting\Theater.Infra.Crosscutting.csproj" />
   </ItemGroup>
 
 </Project>

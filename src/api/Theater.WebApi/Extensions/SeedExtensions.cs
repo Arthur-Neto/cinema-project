@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Theater.Domain.UsersModule;
+using Theater.Domain.UsersModule.Enums;
 using Theater.Infra.Data.EF.Context;
 
 namespace Theater.WebApi.Extensions
@@ -21,7 +22,8 @@ namespace Theater.WebApi.Extensions
             var user = new User()
             {
                 Username = "admin",
-                Password = "123"
+                Password = "123",
+                Role = Role.Manager
             };
 
             context.Add(user);

@@ -1,9 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Theater.Application.UsersModule.Commands;
 using Theater.Application.UsersModule.Models;
 using Theater.Domain.UsersModule;
+using Theater.Infra.Crosscutting.Exceptions;
+using Theater.Infra.Crosscutting.Guards;
 
 namespace Theater.Application.UsersModule
 {
@@ -14,13 +22,23 @@ namespace Theater.Application.UsersModule
         Task<int> CreateAsync(UserCreateCommand command);
         Task<bool> DeleteAsync(UserDeleteCommand command);
         Task<bool> Update(UserUpdateCommand command);
+
+        Task<string> AuthenticateAsync(UserAuthenticateCommand command);
     }
 
     public class UserService : AppServiceBase<IUserRepository>, IUserService
     {
-        public UserService(IUserRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly IConfiguration _appSettings;
+
+        public UserService(
+            IConfiguration appSettings,
+            IUserRepository repository,
+            IMapper mapper,
+            IUnitOfWork unitOfWork)
             : base(repository, mapper, unitOfWork)
-        { }
+        {
+            _appSettings = appSettings;
+        }
 
         public async Task<int> CreateAsync(UserCreateCommand command)
         {
@@ -58,6 +76,36 @@ namespace Theater.Application.UsersModule
             var user = await _repository.RetrieveByIDAsync(id);
 
             return _mapper.Map<UserModel>(user);
+        }
+
+        public async Task<string> AuthenticateAsync(UserAuthenticateCommand command)
+        {
+            var user = await _repository.SingleOrDefaultAsync(x => x.Username.Equals(command.Username));
+            Guard.Against(user, ErrorType.UserNotFound);
+
+            var isCorrectPassword = user.Password.Equals(command.Password);
+            Guard.Against(!isCorrectPassword, ErrorType.IncorrectUserPassword);
+
+            var tokenExpiration = _appSettings.GetValue<string>("TokenExpiration");
+            var secret = _appSettings.GetValue<string>("Secret");
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.ID.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role.ToString()),
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(60),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
+
+            await CommitAsync();
+
+            return user.Token;
         }
     }
 }

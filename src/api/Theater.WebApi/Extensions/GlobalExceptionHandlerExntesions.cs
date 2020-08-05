@@ -1,0 +1,30 @@
+﻿using System.Net;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Theater.Infra.Crosscutting.Exceptions;
+
+namespace Theater.WebApi.Extensions
+{
+    public static class GlobalExceptionHandlerExntesions
+    {
+        public static void ConfigExceptionHandler(this IApplicationBuilder app)
+        {
+            app.UseExceptionHandler(errorApp =>
+            {
+                errorApp.Run(async context =>
+                {
+                    var exceptionHandlingFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+
+                    if (exceptionHandlingFeature?.Error is GuardException ex)
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        context.Response.ContentType = "application/json";
+
+                        await context.Response.WriteAsync($"{{ \"error\": \"{ex.Message}\" }}");
+                    }
+                });
+            });
+        }
+    }
+}

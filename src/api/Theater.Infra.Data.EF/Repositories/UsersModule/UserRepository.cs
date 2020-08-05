@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Theater.Domain.UsersModule;
 using Theater.Infra.Data.EF.Context;
@@ -29,6 +31,11 @@ namespace Theater.Infra.Data.EF.Repositories.UsersModule
         public Task<User> RetrieveByIDAsync(int id)
         {
             return GenericRepository.RetrieveByIDAsync(id);
+        }
+
+        public Task<User> SingleOrDefaultAsync(Expression<Func<User, bool>> expression)
+        {
+            return GenericRepository.SingleOrDefaultAsync(expression);
         }
 
         public void Update(User user)

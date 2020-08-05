@@ -1,8 +1,11 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Theater.Application.UsersModule;
 using Theater.Application.UsersModule.Commands;
 using Theater.Application.UsersModule.Models;
+using Theater.Domain.UsersModule.Enums;
+using Theater.WebApi.Attributes;
 
 namespace Theater.WebApi.Controllers.Api.UsersModule
 {
@@ -16,6 +19,18 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
             _userService = userService;
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("login")]
+        [ProducesResponseType(typeof(string), 200)]
+        public async Task<IActionResult> AuthenticateAsync([FromBody] UserAuthenticateCommand command)
+        {
+            var user = await _userService.AuthenticateAsync(command);
+
+            return Ok(user);
+        }
+
+        [AuthorizeRoles(Role.Manager)]
         [HttpGet]
         [Route("{id:int}")]
         [ProducesResponseType(typeof(UserModel), 200)]
@@ -24,25 +39,28 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
             return Ok(await _userService.RetrieveByIDAsync(id));
         }
 
+        [AuthorizeRoles(Role.Manager)]
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
-        public async Task<IActionResult> CreateAsync(UserCreateCommand command)
+        public async Task<IActionResult> CreateAsync([FromBody] UserCreateCommand command)
         {
             return Ok(await _userService.CreateAsync(command));
         }
 
+        [AuthorizeRoles(Role.Manager)]
         [HttpPut]
         [ProducesResponseType(typeof(bool), 200)]
-        public IActionResult Update(UserUpdateCommand command)
+        public IActionResult Update([FromBody] UserUpdateCommand command)
         {
             _userService.Update(command);
 
             return Ok(true);
         }
 
+        [AuthorizeRoles(Role.Manager)]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), 200)]
-        public async Task<IActionResult> DeleteAsync(UserDeleteCommand command)
+        public async Task<IActionResult> DeleteAsync([FromBody] UserDeleteCommand command)
         {
             await _userService.DeleteAsync(command);
 
