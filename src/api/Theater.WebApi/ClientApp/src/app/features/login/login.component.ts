@@ -1,7 +1,5 @@
-import { error } from 'protractor';
 import { take } from 'rxjs/operators';
 
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,35 +13,39 @@ import { AuthenticationService } from '../../core/authentication/authentication.
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    public loginForm: FormGroup;
+    public form: FormGroup;
 
     public get showUsernameRequiredError(): boolean {
-        return this.loginForm.controls['username'].hasError('required');
+        return this.form.controls['username'].hasError('required');
     }
     public get showUsernameNotFoundError(): boolean {
-        return this.loginForm.controls['username'].hasError('doesntExist');
+        return this.form.controls['username'].hasError('doesntExist');
     }
     public get showPasswordRequiredError(): boolean {
-        return this.loginForm.controls['password'].hasError('required');
+        return this.form.controls['password'].hasError('required');
     }
     public get showWrongPasswordError(): boolean {
-        return this.loginForm.controls['password'].hasError('wrongPassword');
+        return this.form.controls['password'].hasError('wrongPassword');
     }
     public get showConfirmPasswordRequiredError(): boolean {
-        return this.loginForm.controls['confirmPassword'].hasError('required');
+        return this.form.controls['confirmPassword'].hasError('required');
     }
     public get showPasswordDoesntMatchError(): boolean {
-        return this.loginForm.controls['confirmPassword'].hasError('pattern');
+        return this.form.controls['confirmPassword'].hasError('pattern');
     }
 
     constructor(
         private fb: FormBuilder,
         private router: Router,
         private authenticationService: AuthenticationService,
-    ) { }
+    ) {
+        if (this.authenticationService.userValue) {
+            this.router.navigate(['/dashboard']);
+        }
+    }
 
     public ngOnInit(): void {
-        this.loginForm = this.fb.group({
+        this.form = this.fb.group({
             username: [null, Validators.required],
             password: ['', Validators.required],
             confirmPassword: ['', Validators.required],
@@ -51,10 +53,10 @@ export class LoginComponent implements OnInit {
     }
 
     public onSubmit() {
-        if (this.loginForm.valid) {
+        if (this.form.valid) {
             const command = <AuthenticateCommand>{
-                username: this.loginForm.controls['username'].value,
-                password: this.loginForm.controls['password'].value
+                username: this.form.controls['username'].value,
+                password: this.form.controls['password'].value
             };
 
             this.authenticationService
@@ -67,15 +69,15 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    private onSuccessCallback(result: any): void {
-        this.router.navigate(['/']);
+    private onSuccessCallback(): void {
+        this.router.navigate(['/dashboard']);
     }
 
-    private onErrorCallback(errorResponse: HttpErrorResponse): void {
-        if (errorResponse.error.error.match('UserNotFound')) {
-            this.loginForm.controls['username'].setErrors({ doesntExist: true });
-        } else if (errorResponse.error.error.match('IncorrectUserPassword')) {
-            this.loginForm.controls['password'].setErrors({ wrongPassword: true });
+    private onErrorCallback(error: string): void {
+        if (error.match('UserNotFound')) {
+            this.form.controls['username'].setErrors({ doesntExist: true });
+        } else if (error.match('IncorrectUserPassword')) {
+            this.form.controls['password'].setErrors({ wrongPassword: true });
         }
     }
 }

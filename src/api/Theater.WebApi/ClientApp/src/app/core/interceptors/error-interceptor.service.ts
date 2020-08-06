@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 
 import { AuthenticationService } from '../authentication/authentication.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthenticationService) { }
 
@@ -16,7 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.authenticationService.logout();
             }
 
-            const error = err.error.message || err.statusText;
+            const error = err.error.error;
             return throwError(error);
         }));
     }

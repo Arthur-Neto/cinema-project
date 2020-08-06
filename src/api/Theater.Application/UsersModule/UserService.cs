@@ -21,7 +21,7 @@ namespace Theater.Application.UsersModule
         Task<UserModel> RetrieveByIDAsync(int id);
         Task<int> CreateAsync(UserCreateCommand command);
         Task<bool> DeleteAsync(UserDeleteCommand command);
-        Task<bool> Update(UserUpdateCommand command);
+        Task<bool> UpdateAsync(UserUpdateCommand command);
 
         Task<AuthenticatedUserModel> AuthenticateAsync(UserAuthenticateCommand command);
     }
@@ -56,9 +56,16 @@ namespace Theater.Application.UsersModule
             return await CommitAsync() > 0;
         }
 
-        public async Task<bool> Update(UserUpdateCommand command)
+        public async Task<bool> UpdateAsync(UserUpdateCommand command)
         {
-            var user = _mapper.Map<User>(command);
+            var user = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
+            Guard.Against(user, ErrorType.UserNotFound);
+
+            var usernameCount = await _repository.CountAsync(x => x.Username.Equals(command.Username));
+            Guard.Against(usernameCount > 1, ErrorType.DuplicatingUsername);
+
+            user = _mapper.Map<User>(command);
+
             _repository.Update(user);
 
             return await CommitAsync() > 0;

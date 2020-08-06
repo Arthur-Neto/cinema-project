@@ -13,6 +13,11 @@ namespace Theater.Infra.Data.EF.Repositories.UsersModule
             : base(context)
         { }
 
+        public Task<int> CountAsync(Expression<Func<User, bool>> expression)
+        {
+            return GenericRepository.CountAsync(expression);
+        }
+
         public Task<User> CreateAsync(User user)
         {
             return GenericRepository.CreateAsync(user);
@@ -33,9 +38,9 @@ namespace Theater.Infra.Data.EF.Repositories.UsersModule
             return GenericRepository.RetrieveByIDAsync(id);
         }
 
-        public Task<User> SingleOrDefaultAsync(Expression<Func<User, bool>> expression)
+        public Task<User> SingleOrDefaultAsync(Expression<Func<User, bool>> expression, bool tracking = true)
         {
-            return GenericRepository.SingleOrDefaultAsync(expression);
+            return GenericRepository.SingleOrDefaultAsync(expression, tracking);
         }
 
         public void Update(User user)

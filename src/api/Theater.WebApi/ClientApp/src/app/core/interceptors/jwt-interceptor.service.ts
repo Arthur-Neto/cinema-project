@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthenticationService } from '../authentication/authentication.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthenticationService) { }
 

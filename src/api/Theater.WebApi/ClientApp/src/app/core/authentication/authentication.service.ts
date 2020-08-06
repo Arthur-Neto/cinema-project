@@ -3,7 +3,6 @@ import { map } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
 import { AuthenticateCommand, AuthenticatedUser } from './authentication-models';
@@ -19,7 +18,6 @@ export class AuthenticationService {
     private userSubject: BehaviorSubject<AuthenticatedUser>;
 
     constructor(
-        private router: Router,
         private http: HttpClient
     ) {
         this.userSubject = new BehaviorSubject<AuthenticatedUser>(JSON.parse(localStorage.getItem('user')));
@@ -27,7 +25,6 @@ export class AuthenticationService {
     }
 
     public login(command: AuthenticateCommand): Observable<AuthenticatedUser> {
-        console.log(environment.apiUrl);
         return this.http.post<AuthenticatedUser>(`${ environment.apiUrl }api/users/login`, command)
             .pipe(map((user: AuthenticatedUser) => {
                 localStorage.setItem('user', JSON.stringify(user));
@@ -40,6 +37,5 @@ export class AuthenticationService {
     public logout(): void {
         localStorage.removeItem('user');
         this.userSubject.next(null);
-        this.router.navigate(['/dashboard']);
     }
 }

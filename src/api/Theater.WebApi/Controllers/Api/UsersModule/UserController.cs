@@ -47,14 +47,12 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
             return Ok(await _userService.CreateAsync(command));
         }
 
-        [AuthorizeRoles(Role.Manager)]
+        [AuthorizeRoles(Role.Manager, Role.Client)]
         [HttpPut]
         [ProducesResponseType(typeof(bool), 200)]
-        public IActionResult Update([FromBody] UserUpdateCommand command)
+        public async Task<IActionResult> UpdateAsync([FromBody] UserUpdateCommand command)
         {
-            _userService.Update(command);
-
-            return Ok(true);
+            return Ok(await _userService.UpdateAsync(command));
         }
 
         [AuthorizeRoles(Role.Manager)]

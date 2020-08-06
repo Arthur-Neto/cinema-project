@@ -1,17 +1,13 @@
-.sidenav-container {
+.navbar-container {
   height: 100%;
 }
 
-.sidenav {
-  width: 200px;
+.navbar-company-logo .navbar-company-logo-btn {
+  font-size: large;
 }
 
-.sidenav .mat-toolbar {
-  background: inherit;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+.navbar-actions {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
 }

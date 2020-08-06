@@ -15,4 +15,3 @@ export class AuthenticatedUser {
     role: Role;
     token?: string;
 }
-

@@ -3,6 +3,7 @@
     public enum ErrorType
     {
         UserNotFound,
-        IncorrectUserPassword
+        IncorrectUserPassword,
+        DuplicatingUsername
     }
 }

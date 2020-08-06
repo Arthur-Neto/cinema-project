@@ -3,7 +3,7 @@
       (ngSubmit)="onSubmit()">
     <mat-card class="login-card">
         <mat-card-header class="login-header">
-            <mat-card-title>Login</mat-card-title>
+            <mat-card-title>Edit Login</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div class="row">
@@ -15,8 +15,8 @@
                         <mat-error *ngIf="showUsernameRequiredError">
                             Username is <strong>required</strong>
                         </mat-error>
-                        <mat-error *ngIf="showUsernameNotFoundError">
-                            Username not found
+                        <mat-error *ngIf="showUsernameDuplicatedError">
+                            Username already exists
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -29,9 +29,6 @@
                                formControlName="password">
                         <mat-error *ngIf="showPasswordRequiredError">
                             Password is <strong>required</strong>
-                        </mat-error>
-                        <mat-error *ngIf="showWrongPasswordError">
-                            Invalid password
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -58,7 +55,7 @@
                     class="login-btn"
                     color="primary"
                     type="submit">
-                Login
+                Save
             </button>
         </mat-card-actions>
     </mat-card>

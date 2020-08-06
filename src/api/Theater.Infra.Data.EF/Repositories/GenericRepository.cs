@@ -14,7 +14,8 @@ namespace Theater.Infra.Data.EF.Repositories
         IRetrieveAllRepository<TEntity>,
         IUpdateRepository<TEntity>,
         IDeleteByIDRepository<TEntity, KeyType>,
-        ISingleOrDefaultRepository<TEntity> where TEntity : class
+        ISingleOrDefaultRepository<TEntity>,
+        ICountRepository<TEntity> where TEntity : class
     {
         public IDatabaseContext Context { get; private set; }
 
@@ -57,9 +58,21 @@ namespace Theater.Infra.Data.EF.Repositories
             entities.Remove(entity);
         }
 
-        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression, bool tracking = true)
         {
-            return await Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
+            if (tracking)
+            {
+                return await Context.Set<TEntity>().SingleOrDefaultAsync(expression);
+            }
+            else
+            {
+                return await Context.Set<TEntity>().AsNoTracking().SingleOrDefaultAsync(expression);
+            }
+        }
+
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> expression)
+        {
+            return await Context.Set<TEntity>().CountAsync(expression);
         }
     }
 }

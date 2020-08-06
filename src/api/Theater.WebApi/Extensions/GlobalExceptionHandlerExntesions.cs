@@ -23,6 +23,10 @@ namespace Theater.WebApi.Extensions
 
                         await context.Response.WriteAsync($"{{ \"error\": \"{ex.Message}\" }}");
                     }
+                    else
+                    {
+                        await context.Response.WriteAsync($"{exceptionHandlingFeature?.Error.Message}");
+                    }
                 });
             });
         }

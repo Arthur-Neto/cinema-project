@@ -6,6 +6,7 @@
         IRetrieveAllRepository<User>,
         IRetrieveByIDRepository<User, int>,
         IUpdateRepository<User>,
-        ISingleOrDefaultRepository<User>
+        ISingleOrDefaultRepository<User>,
+        ICountRepository<User>
     { }
 }
