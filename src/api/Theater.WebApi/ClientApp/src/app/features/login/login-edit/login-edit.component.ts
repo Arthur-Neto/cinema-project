@@ -12,7 +12,7 @@ import { UsersService } from '../../users/shared/users.service';
 
 @Component({
     templateUrl: './login-edit.component.html',
-    styleUrls: ['./login-edit.component.css']
+    styleUrls: ['./login-edit.component.scss']
 })
 export class LoginEditComponent implements OnInit {
     public form: FormGroup;

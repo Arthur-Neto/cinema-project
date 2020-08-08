@@ -12,6 +12,7 @@ import { JwtInterceptor } from './core/interceptors/jwt-interceptor.service';
 import { DashboardModule } from './features/dashboard/dashboard.module';
 import { LoginModule } from './features/login/login.module';
 import { NavBarModule } from './features/nav-bar/nav-bar.module';
+import { SideBarModule } from './features/side-bar/side-bar.module';
 import { UsersModule } from './features/users/users.module';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { UsersModule } from './features/users/users.module';
         LayoutModule,
 
         NavBarModule,
+        SideBarModule,
         DashboardModule,
         LoginModule,
         UsersModule,
@@ -33,6 +35,6 @@ import { UsersModule } from './features/users/users.module';
         { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } }
     ],
     declarations: [AppComponent],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
 export class AppModule { }

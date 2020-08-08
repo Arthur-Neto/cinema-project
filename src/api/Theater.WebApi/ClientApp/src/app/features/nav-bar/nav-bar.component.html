@@ -1,22 +1,13 @@
-<mat-sidenav-container class="navbar-container">
-    <mat-toolbar color="primary">
-        <button mat-icon-button
-                aria-label="menu">
-            <mat-icon>menu</mat-icon>
+<mat-toolbar color="primary">
+    <div class="navbar-company-logo">
+        <button mat-button
+                class="navbar-company-logo-btn"
+                aria-label="dashboard"
+                [routerLink]="['dashboard']">
+            <span>PlaceholderCompany</span>
         </button>
-        <div class="navbar-company-logo">
-            <button mat-button
-                    class="navbar-company-logo-btn"
-                    aria-label="dashboard"
-                    [routerLink]="['dashboard']">
-                <span>PlaceholderCompany</span>
-            </button>
-        </div>
-        <div class="navbar-actions">
-            <app-nav-bar-login></app-nav-bar-login>
-        </div>
-    </mat-toolbar>
-    <div class="container">
-        <router-outlet></router-outlet>
     </div>
-</mat-sidenav-container>
+    <div class="navbar-actions">
+        <app-nav-bar-login></app-nav-bar-login>
+    </div>
+</mat-toolbar>

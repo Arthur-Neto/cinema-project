@@ -7,7 +7,7 @@ using Theater.Application.UsersModule.Models;
 using Theater.Domain.UsersModule.Enums;
 using Theater.WebApi.Attributes;
 
-namespace Theater.WebApi.Controllers.OData
+namespace Theater.WebApi.Controllers.OData.UsersModule
 {
     [Route("odata/users")]
     public class UserODataController : ControllerBase

@@ -1,26 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Theater.Domain.UsersModule;
+using Theater.Domain.RoomsModule;
 
-namespace Theater.Infra.Data.EF.Configurations.UsersModule
+namespace Theater.Infra.Data.EF.Configurations.RoomsModule
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class RoomConfiguration : IEntityTypeConfiguration<Room>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Room> builder)
         {
             builder.HasKey(u => u.ID);
             builder.Property(u => u.ID)
                 .HasColumnType("int")
                 .ValueGeneratedOnAdd();
 
-            builder.Property(u => u.Username)
+            builder.Property(u => u.Name)
                 .HasColumnType("varchar")
                 .HasMaxLength(50)
                 .IsRequired();
 
-            builder.Property(u => u.Password)
-                .HasColumnType("varchar")
-                .HasMaxLength(50)
+            builder.Property(u => u.NumberOfChairs)
+                .HasColumnType("int")
                 .IsRequired();
         }
     }
