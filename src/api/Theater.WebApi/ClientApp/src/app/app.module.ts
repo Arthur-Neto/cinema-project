@@ -12,8 +12,10 @@ import { JwtInterceptor } from './core/interceptors/jwt-interceptor.service';
 import { DashboardModule } from './features/dashboard/dashboard.module';
 import { LoginModule } from './features/login/login.module';
 import { NavBarModule } from './features/nav-bar/nav-bar.module';
+import { RoomsModule } from './features/rooms/rooms.module';
 import { SideBarModule } from './features/side-bar/side-bar.module';
 import { UsersModule } from './features/users/users.module';
+import { GridModule } from './components/grid/grid.module';
 
 @NgModule({
     imports: [
@@ -28,11 +30,13 @@ import { UsersModule } from './features/users/users.module';
         DashboardModule,
         LoginModule,
         UsersModule,
+        RoomsModule,
+        GridModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } }
+        { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000 } },
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent],

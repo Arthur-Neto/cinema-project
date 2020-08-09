@@ -1,12 +1,28 @@
 <mat-sidenav-container class="sidebar-container">
-    <mat-sidenav opened
-                 mode="side">
-        Start content
+    <mat-sidenav class="sidebar-items"
+                 mode="side"
+                 [opened]="isUserLoggedManager">
+        <button mat-button
+                class="sidebar-item"
+                [routerLink]="'/rooms'">
+            <mat-icon>tablet</mat-icon>
+            Rooms
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-button
+                class="sidebar-item">
+            <mat-icon>theaters</mat-icon>
+            Movies
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-button
+                class="sidebar-item">
+            <mat-icon>movie</mat-icon>
+            Sessions
+        </button>
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <div class="container">
-            <router-outlet></router-outlet>
-        </div>
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
