@@ -9,6 +9,7 @@ using Theater.WebApi.Attributes;
 
 namespace Theater.WebApi.Controllers.OData.UsersModule
 {
+    [ApiController]
     [Route("odata/users")]
     public class UserODataController : ControllerBase
     {

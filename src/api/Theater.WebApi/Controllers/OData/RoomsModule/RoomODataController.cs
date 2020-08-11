@@ -8,6 +8,7 @@ using Theater.Application.RoomsModule.Models;
 
 namespace Theater.WebApi.Controllers.OData.RoomsModule
 {
+    [ApiController]
     [Route("odata/rooms")]
     public class RoomODataController : ControllerBase
     {

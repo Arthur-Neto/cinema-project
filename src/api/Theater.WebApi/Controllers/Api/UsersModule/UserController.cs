@@ -9,6 +9,7 @@ using Theater.WebApi.Attributes;
 
 namespace Theater.WebApi.Controllers.Api.UsersModule
 {
+    [ApiController]
     [Route("api/users")]
     public class UserController : ControllerBase
     {
@@ -23,7 +24,7 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
         [HttpPost]
         [Route("login")]
         [ProducesResponseType(typeof(AuthenticatedUserModel), 200)]
-        public async Task<IActionResult> AuthenticateAsync([FromBody] UserAuthenticateCommand command)
+        public async Task<IActionResult> AuthenticateAsync(UserAuthenticateCommand command)
         {
             var user = await _userService.AuthenticateAsync(command);
 
@@ -42,7 +43,7 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
         [AuthorizeRoles(Role.Manager)]
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
-        public async Task<IActionResult> CreateAsync([FromBody] UserCreateCommand command)
+        public async Task<IActionResult> CreateAsync(UserCreateCommand command)
         {
             return Ok(await _userService.CreateAsync(command));
         }
@@ -50,7 +51,7 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
         [AuthorizeRoles(Role.Manager, Role.Client)]
         [HttpPut]
         [ProducesResponseType(typeof(bool), 200)]
-        public async Task<IActionResult> UpdateAsync([FromBody] UserUpdateCommand command)
+        public async Task<IActionResult> UpdateAsync(UserUpdateCommand command)
         {
             return Ok(await _userService.UpdateAsync(command));
         }
@@ -58,7 +59,7 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
         [AuthorizeRoles(Role.Manager)]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), 200)]
-        public async Task<IActionResult> DeleteAsync([FromBody] UserDeleteCommand command)
+        public async Task<IActionResult> DeleteAsync(UserDeleteCommand command)
         {
             await _userService.DeleteAsync(command);
 

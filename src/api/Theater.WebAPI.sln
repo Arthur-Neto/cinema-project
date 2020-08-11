@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theater.Infra.Crosscutting"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theater.Tests", "Theater.Tests\Theater.Tests.csproj", "{CBB5DE8D-E44A-4979-8EAD-249886C4A561}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Theater.WebApi", "Theater.WebApi\Theater.WebApi.csproj", "{3FE768BF-BEAB-4BC8-8D3C-EF2C2A2F421D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Theater.WebApi", "Theater.WebApi\Theater.WebApi.csproj", "{3FE768BF-BEAB-4BC8-8D3C-EF2C2A2F421D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

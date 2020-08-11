@@ -45,16 +45,13 @@ namespace Theater.WebApi
 
             services.AddODataConfig();
 
-            services.AddControllers();
-
-            services.AddMvc()
-                    .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<IUnitOfWork>());
-
             services.AddSwagger();
 
             services.AddAutoMapper(typeof(IUnitOfWork));
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                    .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<IUnitOfWork>());
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -63,6 +60,7 @@ namespace Theater.WebApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             app.UseCors("TheaterCorsPolicy");
 
             if (env.IsDevelopment())

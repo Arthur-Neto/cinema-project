@@ -4,6 +4,8 @@
     {
         UserNotFound,
         IncorrectUserPassword,
-        DuplicatingUsername
+        DuplicatingUsername,
+        RoomNotFound,
+        DuplicatingRoom,
     }
 }
