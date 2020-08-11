@@ -60,7 +60,6 @@ namespace Theater.WebApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             app.UseCors("TheaterCorsPolicy");
 
             if (env.IsDevelopment())
