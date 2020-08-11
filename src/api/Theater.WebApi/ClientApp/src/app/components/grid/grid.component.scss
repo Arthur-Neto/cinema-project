@@ -5,9 +5,28 @@
   width: 65%;
 }
 
-.grid-filter .mat-form-field {
-  font-size: 14px;
-  margin-left: 17.5%;
-  margin-top: 2%;
-  width: 15%;
+.grid-header {
+  display: flex;
+  flex-direction: row;
+
+  .grid-actions {
+    flex: 1;
+    justify-content: flex-end;
+    margin-right: 17.6%;
+    margin-top: 1%;
+    display: flex;
+  }
+
+  .grid-filter {
+    flex: 1;
+    margin-left: 17.6%;
+
+    &.mat-form-field {
+      font-size: 14px;
+    }
+  }
+}
+
+.mat-column-select {
+  overflow: initial;
 }

@@ -1,5 +1,7 @@
 <app-grid *ngIf="dataSource"
           [headerNames]="headerNames"
           [displayedColumns]="displayedColumns"
-          [dataSource]="dataSource">
+          [dataSource]="dataSource"
+          [actions]="actions"
+          (selectionChange)="onSelectionChange($event)">
 </app-grid>
