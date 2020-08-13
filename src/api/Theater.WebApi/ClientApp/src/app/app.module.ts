@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
+import { SpinnerModule } from './components/spinner/spinner.module';
 import { ErrorInterceptor } from './core/interceptors/error-interceptor.service';
 import { JwtInterceptor } from './core/interceptors/jwt-interceptor.service';
 import { DashboardModule } from './features/dashboard/dashboard.module';
@@ -15,7 +16,6 @@ import { NavBarModule } from './features/nav-bar/nav-bar.module';
 import { RoomsModule } from './features/rooms/rooms.module';
 import { SideBarModule } from './features/side-bar/side-bar.module';
 import { UsersModule } from './features/users/users.module';
-import { GridModule } from './components/grid/grid.module';
 
 @NgModule({
     imports: [
@@ -24,6 +24,7 @@ import { GridModule } from './components/grid/grid.module';
         AppRoutingModule,
         BrowserAnimationsModule,
         LayoutModule,
+        SpinnerModule,
 
         NavBarModule,
         SideBarModule,
@@ -31,7 +32,6 @@ import { GridModule } from './components/grid/grid.module';
         LoginModule,
         UsersModule,
         RoomsModule,
-        GridModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { AuthenticatedUser } from '../../../core/authentication/authentication-models';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { UserUpdateCommand } from '../../users/shared/users.model';
-import { UsersService } from '../../users/shared/users.service';
+import { UsersApiService } from '../../users/shared/users.service';
 
 @Component({
     templateUrl: './login-edit.component.html',
@@ -38,7 +38,7 @@ export class LoginEditComponent implements OnInit {
         private fb: FormBuilder,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private usersService: UsersService,
+        private usersApiService: UsersApiService,
         private snackBar: MatSnackBar,
     ) { }
 
@@ -65,7 +65,7 @@ export class LoginEditComponent implements OnInit {
                 password: this.form.controls['password'].value
             };
 
-            this.usersService
+            this.usersApiService
                 .update(command)
                 .pipe(take(1))
                 .subscribe({
@@ -77,11 +77,11 @@ export class LoginEditComponent implements OnInit {
 
     private onSuccessCallback(): void {
         this.snackBar.open('Edit success');
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['dashboard']);
     }
 
     private onErrorCallback(error: string): void {
-        if (error.match('DuplicatingUsername')) {
+        if (error.match('Duplicating')) {
             this.form.controls['username'].setErrors({ duplicated: true });
         }
     }

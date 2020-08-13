@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         private authenticationService: AuthenticationService,
     ) {
         if (this.authenticationService.userValue) {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['dashboard']);
         }
     }
 
@@ -70,11 +70,11 @@ export class LoginComponent implements OnInit {
     }
 
     private onSuccessCallback(): void {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['dashboard']);
     }
 
     private onErrorCallback(error: string): void {
-        if (error.match('UserNotFound')) {
+        if (error.match('NotFound')) {
             this.form.controls['username'].setErrors({ doesntExist: true });
         } else if (error.match('IncorrectUserPassword')) {
             this.form.controls['password'].setErrors({ wrongPassword: true });

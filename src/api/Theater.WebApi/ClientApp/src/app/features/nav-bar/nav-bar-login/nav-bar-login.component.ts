@@ -10,7 +10,7 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
 @Component({
     selector: 'app-nav-bar-login',
     templateUrl: './nav-bar-login.component.html',
-    styleUrls: ['./nav-bar-login.component.css']
+    styleUrls: ['./nav-bar-login.component.scss']
 })
 export class NavBarLoginComponent implements OnInit, OnDestroy {
     public userLogged: AuthenticatedUser;
@@ -38,10 +38,10 @@ export class NavBarLoginComponent implements OnInit, OnDestroy {
 
     public logout(): void {
         this.authenticationService.logout();
-        this.router.navigate(['/login']);
+        this.router.navigate(['login']);
     }
 
     public editLogin(): void {
-        this.router.navigate(['/edit-login']);
+        this.router.navigate(['edit-login']);
     }
 }

@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { UsersService } from './shared/users.service';
+import { UsersApiService } from './shared/users.service';
 
 @NgModule({
     imports: [
         CommonModule
     ],
     exports: [
-        UsersService,
+        UsersApiService,
     ]
 })
 export class UsersModule { }

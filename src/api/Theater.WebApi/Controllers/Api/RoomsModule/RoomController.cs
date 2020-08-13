@@ -35,11 +35,12 @@ namespace Theater.WebApi.Controllers.Api.RoomsModule
         }
 
         [AuthorizeRoles(Role.Manager)]
+        [Route("{id:int}")]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), 200)]
-        public async Task<IActionResult> DeleteAsync(RoomDeleteCommand command)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            return Ok(await _roomService.DeleteAsync(command));
+            return Ok(await _roomService.DeleteAsync(id));
         }
     }
 }

@@ -2,10 +2,8 @@
 {
     public enum ErrorType
     {
-        UserNotFound,
+        NotFound,
+        Duplicating,
         IncorrectUserPassword,
-        DuplicatingUsername,
-        RoomNotFound,
-        DuplicatingRoom,
     }
 }

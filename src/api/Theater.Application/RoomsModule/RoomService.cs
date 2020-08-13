@@ -13,8 +13,8 @@ namespace Theater.Application.RoomsModule
     {
         Task<IEnumerable<RoomModel>> RetrieveAllAsync();
         Task<int> CreateAsync(RoomCreateCommand command);
-        Task<bool> DeleteAsync(RoomDeleteCommand command);
         Task<bool> UpdateAsync(RoomUpdateCommand command);
+        Task<bool> DeleteAsync(int id);
     }
 
     public class RoomService : AppServiceBase<IRoomRepository>, IRoomService
@@ -31,10 +31,12 @@ namespace Theater.Application.RoomsModule
             return await CommitAsync() > 0 ? createdRoom.ID : 0;
         }
 
-        public async Task<bool> DeleteAsync(RoomDeleteCommand command)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var room = _mapper.Map<Room>(command);
-            await _repository.DeleteAsync(room.ID);
+            var room = await _repository.SingleOrDefaultAsync(x => x.ID == id);
+            Guard.Against(room, ErrorType.NotFound);
+
+            await _repository.DeleteAsync(id);
 
             return await CommitAsync() > 0;
         }
@@ -48,15 +50,15 @@ namespace Theater.Application.RoomsModule
 
         public async Task<bool> UpdateAsync(RoomUpdateCommand command)
         {
-            var user = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
-            Guard.Against(user, ErrorType.RoomNotFound);
+            var room = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
+            Guard.Against(room, ErrorType.NotFound);
 
             var usernameCount = await _repository.CountAsync(x => x.Name.Equals(command.Name));
-            Guard.Against(usernameCount > 1, ErrorType.DuplicatingRoom);
+            Guard.Against(usernameCount > 1, ErrorType.NotFound);
 
-            user = _mapper.Map<Room>(command);
+            room = _mapper.Map<Room>(command);
 
-            _repository.Update(user);
+            _repository.Update(room);
 
             return await CommitAsync() > 0;
         }

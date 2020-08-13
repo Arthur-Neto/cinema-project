@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 
-import { UsersService } from '../users/shared/users.service';
+import { UsersApiService } from '../users/shared/users.service';
 import { LoginEditComponent } from './login-edit/login-edit.component';
 import { LoginComponent } from './login.component';
 import { LoginRoutingModule } from './login.routing.module';
@@ -34,7 +34,7 @@ import { LoginRoutingModule } from './login.routing.module';
         LoginComponent,
     ],
     providers: [
-        UsersService,
+        UsersApiService,
     ]
 })
 export class LoginModule { }

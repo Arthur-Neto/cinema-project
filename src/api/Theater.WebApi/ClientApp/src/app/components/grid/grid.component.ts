@@ -1,8 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 import { IActionModel } from './shared/grid.model';
 
@@ -11,7 +11,7 @@ import { IActionModel } from './shared/grid.model';
     templateUrl: './grid.component.html',
     styleUrls: ['./grid.component.scss']
 })
-export class GridComponent<T> implements OnInit {
+export class GridComponent<T> implements AfterViewInit {
     @Input() public headerNames: string[];
     @Input() public displayedColumns: string[];
     @Input() public dataSource: MatTableDataSource<T>;
@@ -19,12 +19,14 @@ export class GridComponent<T> implements OnInit {
 
     @Output() public selectionChange: EventEmitter<T> = new EventEmitter();
 
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: false }) sort: MatSort;
+    @ViewChild(MatTable, { static: false }) table: MatTable<T>;
 
     public selection = new SelectionModel<T>(false, []);
+    public noRowsMsg = 'No data';
 
-    public ngOnInit(): void {
+    public ngAfterViewInit(): void {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
     }
@@ -32,6 +34,7 @@ export class GridComponent<T> implements OnInit {
     public onApplyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
+        this.noRowsMsg = `No data matching the filter "${ filterValue }"`;
 
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
@@ -42,20 +45,14 @@ export class GridComponent<T> implements OnInit {
         event();
     }
 
-    public isAllSelected(): boolean {
-        const numSelected = this.selection.selected.length;
-        const numRows = this.dataSource.data.length;
-        return numSelected === numRows;
-    }
-
-    public masterToggle(): void {
-        this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.forEach(row => this.selection.select(row));
-    }
-
     public onSelectionChanged(row: T): void {
         this.selection.toggle(row);
         this.selectionChange.emit(row);
+    }
+
+    public refreshGrid(items: T[]): void {
+        this.dataSource = new MatTableDataSource<T>(items);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     }
 }

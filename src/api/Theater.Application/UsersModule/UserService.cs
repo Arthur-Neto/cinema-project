@@ -59,10 +59,10 @@ namespace Theater.Application.UsersModule
         public async Task<bool> UpdateAsync(UserUpdateCommand command)
         {
             var user = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
-            Guard.Against(user, ErrorType.UserNotFound);
+            Guard.Against(user, ErrorType.NotFound);
 
             var usernameCount = await _repository.CountAsync(x => x.Username.Equals(command.Username));
-            Guard.Against(usernameCount > 1, ErrorType.DuplicatingUsername);
+            Guard.Against(usernameCount > 1, ErrorType.Duplicating);
 
             user = _mapper.Map<User>(command);
 
@@ -88,7 +88,7 @@ namespace Theater.Application.UsersModule
         public async Task<AuthenticatedUserModel> AuthenticateAsync(UserAuthenticateCommand command)
         {
             var user = await _repository.SingleOrDefaultAsync(x => x.Username.Equals(command.Username));
-            Guard.Against(user, ErrorType.UserNotFound);
+            Guard.Against(user, ErrorType.NotFound);
 
             var isCorrectPassword = user.Password.Equals(command.Password);
             Guard.Against(!isCorrectPassword, ErrorType.IncorrectUserPassword);

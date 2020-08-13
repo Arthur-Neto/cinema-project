@@ -7,7 +7,7 @@ import { environment } from '../../../../environments/environment';
 import { UserUpdateCommand } from './users.model';
 
 @Injectable()
-export class UsersService {
+export class UsersApiService {
     private apiUrl: string;
 
     constructor(
@@ -17,6 +17,6 @@ export class UsersService {
     }
 
     public update(command: UserUpdateCommand): Observable<boolean> {
-        return this.http.put<boolean>(`${ this.apiUrl }`, command).pipe();
+        return this.http.put<boolean>(`${ this.apiUrl }`, command);
     }
 }

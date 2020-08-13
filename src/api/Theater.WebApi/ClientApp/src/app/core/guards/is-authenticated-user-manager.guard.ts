@@ -18,7 +18,7 @@ export class IsAuthenticatedUserManagerGuard implements CanActivate {
 
         this.authenticationService.logout();
 
-        this.router.navigate(['/login']);
+        this.router.navigate(['login']);
         return false;
     }
 }

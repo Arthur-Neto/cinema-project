@@ -32,9 +32,33 @@ namespace Theater.WebApi.Extensions
                 Name = "Sala 01",
                 NumberOfChairs = 50,
             };
+            var room2 = new Room()
+            {
+                Name = "Sala 02",
+                NumberOfChairs = 50,
+            };
+            var room3 = new Room()
+            {
+                Name = "Sala 03",
+                NumberOfChairs = 50,
+            };
+            var room4 = new Room()
+            {
+                Name = "Sala 04",
+                NumberOfChairs = 50,
+            };
+            var room5 = new Room()
+            {
+                Name = "Sala 05",
+                NumberOfChairs = 50,
+            };
 
             context.Add(user);
             context.Add(room);
+            context.Add(room2);
+            context.Add(room3);
+            context.Add(room4);
+            context.Add(room5);
 
             context.SaveChanges();
         }
