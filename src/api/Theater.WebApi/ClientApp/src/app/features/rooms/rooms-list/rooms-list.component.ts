@@ -1,11 +1,10 @@
 import { finalize, take } from 'rxjs/operators';
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { GridComponent } from '../../../components/grid/grid.component';
 import { IActionModel } from '../../../components/grid/shared/grid.model';
 import { IRoomsModel } from '../shared/rooms.model';
 import { RoomsApiService, RoomsODataService } from '../shared/rooms.service';
@@ -44,8 +43,6 @@ export class RoomsListComponent implements OnInit {
             }
         }
     ];
-
-    @ViewChild(GridComponent, { static: false }) grid: GridComponent<IRoomsModel>;
 
     constructor(
         private roomsODataService: RoomsODataService,
@@ -91,7 +88,7 @@ export class RoomsListComponent implements OnInit {
                             take(1),
                             finalize(() => this.isLoading = false))
                         .subscribe((rooms: IRoomsModel[]) => {
-                            this.grid.refreshGrid(rooms);
+                            this.dataSource.data = rooms;
                         });
                 }
             });

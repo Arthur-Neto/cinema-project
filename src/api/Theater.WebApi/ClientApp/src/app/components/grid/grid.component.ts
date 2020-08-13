@@ -43,16 +43,11 @@ export class GridComponent<T> implements AfterViewInit {
 
     public onGridAction(event: Function) {
         event();
+        this.onSelectionChanged(null);
     }
 
     public onSelectionChanged(row: T): void {
         this.selection.toggle(row);
         this.selectionChange.emit(row);
-    }
-
-    public refreshGrid(items: T[]): void {
-        this.dataSource = new MatTableDataSource<T>(items);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
     }
 }
