@@ -1,5 +1,7 @@
 # Cinema Project
 
+[![Build Status](https://netoarthur.visualstudio.com/Cinema/_apis/build/status/Arthur-Neto.cinema-project?branchName=master)](https://netoarthur.visualstudio.com/Cinema/_build/latest?definitionId=6&branchName=master)
+
 Project made for a job interview using the lastest(08/2020) .NET technologies.
 
 ## Dependencies
