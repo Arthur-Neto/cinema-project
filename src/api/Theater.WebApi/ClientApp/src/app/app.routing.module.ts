@@ -9,15 +9,15 @@ const routes: Routes = [
     },
     {
         path: 'dashboard',
-        loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () => import('@modules/dashboard/dashboard.module').then(m => m.DashboardModule)
     },
     {
         path: 'login',
-        loadChildren: () => import('./features/login/login.module').then(m => m.LoginModule)
+        loadChildren: () => import('@modules/login/login.module').then(m => m.LoginModule)
     },
     {
         path: 'rooms',
-        loadChildren: () => import('./features/rooms/rooms.module').then(m => m.RoomsModule)
+        loadChildren: () => import('@modules/rooms/rooms.module').then(m => m.RoomsModule)
     }
 ];
 

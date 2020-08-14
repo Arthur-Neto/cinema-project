@@ -4,18 +4,18 @@ import { NgModule } from '@angular/core';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorInterceptor } from '@app/interceptors/error-interceptor.service';
+import { JwtInterceptor } from '@app/interceptors/jwt-interceptor.service';
+import { DashboardModule } from '@modules/dashboard/dashboard.module';
+import { LoginModule } from '@modules/login/login.module';
+import { NavBarModule } from '@modules/nav-bar/nav-bar.module';
+import { RoomsModule } from '@modules/rooms/rooms.module';
+import { SideBarModule } from '@modules/side-bar/side-bar.module';
+import { UsersModule } from '@modules/users/users.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { SpinnerModule } from './components/spinner/spinner.module';
-import { ErrorInterceptor } from './core/interceptors/error-interceptor.service';
-import { JwtInterceptor } from './core/interceptors/jwt-interceptor.service';
-import { DashboardModule } from './features/dashboard/dashboard.module';
-import { LoginModule } from './features/login/login.module';
-import { NavBarModule } from './features/nav-bar/nav-bar.module';
-import { RoomsModule } from './features/rooms/rooms.module';
-import { SideBarModule } from './features/side-bar/side-bar.module';
-import { UsersModule } from './features/users/users.module';
 
 @NgModule({
     imports: [
