@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { AuthenticatedUser, Role } from '../../core/authentication/authentication-models';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { AuthenticatedUser, Role } from '@app/authentication/authentication-models';
+import { AuthenticationService } from '@app/authentication/authentication.service';
 
 @Component({
     selector: 'app-side-bar',

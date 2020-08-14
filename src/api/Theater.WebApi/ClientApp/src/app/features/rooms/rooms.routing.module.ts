@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsAuthenticatedUserManagerGuard } from '@app/guards/is-authenticated-user-manager.guard';
 
-import { IsAuthenticatedUserManagerGuard } from '../../core/guards/is-authenticated-user-manager.guard';
 import { RoomsCreateComponent } from './rooms-list/rooms-create/rooms-create.component';
 import { RoomsEditComponent } from './rooms-list/rooms-edit/rooms-edit.component';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';

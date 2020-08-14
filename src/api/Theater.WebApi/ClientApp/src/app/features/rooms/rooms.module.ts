@@ -6,9 +6,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { GridModule } from '@components/grid/grid.module';
+import { SpinnerModule } from '@components/spinner/spinner.module';
 
-import { GridModule } from '../../components/grid/grid.module';
-import { SpinnerModule } from '../../components/spinner/spinner.module';
 import { RoomsCreateComponent } from './rooms-list/rooms-create/rooms-create.component';
 import { RoomsEditComponent } from './rooms-list/rooms-edit/rooms-edit.component';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';

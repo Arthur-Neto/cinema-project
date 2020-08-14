@@ -4,8 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IActionModel } from '@components/grid/shared/grid.model';
 
-import { IActionModel } from '../../../components/grid/shared/grid.model';
 import { IRoomsModel } from '../shared/rooms.model';
 import { RoomsApiService, RoomsODataService } from '../shared/rooms.service';
 

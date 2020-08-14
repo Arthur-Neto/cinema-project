@@ -3,9 +3,8 @@ import { take } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { AuthenticateCommand } from '../../core/authentication/authentication-models';
-import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { AuthenticateCommand } from '@app/authentication/authentication-models';
+import { AuthenticationService } from '@app/authentication/authentication.service';
 
 @Component({
     selector: 'app-login',

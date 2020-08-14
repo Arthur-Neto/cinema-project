@@ -4,9 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthenticatedUser } from '@app/authentication/authentication-models';
+import { AuthenticationService } from '@app/authentication/authentication.service';
 
-import { AuthenticatedUser } from '../../../core/authentication/authentication-models';
-import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { UserUpdateCommand } from '../../users/shared/users.model';
 import { UsersApiService } from '../../users/shared/users.service';
 

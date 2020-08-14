@@ -3,8 +3,8 @@ import { map } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@env';
 
-import { environment } from '../../../environments/environment';
 import { AuthenticateCommand, AuthenticatedUser } from './authentication-models';
 
 @Injectable({ providedIn: 'root' })

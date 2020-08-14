@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@env';
 
-import { environment } from '../../../../environments/environment';
 import { UserUpdateCommand } from './users.model';
 
 @Injectable()

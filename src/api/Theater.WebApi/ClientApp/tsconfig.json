@@ -1,7 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "baseUrl": "./",
+        "baseUrl": "src",
         "module": "esnext",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
@@ -13,6 +13,20 @@
         "typeRoots": [
             "node_modules/@types"
         ],
+        "paths": {
+            "@app/*": [
+                "app/core/*"
+            ],
+            "@env": [
+                "environments/environment"
+            ],
+            "@features/*": [
+                "app/features/*"
+            ],
+            "@components/*": [
+                "app/components/*"
+            ]
+        },
         "lib": [
             "es2017",
             "dom"

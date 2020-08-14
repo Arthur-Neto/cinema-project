@@ -3,9 +3,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { AuthenticatedUser } from '../../../core/authentication/authentication-models';
-import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import { AuthenticatedUser } from '@app/authentication/authentication-models';
+import { AuthenticationService } from '@app/authentication/authentication.service';
 
 @Component({
     selector: 'app-nav-bar-login',
