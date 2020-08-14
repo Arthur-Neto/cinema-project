@@ -1,10 +1,10 @@
-import { take } from 'rxjs/operators';
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticateCommand } from '@app/authentication/authentication-models';
 import { AuthenticationService } from '@app/authentication/authentication.service';
+
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',

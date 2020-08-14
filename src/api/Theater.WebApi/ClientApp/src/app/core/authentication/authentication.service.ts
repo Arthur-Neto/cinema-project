@@ -1,10 +1,11 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env';
 
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { LocalStorageService } from '../local-storage/local-storage.service';
 import { AuthenticateCommand, AuthenticatedUser } from './authentication-models';
 
 @Injectable({ providedIn: 'root' })
@@ -18,16 +19,17 @@ export class AuthenticationService {
     private userSubject: BehaviorSubject<AuthenticatedUser>;
 
     constructor(
+        private localStorageService: LocalStorageService,
         private http: HttpClient
     ) {
-        this.userSubject = new BehaviorSubject<AuthenticatedUser>(JSON.parse(localStorage.getItem('user')));
+        this.userSubject = new BehaviorSubject<AuthenticatedUser>(this.getToken());
         this.user = this.userSubject.asObservable();
     }
 
     public login(command: AuthenticateCommand): Observable<AuthenticatedUser> {
         return this.http.post<AuthenticatedUser>(`${ environment.apiUrl }api/users/login`, command)
             .pipe(map((user: AuthenticatedUser) => {
-                localStorage.setItem('user', JSON.stringify(user));
+                this.localStorageService.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
 
                 return user;
@@ -35,7 +37,11 @@ export class AuthenticationService {
     }
 
     public logout(): void {
-        localStorage.removeItem('user');
+        this.localStorageService.removeItem('user');
         this.userSubject.next(null);
+    }
+
+    private getToken(): AuthenticatedUser {
+        return this.localStorageService.getItem('user') ? JSON.parse(this.localStorageService.getItem('user')) : null;
     }
 }

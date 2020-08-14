@@ -1,10 +1,10 @@
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticatedUser } from '@app/authentication/authentication-models';
 import { AuthenticationService } from '@app/authentication/authentication.service';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-nav-bar-login',
@@ -35,12 +35,16 @@ export class NavBarLoginComponent implements OnInit, OnDestroy {
         this.ngUnsubscribe.complete();
     }
 
+    public login(): void {
+        this.logout();
+    }
+
     public logout(): void {
         this.authenticationService.logout();
-        this.router.navigate(['login']);
+        this.router.navigate(['auth/login']);
     }
 
     public editLogin(): void {
-        this.router.navigate(['edit-login']);
+        this.router.navigate(['auth/edit-login']);
     }
 }

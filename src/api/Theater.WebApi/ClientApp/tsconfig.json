@@ -17,19 +17,22 @@
             "@app/*": [
                 "app/core/*"
             ],
-            "@env": [
-                "environments/environment"
-            ],
             "@modules/*": [
                 "app/modules/*"
             ],
-            "@components/*": [
-                "app/components/*"
-            ]
+            "@layout/*": [
+                "app/layout/*"
+            ],
+            "@shared/*": [
+                "app/shared/*"
+            ],
+            "@env": [
+                "environments/environment"
+            ],
         },
         "lib": [
             "es2017",
             "dom"
         ]
-    }
+    },
 }

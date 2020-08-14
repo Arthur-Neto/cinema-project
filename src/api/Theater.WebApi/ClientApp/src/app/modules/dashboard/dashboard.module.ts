@@ -1,39 +1,27 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { SharedModule } from '@shared/shared.module';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing.module';
 
 @NgModule({
-    declarations: [
-        DashboardComponent,
-    ],
     imports: [
-        CommonModule,
+        SharedModule,
         DashboardRoutingModule,
 
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
+        MatMenuModule,
         MatListModule,
         MatGridListModule,
-        MatCardModule,
-        MatMenuModule,
-        MatInputModule,
         MatSelectModule,
         MatRadioModule,
+    ],
+    declarations: [
+        DashboardComponent,
     ],
     exports: [
         DashboardComponent,

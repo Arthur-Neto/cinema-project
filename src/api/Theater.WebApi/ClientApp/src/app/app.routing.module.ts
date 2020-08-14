@@ -8,12 +8,12 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'dashboard',
-        loadChildren: () => import('@modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+        path: 'auth',
+        loadChildren: () => import('@modules/login/login.module').then(m => m.LoginModule)
     },
     {
-        path: 'login',
-        loadChildren: () => import('@modules/login/login.module').then(m => m.LoginModule)
+        path: 'dashboard',
+        loadChildren: () => import('@modules/dashboard/dashboard.module').then(m => m.DashboardModule)
     },
     {
         path: 'rooms',
@@ -22,7 +22,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { useHash: true, initialNavigation: 'enabled' })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

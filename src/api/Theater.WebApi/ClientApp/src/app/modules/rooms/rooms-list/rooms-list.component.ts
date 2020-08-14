@@ -1,10 +1,10 @@
-import { finalize, take } from 'rxjs/operators';
-
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IActionModel } from '@components/grid/shared/grid.model';
+import { IActionModel } from '@shared/components/grid/shared/grid.model';
+
+import { finalize, take } from 'rxjs/operators';
 
 import { IRoomsModel } from '../shared/rooms.model';
 import { RoomsApiService, RoomsODataService } from '../shared/rooms.service';
@@ -25,14 +25,20 @@ export class RoomsListComponent implements OnInit {
             icon: 'add',
             name: 'Add',
             function: () => {
-                this.router.navigate(['create'], { relativeTo: this.route });
+                this.router.navigate(['../create'], { relativeTo: this.route });
             }
         },
         {
             icon: 'edit',
             name: 'Edit',
             function: () => {
-                this.router.navigate(['edit', this.selectedRoom.id], { relativeTo: this.route });
+                if (!this.selectedRoom) {
+                    this.snackBar.open('Select a room');
+
+                    return;
+                }
+
+                this.router.navigate(['../edit', this.selectedRoom.id], { relativeTo: this.route });
             }
         },
         {

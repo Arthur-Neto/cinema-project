@@ -1,21 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterModule } from '@angular/router';
+import { SharedModule } from '@shared/shared.module';
 
 import { SideBarComponent } from './side-bar.component';
 
 @NgModule({
     imports: [
-        CommonModule,
-        RouterModule,
+        SharedModule,
 
         MatSidenavModule,
-        MatIconModule,
-        MatButtonModule,
         MatDividerModule,
     ],
     declarations: [

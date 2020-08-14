@@ -41,6 +41,22 @@
     "importSorter.sortConfiguration.customOrderingRules.defaultOrderLevel": 20,
     "importSorter.sortConfiguration.removeUnusedImports": true,
     "importSorter.sortConfiguration.removeUnusedDefaultImports": true,
+    "importSorter.sortConfiguration.customOrderingRules.rules": [
+        {
+            "regex": "^[@]",
+            "orderLevel": 10
+        },
+        {
+            "type": "importMember",
+            "regex": "^$",
+            "orderLevel": 20,
+            "disableSort": true
+        },
+        {
+            "regex": "^[.]",
+            "orderLevel": 40
+        }
+    ],
     "html.format.indentInnerHtml": true,
     "html.format.wrapAttributes": "force-aligned",
 }

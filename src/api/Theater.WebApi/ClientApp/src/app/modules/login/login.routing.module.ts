@@ -8,13 +8,23 @@ import { LoginComponent } from './login.component';
 const routes: Routes = [
     {
         path: '',
-        component: LoginComponent,
+        redirectTo: '/auth/login',
+        pathMatch: 'full',
     },
     {
-        path: 'edit-login',
-        component: LoginEditComponent,
-        canActivate: [AuthGuard],
-    },
+        path: '',
+        children: [
+            {
+                path: 'login',
+                component: LoginComponent,
+            },
+            {
+                path: 'edit-login',
+                component: LoginEditComponent,
+                canActivate: [AuthGuard],
+            },
+        ],
+    }
 ];
 
 @NgModule({

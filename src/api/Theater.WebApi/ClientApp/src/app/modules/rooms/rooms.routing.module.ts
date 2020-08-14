@@ -9,18 +9,26 @@ import { RoomsListComponent } from './rooms-list/rooms-list.component';
 const routes: Routes = [
     {
         path: '',
-        component: RoomsListComponent,
-        canActivate: [IsAuthenticatedUserManagerGuard],
+        redirectTo: '/rooms/list',
+        pathMatch: 'full',
     },
     {
-        path: 'rooms/create',
-        component: RoomsCreateComponent,
+        path: '',
         canActivate: [IsAuthenticatedUserManagerGuard],
-    },
-    {
-        path: 'rooms/edit/:id',
-        component: RoomsEditComponent,
-        canActivate: [IsAuthenticatedUserManagerGuard],
+        children: [
+            {
+                path: 'list',
+                component: RoomsListComponent,
+            },
+            {
+                path: 'create',
+                component: RoomsCreateComponent,
+            },
+            {
+                path: 'edit/:id',
+                component: RoomsEditComponent,
+            },
+        ]
     },
 ];
 

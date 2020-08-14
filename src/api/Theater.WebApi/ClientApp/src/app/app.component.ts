@@ -1,29 +1,16 @@
-import { Component } from '@angular/core';
-import { Event, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html'
 })
 export class AppComponent {
-    public isLoading: boolean;
+    static isBrowser = new BehaviorSubject<boolean>(null);
 
-    constructor(private router: Router) {
-
-        this.router.events.subscribe((event: Event) => {
-            if (event instanceof NavigationStart) {
-                this.isLoading = true;
-            }
-
-            if (event instanceof NavigationEnd) {
-                this.isLoading = false;
-            }
-
-            if (event instanceof NavigationError) {
-                this.isLoading = false;
-
-                console.log(event.error);
-            }
-        });
+    constructor(@Inject(PLATFORM_ID) private platformId: any) {
+        AppComponent.isBrowser.next(isPlatformBrowser(platformId));
     }
 }
