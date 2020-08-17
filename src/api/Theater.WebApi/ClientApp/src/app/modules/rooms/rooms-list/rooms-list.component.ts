@@ -38,7 +38,7 @@ export class RoomsListComponent implements OnInit {
                     return;
                 }
 
-                this.router.navigate(['../edit', this.selectedRoom.id], { relativeTo: this.route });
+                this.router.navigate(['../edit', this.selectedRoom.id], { relativeTo: this.route, state: { room: this.selectedRoom } });
             }
         },
         {

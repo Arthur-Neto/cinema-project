@@ -1,1 +1,59 @@
-<p>rooms-create works!</p>
+<form [formGroup]="form"
+      novalidate
+      (ngSubmit)="onSubmit()">
+    <mat-card class="room-create-card">
+        <mat-card-header class="room-create-header">
+            <mat-card-title>Create room</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <input matInput
+                               placeholder="Name"
+                               formControlName="name">
+                        <mat-error *ngIf="showNameRequiredError">
+                            Name is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="showNameAlreadyExistsError">
+                            Room with this name already exists
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <input matInput
+                               type="number"
+                               placeholder="Number of Chairs"
+                               formControlName="numberOfChairs">
+                        <mat-error *ngIf="showNumberOfChairsRequiredError">
+                            Number of Chairs is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="showNumberOfChairsMinLengthError">
+                            Must have at least 20 chairs
+                        </mat-error>
+                        <mat-error *ngIf="showNumberOfChairsMaxLengthError">
+                            Shouldn't have more than 100 chairs
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="room-create-actions">
+            <button mat-raised-button
+                    class="room-create-btn"
+                    color="primary"
+                    type="submit">
+                Save
+            </button>
+            <button mat-raised-button
+                    class="room-cancel-btn"
+                    color="primary"
+                    (click)="onCanceClick()">
+                Cancel
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

@@ -1,0 +1,25 @@
+.full-width {
+  width: 100%;
+}
+
+.room-edit-card {
+  width: calc(400px);
+  margin: calc(15%) auto;
+}
+
+.mat-card-header.room-edit-header {
+  justify-content: center;
+}
+
+.mat-card-actions.room-edit-actions {
+  justify-content: center;
+  display: flex;
+}
+
+button.room-edit-btn {
+  width: calc(100px);
+}
+
+button.room-cancel-btn {
+  width: calc(100px);
+}

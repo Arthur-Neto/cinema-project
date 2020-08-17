@@ -42,4 +42,8 @@ export class RoomsApiService {
     public delete(id: number): Observable<boolean> {
         return this.http.delete<boolean>(`${ this.apiUrl }\\${ id }`);
     }
+
+    public getById(id: number): Observable<IRoomsModel> {
+        return this.http.get<IRoomsModel>(`${ this.apiUrl }\\${ id }`);
+    }
 }

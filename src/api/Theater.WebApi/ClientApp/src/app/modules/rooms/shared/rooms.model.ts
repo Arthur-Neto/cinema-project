@@ -6,11 +6,11 @@ export interface IRoomsModel {
 
 export interface IRoomCreateCommand {
     name: string;
-    numberOfRows: number;
+    numberOfChairs: number;
 }
 
 export interface IRoomUpdateCommand {
     id: number;
     name: string;
-    numberOfRows: number;
+    numberOfChairs: number;
 }
