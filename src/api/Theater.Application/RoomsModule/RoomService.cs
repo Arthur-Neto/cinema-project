@@ -54,7 +54,7 @@ namespace Theater.Application.RoomsModule
             Guard.Against(room, ErrorType.NotFound);
 
             var usernameCount = await _repository.CountAsync(x => x.Name.Equals(command.Name));
-            Guard.Against(usernameCount > 1, ErrorType.NotFound);
+            Guard.Against(usernameCount > 1, ErrorType.Duplicating);
 
             room = _mapper.Map<Room>(command);
 

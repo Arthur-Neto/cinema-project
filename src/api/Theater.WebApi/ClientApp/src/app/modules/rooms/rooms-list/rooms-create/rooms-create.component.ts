@@ -18,8 +18,8 @@ export class RoomsCreateComponent implements OnInit {
     public get showNameRequiredError(): boolean {
         return this.form.controls['name'].hasError('required');
     }
-    public get showNameAlreadyExistsError(): boolean {
-        return this.form.controls['name'].hasError('alreadyExists');
+    public get showNameDuplicatedError(): boolean {
+        return this.form.controls['name'].hasError('duplicated');
     }
     public get showNumberOfChairsRequiredError(): boolean {
         return this.form.controls['numberOfChairs'].hasError('required');
@@ -73,8 +73,8 @@ export class RoomsCreateComponent implements OnInit {
     }
 
     private onErrorCallback(error: string): void {
-        if (error.match('AlreadyExists')) {
-            this.form.controls['name'].setErrors({ alreadyExists: true });
+        if (error.match('Duplicating')) {
+            this.form.controls['name'].setErrors({ duplicated: true });
         }
     }
 
