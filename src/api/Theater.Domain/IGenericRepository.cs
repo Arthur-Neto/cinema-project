@@ -17,7 +17,7 @@ namespace Theater.Domain
 
     public interface IRetrieveAllRepository<TEntity> : IDisposable where TEntity : class
     {
-        Task<IEnumerable<TEntity>> RetrieveAllAsync();
+        Task<IEnumerable<TEntity>> RetrieveAllAsync(params Expression<Func<TEntity, object>>[] includeExpression);
     }
 
     public interface IUpdateRepository<TEntity> : IDisposable where TEntity : class

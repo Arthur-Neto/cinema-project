@@ -8,17 +8,17 @@ namespace Theater.Infra.Data.EF.Configurations.RoomsModule
     {
         public void Configure(EntityTypeBuilder<Room> builder)
         {
-            builder.HasKey(u => u.ID);
-            builder.Property(u => u.ID)
+            builder.HasKey(p => p.ID);
+            builder.Property(p => p.ID)
                 .HasColumnType("int")
                 .ValueGeneratedOnAdd();
 
-            builder.Property(u => u.Name)
+            builder.Property(p => p.Name)
                 .HasColumnType("varchar")
                 .HasMaxLength(50)
                 .IsRequired();
 
-            builder.Property(u => u.NumberOfChairs)
+            builder.Property(p => p.NumberOfChairs)
                 .HasColumnType("int")
                 .IsRequired();
         }

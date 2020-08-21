@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Theater.Application.MoviesModule.Commands;
 using Theater.Application.MoviesModule.Models;
 using Theater.Domain.MoviesModule;
+using Theater.Domain.MoviesModule.Enums;
 using Theater.Infra.Crosscutting.Exceptions;
 using Theater.Infra.Crosscutting.Guards;
 
@@ -43,9 +45,25 @@ namespace Theater.Application.MoviesModule
 
         public async Task<IEnumerable<MovieModel>> RetrieveAllAsync()
         {
-            var rooms = await _repository.RetrieveAllAsync();
+            var movies = await _repository.RetrieveAllAsync();
 
-            return _mapper.Map<IEnumerable<MovieModel>>(rooms);
+            var moviesModels = _mapper.Map<IEnumerable<MovieModel>>(movies);
+
+            foreach (var item in moviesModels)
+            {
+                var spplitedDuration = item.Duration.Split(":");
+                var sb = new StringBuilder();
+                sb.Append(spplitedDuration[0]);
+                sb.Append("h");
+                sb.Append(" ");
+                sb.Append(spplitedDuration[1]);
+                sb.Append("m");
+                item.Duration = sb.ToString();
+                item.AudioName = item.AudioType == AudioType.Dubbed ? "Dubbed" : "Subtitled";
+                item.ScreenName = item.ScreenType == ScreenType.Three_Dimension ? "3D" : "2D";
+            }
+
+            return moviesModels;
         }
 
         public async Task<bool> UpdateAsync(MovieUpdateCommand command)

@@ -29,7 +29,8 @@ namespace Theater.Infra.Data.EF.Configurations.MoviesModule
                 .IsRequired();
 
             builder.Property(u => u.Duration)
-                .HasColumnType("time")
+                .HasColumnType("varchar")
+                .HasMaxLength(50)
                 .IsRequired();
 
             builder.Property(u => u.ScreenType)

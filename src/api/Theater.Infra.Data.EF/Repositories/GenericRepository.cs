@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -41,9 +42,13 @@ namespace Theater.Infra.Data.EF.Repositories
             return await Context.Set<TEntity>().FindAsync(key);
         }
 
-        public async Task<IEnumerable<TEntity>> RetrieveAllAsync()
+        public async Task<IEnumerable<TEntity>> RetrieveAllAsync(params Expression<Func<TEntity, object>>[] includeExpression)
         {
-            return await Context.Set<TEntity>().ToListAsync();
+            var query = Context.Set<TEntity>().AsQueryable();
+
+            if (includeExpression == null) { return await query.ToListAsync(); }
+
+            return includeExpression.Aggregate(query, (current, include) => current.Include(include));
         }
 
         public void Update(TEntity entity)

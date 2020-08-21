@@ -27,6 +27,14 @@
   }
 }
 
+.grid-content th,
+.grid-content td {
+  overflow: hidden;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .mat-column-select {
   overflow: initial;
 }

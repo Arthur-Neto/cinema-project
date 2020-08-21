@@ -28,9 +28,9 @@ namespace Theater.Infra.Data.EF.Repositories.RoomsModule
             return GenericRepository.DeleteAsync(key);
         }
 
-        public Task<IEnumerable<Room>> RetrieveAllAsync()
+        public Task<IEnumerable<Room>> RetrieveAllAsync(params Expression<Func<Room, object>>[] includeExpression)
         {
-            return GenericRepository.RetrieveAllAsync();
+            return GenericRepository.RetrieveAllAsync(includeExpression);
         }
 
         public Task<Room> SingleOrDefaultAsync(Expression<Func<Room, bool>> expression, bool tracking = true)

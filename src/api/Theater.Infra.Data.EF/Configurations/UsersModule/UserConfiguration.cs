@@ -8,17 +8,17 @@ namespace Theater.Infra.Data.EF.Configurations.UsersModule
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(u => u.ID);
-            builder.Property(u => u.ID)
+            builder.HasKey(p => p.ID);
+            builder.Property(p => p.ID)
                 .HasColumnType("int")
                 .ValueGeneratedOnAdd();
 
-            builder.Property(u => u.Username)
+            builder.Property(p => p.Username)
                 .HasColumnType("varchar")
                 .HasMaxLength(50)
                 .IsRequired();
 
-            builder.Property(u => u.Password)
+            builder.Property(p => p.Password)
                 .HasColumnType("varchar")
                 .HasMaxLength(50)
                 .IsRequired();

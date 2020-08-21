@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Theater.Domain.MoviesModule;
 using Theater.Domain.MoviesModule.Enums;
 
@@ -11,8 +10,10 @@ namespace Theater.Application.MoviesModule.Models
         public string ImagePath { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime Duration { get; set; }
+        public string Duration { get; set; }
+        public string ScreenName { get; set; }
         public ScreenType ScreenType { get; set; }
+        public string AudioName { get; set; }
         public AudioType AudioType { get; set; }
     }
 

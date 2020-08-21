@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using Theater.Domain.MoviesModule;
 using Theater.Domain.MoviesModule.Enums;
@@ -12,7 +11,7 @@ namespace Theater.Application.MoviesModule.Commands
         public byte[] Image { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime Duration { get; set; }
+        public string Duration { get; set; }
         public ScreenType ScreenType { get; set; }
         public AudioType AudioType { get; set; }
     }
@@ -39,7 +38,7 @@ namespace Theater.Application.MoviesModule.Commands
             RuleFor(x => x.ID).NotEmpty().GreaterThan(0);
             RuleFor(x => x.Title).NotEmpty().Length(1, 50);
             RuleFor(x => x.Description).NotEmpty().Length(1, 50);
-            RuleFor(x => x.Duration).NotEmpty();
+            RuleFor(x => x.Duration).NotEmpty().Length(1, 50);
             RuleFor(x => x.ScreenType).NotEmpty().IsInEnum();
             RuleFor(x => x.AudioType).NotEmpty().IsInEnum();
         }

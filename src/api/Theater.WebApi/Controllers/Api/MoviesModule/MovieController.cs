@@ -5,7 +5,7 @@ using Theater.Application.MoviesModule.Commands;
 using Theater.Domain.UsersModule.Enums;
 using Theater.WebApi.Attributes;
 
-namespace Theater.WebApi.Controllers.Api.MovieModules
+namespace Theater.WebApi.Controllers.Api.MoviesModule
 {
     [ApiController]
     [Route("api/movies")]

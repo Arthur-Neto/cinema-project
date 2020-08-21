@@ -18,11 +18,19 @@ const routes: Routes = [
     {
         path: 'rooms',
         loadChildren: () => import('@modules/rooms/rooms.module').then(m => m.RoomsModule)
+    },
+    {
+        path: 'movies',
+        loadChildren: () => import('@modules/movies/movies.module').then(m => m.MoviesModule)
+    },
+    {
+        path: 'sessions',
+        loadChildren: () => import('@modules/sessions/sessions.module').then(m => m.SessionsModule)
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { useHash: true, initialNavigation: 'enabled' })],
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }
