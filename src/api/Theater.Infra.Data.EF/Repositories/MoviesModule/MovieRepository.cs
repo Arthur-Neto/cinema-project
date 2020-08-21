@@ -33,9 +33,9 @@ namespace Theater.Infra.Data.EF.Repositories.MoviesModule
             return GenericRepository.RetrieveAllAsync(includeExpression);
         }
 
-        public Task<Movie> SingleOrDefaultAsync(Expression<Func<Movie, bool>> expression, bool tracking = true)
+        public Task<Movie> SingleOrDefaultAsync(Expression<Func<Movie, bool>> expression, bool tracking = true, params Expression<Func<Movie, object>>[] includeExpression)
         {
-            return GenericRepository.SingleOrDefaultAsync(expression, tracking);
+            return GenericRepository.SingleOrDefaultAsync(expression, tracking, includeExpression);
         }
 
         public void Update(Movie movie)

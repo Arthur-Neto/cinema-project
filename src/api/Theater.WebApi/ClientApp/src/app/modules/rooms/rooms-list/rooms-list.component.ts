@@ -96,7 +96,14 @@ export class RoomsListComponent implements OnInit {
                         .subscribe((rooms: IRoomsModel[]) => {
                             this.dataSource.data = rooms;
                         });
-                }
+                },
+                error: this.onErrorCallback.bind(this)
             });
+    }
+
+    private onErrorCallback(error: string): void {
+        if (error.match('RoomWithSession')) {
+            this.snackBar.open(`Room included in a session`);
+        }
     }
 }

@@ -99,7 +99,14 @@ export class SessionsListComponent implements OnInit {
                         .subscribe((Sessions: ISessionModel[]) => {
                             this.dataSource.data = Sessions;
                         });
-                }
+                },
+                error: this.onErrorCallback.bind(this)
             });
+    }
+
+    private onErrorCallback(error: string): void {
+        if (error.match('SessionLessThanTenDaysToStart')) {
+            this.snackBar.open(`Can't delete session with less than 10 days to start`);
+        }
     }
 }

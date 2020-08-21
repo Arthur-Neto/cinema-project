@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Theater.Application.RoomsModule.Commands;
@@ -33,8 +34,9 @@ namespace Theater.Application.RoomsModule
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var room = await _repository.SingleOrDefaultAsync(x => x.ID == id);
+            var room = await _repository.SingleOrDefaultAsync(x => x.ID == id, true, p => p.Sessions);
             Guard.Against(room, ErrorType.NotFound);
+            Guard.Against(room.Sessions.Count() > 0, ErrorType.RoomWithSession);
 
             await _repository.DeleteAsync(id);
 

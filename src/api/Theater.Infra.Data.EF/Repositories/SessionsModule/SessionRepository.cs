@@ -33,9 +33,9 @@ namespace Theater.Infra.Data.EF.Repositories.SessionsModule
             return GenericRepository.RetrieveAllAsync(includeExpression);
         }
 
-        public Task<Session> SingleOrDefaultAsync(Expression<Func<Session, bool>> expression, bool tracking = true)
+        public Task<Session> SingleOrDefaultAsync(Expression<Func<Session, bool>> expression, bool tracking = true, params Expression<Func<Session, object>>[] includeExpression)
         {
-            return GenericRepository.SingleOrDefaultAsync(expression, tracking);
+            return GenericRepository.SingleOrDefaultAsync(expression, tracking, includeExpression);
         }
 
         public void Update(Session session)

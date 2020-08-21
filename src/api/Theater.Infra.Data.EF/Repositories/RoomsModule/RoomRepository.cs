@@ -33,9 +33,9 @@ namespace Theater.Infra.Data.EF.Repositories.RoomsModule
             return GenericRepository.RetrieveAllAsync(includeExpression);
         }
 
-        public Task<Room> SingleOrDefaultAsync(Expression<Func<Room, bool>> expression, bool tracking = true)
+        public Task<Room> SingleOrDefaultAsync(Expression<Func<Room, bool>> expression, bool tracking = true, params Expression<Func<Room, object>>[] includeExpression)
         {
-            return GenericRepository.SingleOrDefaultAsync(expression, tracking);
+            return GenericRepository.SingleOrDefaultAsync(expression, tracking, includeExpression);
         }
 
         public void Update(Room room)

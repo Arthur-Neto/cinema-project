@@ -21,6 +21,10 @@ namespace Theater.Infra.Data.EF.Configurations.RoomsModule
             builder.Property(p => p.NumberOfChairs)
                 .HasColumnType("int")
                 .IsRequired();
+
+            builder.HasMany(p => p.Sessions)
+                .WithOne(p => p.Room)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

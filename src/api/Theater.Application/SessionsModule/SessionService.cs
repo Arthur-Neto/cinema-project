@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Theater.Application.SessionsModule.Commands;
@@ -35,6 +36,9 @@ namespace Theater.Application.SessionsModule
         {
             var session = await _repository.SingleOrDefaultAsync(x => x.ID == id);
             Guard.Against(session, ErrorType.NotFound);
+
+            var lessThanTenDaysToStart = (session.Date - DateTime.UtcNow).TotalDays < 10;
+            Guard.Against(lessThanTenDaysToStart, ErrorType.SessionLessThanTenDaysToStart);
 
             await _repository.DeleteAsync(id);
 

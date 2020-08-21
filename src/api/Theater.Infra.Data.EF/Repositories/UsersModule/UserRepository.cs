@@ -38,9 +38,9 @@ namespace Theater.Infra.Data.EF.Repositories.UsersModule
             return GenericRepository.RetrieveByIDAsync(id);
         }
 
-        public Task<User> SingleOrDefaultAsync(Expression<Func<User, bool>> expression, bool tracking = true)
+        public Task<User> SingleOrDefaultAsync(Expression<Func<User, bool>> expression, bool tracking = true, params Expression<Func<User, object>>[] includeExpression)
         {
-            return GenericRepository.SingleOrDefaultAsync(expression, tracking);
+            return GenericRepository.SingleOrDefaultAsync(expression, tracking, includeExpression);
         }
 
         public void Update(User user)

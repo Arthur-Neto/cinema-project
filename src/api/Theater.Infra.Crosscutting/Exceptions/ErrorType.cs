@@ -5,5 +5,7 @@
         NotFound,
         Duplicating,
         IncorrectUserPassword,
+        SessionLessThanTenDaysToStart,
+        RoomWithSession,
     }
 }

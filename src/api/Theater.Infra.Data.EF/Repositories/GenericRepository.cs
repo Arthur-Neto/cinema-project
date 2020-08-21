@@ -63,16 +63,26 @@ namespace Theater.Infra.Data.EF.Repositories
             entities.Remove(entity);
         }
 
-        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression, bool tracking = true)
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression, bool tracking = true, params Expression<Func<TEntity, object>>[] includeExpression)
         {
+            var query = Context.Set<TEntity>().AsQueryable();
+
+            if (includeExpression == null)
+            {
+                if (tracking)
+                {
+                    return await query.SingleOrDefaultAsync(expression);
+                }
+
+                return await query.AsNoTracking().SingleOrDefaultAsync(expression);
+            }
+
             if (tracking)
             {
-                return await Context.Set<TEntity>().SingleOrDefaultAsync(expression);
+                return await includeExpression.Aggregate(query, (current, include) => current.Include(include)).SingleOrDefaultAsync(expression);
             }
-            else
-            {
-                return await Context.Set<TEntity>().AsNoTracking().SingleOrDefaultAsync(expression);
-            }
+
+            return await includeExpression.Aggregate(query, (current, include) => current.AsNoTracking().Include(include)).SingleOrDefaultAsync(expression);
         }
 
         public async Task<int> CountAsync(Expression<Func<TEntity, bool>> expression)

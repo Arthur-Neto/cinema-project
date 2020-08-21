@@ -32,7 +32,7 @@ namespace Theater.Domain
 
     public interface ISingleOrDefaultRepository<TEntity> : IDisposable where TEntity : class
     {
-        Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression, bool tracking = true);
+        Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression, bool tracking = true, params Expression<Func<TEntity, object>>[] includeExpression);
     }
 
     public interface ICountRepository<TEntity> : IDisposable where TEntity : class
