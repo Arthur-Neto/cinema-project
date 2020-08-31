@@ -21,7 +21,7 @@ export class SessionsListComponent implements OnInit {
     public headerNames: string[] = ['Date', 'Movie', 'Room'];
     public displayedColumns: string[] = ['id', 'date', 'movieTitle', 'roomName'];
     public actions: IActionModel[] = [
-        {
+        /*{
             icon: 'add',
             name: 'Add',
             function: () => {
@@ -43,7 +43,7 @@ export class SessionsListComponent implements OnInit {
                     { relativeTo: this.route, state: { session: this.selectedSession } }
                 );
             }
-        },
+        },*/
         {
             icon: 'delete',
             name: 'Delete',
