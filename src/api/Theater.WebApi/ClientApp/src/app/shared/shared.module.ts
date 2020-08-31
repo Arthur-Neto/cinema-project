@@ -4,16 +4,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 
+import { CarouselDaypickerComponent } from './components/carousel-daypicker/carousel-daypicker.component';
 import { GridComponent } from './components/grid/grid.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
@@ -33,14 +40,22 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
         MatCheckboxModule,
         MatSnackBarModule,
         MatCardModule,
+        MatMenuModule,
+        MatListModule,
+        MatGridListModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatChipsModule,
     ],
     declarations: [
         GridComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        CarouselDaypickerComponent
     ],
     exports: [
         GridComponent,
         SpinnerComponent,
+        CarouselDaypickerComponent,
 
         CommonModule,
         RouterModule,
@@ -56,6 +71,12 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
         MatCheckboxModule,
         MatSnackBarModule,
         MatCardModule,
+        MatMenuModule,
+        MatListModule,
+        MatGridListModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatChipsModule
     ]
 })
 export class SharedModule { }

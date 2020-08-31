@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OData.UriParser;
 using Theater.Application;
 using Theater.WebApi.Extensions;
 
@@ -91,7 +92,10 @@ namespace Theater.WebApi
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.EnableDependencyInjection();
+                endpoints.EnableDependencyInjection(builder =>
+                {
+                    builder.AddService(Microsoft.OData.ServiceLifetime.Singleton, typeof(ODataUriResolver), sp => new StringAsEnumResolver());
+                });
                 endpoints.MapControllers();
                 endpoints.MapODataEndpoints();
             });

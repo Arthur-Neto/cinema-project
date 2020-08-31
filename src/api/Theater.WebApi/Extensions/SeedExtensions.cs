@@ -36,6 +36,18 @@ namespace Theater.WebApi.Extensions
                 NumberOfChairs = 50,
             };
 
+            var room2 = new Room()
+            {
+                Name = "Lorem ipsum dolor sit amet 2",
+                NumberOfChairs = 50,
+            };
+
+            var room3 = new Room()
+            {
+                Name = "Lorem ipsum dolor sit amet 3",
+                NumberOfChairs = 50,
+            };
+
             var movie = new Movie()
             {
                 AudioType = Domain.MoviesModule.Enums.AudioType.Dubbed,
@@ -48,15 +60,60 @@ namespace Theater.WebApi.Extensions
 
             var session = new Session()
             {
-                Date = new DateTimeOffset(2020, 10, 10, 13, 30, 00, new TimeSpan()),
+                Date = new DateTimeOffset(2020, 08, 31, 13, 30, 00, new TimeSpan()),
+                MovieId = 1,
+                RoomId = 1,
+            };
+
+            var session2 = new Session()
+            {
+                Date = new DateTimeOffset(2020, 09, 01, 15, 30, 00, new TimeSpan()),
+                MovieId = 1,
+                RoomId = 1,
+            };
+
+            var session3 = new Session()
+            {
+                Date = new DateTimeOffset(2020, 09, 01, 13, 30, 00, new TimeSpan()),
+                MovieId = 1,
+                RoomId = 2,
+            };
+
+            var session4 = new Session()
+            {
+                Date = new DateTimeOffset(2020, 09, 01, 13, 30, 00, new TimeSpan()),
+                MovieId = 1,
+                RoomId = 3,
+            };
+
+            var session5 = new Session()
+            {
+                Date = new DateTimeOffset(2020, 09, 01, 15, 30, 00, new TimeSpan()),
+                MovieId = 1,
+                RoomId = 3,
+            };
+
+            var session6 = new Session()
+            {
+                Date = new DateTimeOffset(2020, 09, 02, 15, 30, 00, new TimeSpan()),
                 MovieId = 1,
                 RoomId = 1,
             };
 
             context.Add(user);
+
             context.Add(room);
+            context.Add(room2);
+            context.Add(room3);
+
             context.Add(movie);
+
             context.Add(session);
+            context.Add(session2);
+            context.Add(session3);
+            context.Add(session4);
+            context.Add(session5);
+            context.Add(session6);
 
             context.SaveChanges();
         }

@@ -1,7 +1,10 @@
-import { map } from 'rxjs/operators';
-
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
+
+import { finalize, take } from 'rxjs/operators';
+
+import { IDayAndMonth } from '../../shared/components/carousel-daypicker/carousel-daypicker.component';
+import { AudioType, IMovieDashboardModel, ScreenType } from '../movies/shared/movies.model';
+import { MoviesDashboardODataService } from '../movies/shared/movies.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -9,26 +12,46 @@ import { Component } from '@angular/core';
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-    /** Based on the screen size, switch from standard to one column per row */
-    cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-        map(({ matches }) => {
-            if (matches) {
-                return [
-                    { title: 'Card 1', cols: 1, rows: 1 },
-                    { title: 'Card 2', cols: 1, rows: 1 },
-                    { title: 'Card 3', cols: 1, rows: 1 },
-                    { title: 'Card 4', cols: 1, rows: 1 }
-                ];
-            }
+    public isLoading = true;
+    public movies: IMovieDashboardModel[];
+    public dayAndMonth: IDayAndMonth;
+    public noMovies: boolean;
+    public sessionsGroupByRoomName: any[];
+    public audioType = AudioType;
+    public screenType = ScreenType;
 
-            return [
-                { title: 'Card 1', cols: 2, rows: 1 },
-                { title: 'Card 2', cols: 1, rows: 1 },
-                { title: 'Card 3', cols: 1, rows: 2 },
-                { title: 'Card 4', cols: 1, rows: 1 }
-            ];
-        })
-    );
+    constructor(
+        private moviesDashboardODataService: MoviesDashboardODataService
+    ) { }
 
-    constructor(private breakpointObserver: BreakpointObserver) { }
+    public onDayChanged(dayAndMonth: IDayAndMonth) {
+        this.isLoading = true;
+        this.dayAndMonth = dayAndMonth;
+
+        this.moviesDashboardODataService
+            .getDashboardMovies(dayAndMonth)
+            .pipe(
+                take(1),
+                finalize(() => this.isLoading = false))
+            .subscribe((movies: IMovieDashboardModel[]) => {
+                this.movies = movies;
+
+                this.noMovies = movies.length === 0;
+            });
+    }
+
+    public onScreenOrAudioTypeChanged(screenType: ScreenType = null, audioType: AudioType = null) {
+        this.isLoading = true;
+
+        this.moviesDashboardODataService
+            .getDashboardMovies(this.dayAndMonth, screenType, audioType)
+            .pipe(
+                take(1),
+                finalize(() => this.isLoading = false))
+            .subscribe((movies: IMovieDashboardModel[]) => {
+                this.movies = movies;
+
+                this.noMovies = movies.length === 0;
+            });
+    }
 }

@@ -4,16 +4,12 @@ export interface ISessionModel {
     movieId: number;
     movieTitle: string;
     roomId: number;
-    roomName: number;
+    roomName: string;
 }
 
-export interface ISessionCreateCommand {
-    name: string;
-    numberOfChairs: number;
-}
-
-export interface ISessionUpdateCommand {
+export interface ISessionDashboardModel {
     id: number;
-    name: string;
-    numberOfChairs: number;
+    startTimes: Date[];
+    roomID: number;
+    roomName: string;
 }

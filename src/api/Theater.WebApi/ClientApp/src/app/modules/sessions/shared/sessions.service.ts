@@ -4,7 +4,7 @@ import { environment } from '@env';
 
 import { Observable } from 'rxjs';
 
-import { ISessionCreateCommand, ISessionModel, ISessionUpdateCommand } from './sessions.model';
+import { ISessionModel } from './sessions.model';
 
 @Injectable()
 export class SessionsODataService {
@@ -29,14 +29,6 @@ export class SessionsApiService {
         private http: HttpClient
     ) {
         this.apiUrl = `${ environment.apiUrl }api/sessions`;
-    }
-
-    public create(command: ISessionCreateCommand): Observable<number> {
-        return this.http.post<number>(`${ this.apiUrl }`, command);
-    }
-
-    public update(command: ISessionUpdateCommand): Observable<boolean> {
-        return this.http.put<boolean>(`${ this.apiUrl }`, command);
     }
 
     public delete(id: number): Observable<boolean> {

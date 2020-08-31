@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
@@ -20,7 +19,7 @@ namespace Theater.WebApi.Extensions
 
             services.AddMvcCore(options =>
             {
-                IEnumerable<ODataOutputFormatter> outputFormatters =
+                var outputFormatters =
                     options.OutputFormatters.OfType<ODataOutputFormatter>()
                         .Where(foramtter => foramtter.SupportedMediaTypes.Count == 0);
 
@@ -43,7 +42,7 @@ namespace Theater.WebApi.Extensions
 
         public static void MapODataEndpoints(this IEndpointRouteBuilder endpoint)
         {
-            endpoint.Select().Count().Filter().OrderBy().MaxTop(100);
+            endpoint.Select().Count().Filter().OrderBy().Expand().MaxTop(100);
             endpoint.MapODataRoute("ODataRoute", "odata", GetEdmModel());
         }
 

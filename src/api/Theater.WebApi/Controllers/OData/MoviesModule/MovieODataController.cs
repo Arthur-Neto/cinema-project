@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNet.OData;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Theater.Application.MoviesModule;
 using Theater.Application.MoviesModule.Models;
+using Theater.Domain.UsersModule.Enums;
+using Theater.WebApi.Attributes;
 
 namespace Theater.WebApi.Controllers.OData.MoviesModule
 {
@@ -19,7 +20,7 @@ namespace Theater.WebApi.Controllers.OData.MoviesModule
             _movieService = movieService;
         }
 
-        [AllowAnonymous]
+        [AuthorizeRoles(Role.Manager)]
         [HttpGet]
         [EnableQuery]
         [ProducesResponseType(typeof(IEnumerable<MovieModel>), 200)]

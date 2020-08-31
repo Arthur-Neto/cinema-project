@@ -1,21 +1,27 @@
 .grid-container {
-  margin: 20px;
+  margin: 1%;
 }
 
 .dashboard-card {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-}
+  top: 2.5%;
+  left: 2.5%;
+  right: 2.5%;
+  bottom: 2.5%;
 
-.more-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
+  &--nomovies {
+    height: 50px;
+  }
 
-.dashboard-card-content {
-  text-align: center;
+  .dashboard-card-content {
+    justify-content: justify;
+  }
+
+  .dashboard-card-header {
+    justify-content: center;
+  }
+
+  .dashboard-card-content-startTimes {
+    display: inline;
+  }
 }

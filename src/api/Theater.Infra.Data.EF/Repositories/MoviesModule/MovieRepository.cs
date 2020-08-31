@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Theater.Domain.MoviesModule;
 using Theater.Infra.Data.EF.Context;
 
@@ -31,6 +32,11 @@ namespace Theater.Infra.Data.EF.Repositories.MoviesModule
         public Task<IEnumerable<Movie>> RetrieveAllAsync(params Expression<Func<Movie, object>>[] includeExpression)
         {
             return GenericRepository.RetrieveAllAsync(includeExpression);
+        }
+
+        public async Task<IEnumerable<Movie>> RetrieveMoviesWithSessionsAndRooms()
+        {
+            return await GenericRepository.Context.Set<Movie>().Include(p => p.Sessions).ThenInclude(p => p.Room).ToListAsync();
         }
 
         public Task<Movie> SingleOrDefaultAsync(Expression<Func<Movie, bool>> expression, bool tracking = true, params Expression<Func<Movie, object>>[] includeExpression)

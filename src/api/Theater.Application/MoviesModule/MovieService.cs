@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Theater.Application.MoviesModule.Commands;
 using Theater.Application.MoviesModule.Models;
+using Theater.Application.SessionsModule.Models;
 using Theater.Domain.MoviesModule;
-using Theater.Domain.MoviesModule.Enums;
 using Theater.Infra.Crosscutting.Exceptions;
 using Theater.Infra.Crosscutting.Guards;
 
@@ -14,6 +16,9 @@ namespace Theater.Application.MoviesModule
     public interface IMovieService
     {
         Task<IEnumerable<MovieModel>> RetrieveAllAsync();
+        Task<IEnumerable<MovieDashboardModel>> RetrieveMoviesDashboardAsync(DateTime date);
+
+
         Task<int> CreateAsync(MovieCreateCommand command);
         Task<bool> UpdateAsync(MovieUpdateCommand command);
         Task<bool> DeleteAsync(int id);
@@ -47,23 +52,54 @@ namespace Theater.Application.MoviesModule
         {
             var movies = await _repository.RetrieveAllAsync();
 
-            var moviesModels = _mapper.Map<IEnumerable<MovieModel>>(movies);
-
-            foreach (var item in moviesModels)
+            var movieModels = new List<MovieModel>();
+            foreach (var movie in movies)
             {
-                var spplitedDuration = item.Duration.Split(":");
-                var sb = new StringBuilder();
-                sb.Append(spplitedDuration[0]);
-                sb.Append("h");
-                sb.Append(" ");
-                sb.Append(spplitedDuration[1]);
-                sb.Append("m");
-                item.Duration = sb.ToString();
-                item.AudioName = item.AudioType == AudioType.Dubbed ? "Dubbed" : "Subtitled";
-                item.ScreenName = item.ScreenType == ScreenType.Three_Dimension ? "3D" : "2D";
+                var movieModel = _mapper.Map<MovieModel>(movie);
+                movieModel.Duration = FormatDuration(movie.Duration);
+                movieModels.Add(movieModel);
             }
 
-            return moviesModels;
+            return movieModels;
+        }
+
+        public async Task<IEnumerable<MovieDashboardModel>> RetrieveMoviesDashboardAsync(DateTime date)
+        {
+            var movies = await _repository.RetrieveMoviesWithSessionsAndRooms();
+
+            var movieModels = new List<MovieDashboardModel>();
+            foreach (var movie in movies)
+            {
+                var movieModel = _mapper.Map<MovieDashboardModel>(movie);
+                movieModel.Sessions = new List<SessionDashboardModel>();
+                movieModel.Duration = FormatDuration(movie.Duration);
+
+                var sessionsGroupByRoom = movie.Sessions.GroupBy(p => p.RoomId);
+                var sessionsGroupByDate = movie.Sessions.GroupBy(p => p.Date);
+                foreach (var sessionGroupByRoom in sessionsGroupByRoom)
+                {
+                    var sessionID = sessionGroupByRoom.Select(p => p.ID).First();
+                    var roomID = sessionGroupByRoom.Key;
+                    var roomName = sessionGroupByRoom.Select(p => p.Room.Name).First();
+                    var dates = sessionGroupByRoom
+                        .Select(p => p.Date)
+                        .Intersect(sessionsGroupByDate
+                            .Select(p => p.Key))
+                        .Where(p => p.Date == date.Date);
+
+                    if (dates.Count() > 0)
+                    {
+                        movieModel.Sessions.Add(new SessionDashboardModel() { ID = sessionID, RoomID = roomID, RoomName = roomName, StartTimes = dates });
+                    }
+                }
+
+                if (movieModel.Sessions.Count > 0)
+                {
+                    movieModels.Add(movieModel);
+                }
+            }
+
+            return movieModels;
         }
 
         public async Task<bool> UpdateAsync(MovieUpdateCommand command)
@@ -79,6 +115,18 @@ namespace Theater.Application.MoviesModule
             _repository.Update(movie);
 
             return await CommitAsync() > 0;
+        }
+
+        private string FormatDuration(string duration)
+        {
+            var spplitedDuration = duration.Split(":");
+            var sb = new StringBuilder();
+            sb.Append(spplitedDuration[0]);
+            sb.Append("h");
+            sb.Append(" ");
+            sb.Append(spplitedDuration[1]);
+            sb.Append("m");
+            return sb.ToString();
         }
     }
 }

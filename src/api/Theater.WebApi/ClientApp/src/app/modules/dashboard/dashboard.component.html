@@ -1,29 +1,62 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<app-carousel-daypicker (dayChanged)="onDayChanged($event)"></app-carousel-daypicker>
+
 <div class="grid-container">
-    <h1 class="mat-h1">Dashboard</h1>
-    <mat-grid-list cols="2"
+    <mat-chip-list>
+        <mat-chip color="primary"
+                  (click)="onScreenOrAudioTypeChanged(screenType.three_dimension)">
+            3D
+        </mat-chip>
+        <mat-chip color="primary"
+                  (click)="onScreenOrAudioTypeChanged(screenType.two_dimension)">
+            2D
+        </mat-chip>
+        <mat-chip color="primary"
+                  (click)="onScreenOrAudioTypeChanged(null, audioType.dubbed)">
+            Dubbed
+        </mat-chip>
+        <mat-chip color="primary"
+                  (click)="onScreenOrAudioTypeChanged(null, audioType.subtitled)">
+            Subtitled
+        </mat-chip>
+    </mat-chip-list>
+    <mat-grid-list cols="4"
                    rowHeight="350px">
-        <mat-grid-tile *ngFor="let card of cards | async"
-                       [colspan]="card.cols"
-                       [rowspan]="card.rows">
+        <mat-grid-tile *ngFor="let movie of movies"
+                       [colspan]="1"
+                       [rowspan]="3">
             <mat-card class="dashboard-card">
-                <mat-card-header>
+                <mat-card-header class="dashboard-card-header">
                     <mat-card-title>
-                        {{card.title}}
-                        <button mat-icon-button
-                                class="more-button"
-                                [matMenuTriggerFor]="menu"
-                                aria-label="Toggle menu">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu"
-                                  xPosition="before">
-                            <button mat-menu-item>Expand</button>
-                            <button mat-menu-item>Remove</button>
-                        </mat-menu>
+                        {{movie.title}}
                     </mat-card-title>
                 </mat-card-header>
+                <img mat-card-image
+                     src="https://material.angular.io/assets/img/examples/shiba2.jpg">
                 <mat-card-content class="dashboard-card-content">
-                    <div>Card Content Here</div>
+                    <p>{{movie.description}}</p>
+                    <div>
+                        {{'Duration: ' + movie.duration}}
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div *ngFor="let session of movie.sessions">
+                        {{session.roomName}} <br>
+                        <div *ngFor="let date of session.startTimes"
+                             class="dashboard-card-content-startTimes">
+                            <button mat-button>{{date | date:'h:mm'}}</button>
+                        </div>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile *ngIf="noMovies"
+                       [colspan]="1"
+                       [rowspan]="2">
+            <mat-card class="dashboard-card dashboard-card--nomovies">
+                <mat-card-content class="dashboard-card-content">
+                    <p>No movies in this date</p>
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>

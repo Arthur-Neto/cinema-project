@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
 import { SharedModule } from '@shared/shared.module';
 
+import { MoviesDashboardODataService } from '../movies/shared/movies.service';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing.module';
 
@@ -13,12 +9,6 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
     imports: [
         SharedModule,
         DashboardRoutingModule,
-
-        MatMenuModule,
-        MatListModule,
-        MatGridListModule,
-        MatSelectModule,
-        MatRadioModule,
     ],
     declarations: [
         DashboardComponent,
@@ -26,5 +16,8 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
     exports: [
         DashboardComponent,
     ],
+    providers: [
+        MoviesDashboardODataService,
+    ]
 })
 export class DashboardModule { }

@@ -1,23 +1,23 @@
+import { ISessionDashboardModel } from '../../sessions/shared/sessions.model';
+
 export interface IMovieModel {
     id: number;
-    imagePath: string;
+    title: string;
     description: string;
     duration: string;
     screenName: string;
-    screenType: ScreenType;
     audioName: string;
-    audioType: AudioType;
 }
 
-export interface IMovieCreateCommand {
-    name: string;
-    numberOfChairs: number;
-}
-
-export interface IMovieUpdateCommand {
+export interface IMovieDashboardModel {
     id: number;
-    name: string;
-    numberOfChairs: number;
+    imagePath: string;
+    title: string;
+    description: string;
+    duration: string;
+    screenType: ScreenType;
+    audioType: AudioType;
+    sessions: ISessionDashboardModel[];
 }
 
 export enum ScreenType {
@@ -27,5 +27,5 @@ export enum ScreenType {
 
 export enum AudioType {
     dubbed = 1,
-    dubtitled = 2,
+    subtitled = 2,
 }

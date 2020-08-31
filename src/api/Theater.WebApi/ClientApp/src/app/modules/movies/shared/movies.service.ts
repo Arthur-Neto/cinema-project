@@ -4,7 +4,8 @@ import { environment } from '@env';
 
 import { Observable } from 'rxjs';
 
-import { IMovieCreateCommand, IMovieModel, IMovieUpdateCommand } from './movies.model';
+import { IDayAndMonth } from '../../../shared/components/carousel-daypicker/carousel-daypicker.component';
+import { AudioType, IMovieDashboardModel, IMovieModel, ScreenType } from './movies.model';
 
 @Injectable()
 export class MoviesODataService {
@@ -22,6 +23,32 @@ export class MoviesODataService {
 }
 
 @Injectable()
+export class MoviesDashboardODataService {
+    private apiUrl: string;
+
+    constructor(
+        private http: HttpClient
+    ) {
+        this.apiUrl = `${ environment.apiUrl }odata/movies-dashboard`;
+    }
+
+    public getDashboardMovies(
+        dayAndMonth: IDayAndMonth,
+        screenType: ScreenType = null,
+        audioType: AudioType = null
+    ): Observable<IMovieDashboardModel[]> {
+        let uri = `${ this.apiUrl }?Date=${ new Date().getFullYear() }-${ dayAndMonth.month }-${ dayAndMonth.day }`;
+        if (screenType) {
+            uri = uri + `&$filter=ScreenType eq '${ screenType }'`;
+        } else if (audioType) {
+            uri = uri + `&$filter=AudioType eq '${ audioType }'`;
+        }
+
+        return this.http.get<IMovieDashboardModel[]>(uri);
+    }
+}
+
+@Injectable()
 export class MoviesApiService {
     private apiUrl: string;
 
@@ -29,14 +56,6 @@ export class MoviesApiService {
         private http: HttpClient
     ) {
         this.apiUrl = `${ environment.apiUrl }api/movies`;
-    }
-
-    public create(command: IMovieCreateCommand): Observable<number> {
-        return this.http.post<number>(`${ this.apiUrl }`, command);
-    }
-
-    public update(command: IMovieUpdateCommand): Observable<boolean> {
-        return this.http.put<boolean>(`${ this.apiUrl }`, command);
     }
 
     public delete(id: number): Observable<boolean> {
