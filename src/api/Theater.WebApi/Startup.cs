@@ -79,6 +79,7 @@ namespace Theater.WebApi
             app.ConfigSwagger();
 
             app.UseStaticFiles();
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();

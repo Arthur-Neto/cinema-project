@@ -4,7 +4,7 @@
             class="daypicker-button daypicker-button--navigate"
             color="secundary"
             [disabled]="isCurrentWeek"
-            (click)="onWeekChange(0)">
+            (click)="onWeekChange(false)">
         <mat-icon>navigate_before</mat-icon>
     </button>
     <div *ngFor="let dayOnWeek of daysOnWeek">
@@ -21,7 +21,7 @@
             disableRipple
             class="daypicker-button daypicker-button--navigate"
             color="secundary"
-            (click)="onWeekChange(1)">
+            (click)="onWeekChange(true)">
         <mat-icon>navigate_next</mat-icon>
     </button>
 </div>
