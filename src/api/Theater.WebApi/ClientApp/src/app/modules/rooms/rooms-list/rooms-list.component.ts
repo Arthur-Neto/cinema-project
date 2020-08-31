@@ -105,5 +105,7 @@ export class RoomsListComponent implements OnInit {
         if (error.match('RoomWithSession')) {
             this.snackBar.open(`Room included in a session`);
         }
+
+        this.isLoading = false;
     }
 }

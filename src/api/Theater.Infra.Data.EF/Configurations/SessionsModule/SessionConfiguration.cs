@@ -19,11 +19,13 @@ namespace Theater.Infra.Data.EF.Configurations.SessionsModule
 
             builder.HasOne(p => p.Movie)
                 .WithMany(p => p.Sessions)
-                .HasForeignKey(p => p.MovieId);
+                .HasForeignKey(p => p.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(p => p.Room)
                 .WithMany(p => p.Sessions)
-                .HasForeignKey(p => p.RoomId);
+                .HasForeignKey(p => p.RoomId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

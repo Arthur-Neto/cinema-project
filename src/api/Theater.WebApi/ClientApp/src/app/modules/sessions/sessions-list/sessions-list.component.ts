@@ -108,5 +108,7 @@ export class SessionsListComponent implements OnInit {
         if (error.match('SessionLessThanTenDaysToStart')) {
             this.snackBar.open(`Can't delete session with less than 10 days to start`);
         }
+
+        this.isLoading = false;
     }
 }

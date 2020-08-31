@@ -104,6 +104,8 @@ namespace Theater.WebApi
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
+
+                spa.ApplicationBuilder.UseCors("TheaterCorsPolicy");
             });
         }
     }

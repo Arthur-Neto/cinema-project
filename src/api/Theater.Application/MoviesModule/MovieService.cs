@@ -40,7 +40,7 @@ namespace Theater.Application.MoviesModule
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var movie = await _repository.SingleOrDefaultAsync(x => x.ID == id);
+            var movie = await _repository.SingleOrDefaultAsync(x => x.ID == id, true, p => p.Sessions);
             Guard.Against(movie, ErrorType.NotFound);
 
             await _repository.DeleteAsync(id);

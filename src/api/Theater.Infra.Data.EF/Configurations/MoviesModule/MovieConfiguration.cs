@@ -40,6 +40,10 @@ namespace Theater.Infra.Data.EF.Configurations.MoviesModule
             builder.Property(u => u.AudioType)
                 .HasColumnType("smallint")
                 .IsRequired();
+
+            builder.HasMany(p => p.Sessions)
+                .WithOne(p => p.Movie)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

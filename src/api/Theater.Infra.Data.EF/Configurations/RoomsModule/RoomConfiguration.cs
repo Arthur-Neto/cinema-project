@@ -24,7 +24,7 @@ namespace Theater.Infra.Data.EF.Configurations.RoomsModule
 
             builder.HasMany(p => p.Sessions)
                 .WithOne(p => p.Room)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
