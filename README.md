@@ -4,6 +4,8 @@
 
 Project made for a job interview using the lastest(08/2020) .NET technologies.
 
+Full development process: https://netoarthur.visualstudio.com/Cinema
+
 ## Dependencies
 
 > Backend
