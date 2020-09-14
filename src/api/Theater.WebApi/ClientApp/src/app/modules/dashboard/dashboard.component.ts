@@ -15,7 +15,6 @@ export class DashboardComponent {
     public isLoading = true;
     public movies: IMovieDashboardModel[];
     public dayAndMonth: IDayAndMonth;
-    public noMovies: boolean;
     public sessionsGroupByRoomName: any[];
     public audioType = AudioType;
     public screenType = ScreenType;
@@ -35,8 +34,6 @@ export class DashboardComponent {
                 finalize(() => this.isLoading = false))
             .subscribe((movies: IMovieDashboardModel[]) => {
                 this.movies = movies;
-
-                this.noMovies = movies.length === 0;
             });
     }
 
@@ -50,8 +47,6 @@ export class DashboardComponent {
                 finalize(() => this.isLoading = false))
             .subscribe((movies: IMovieDashboardModel[]) => {
                 this.movies = movies;
-
-                this.noMovies = movies.length === 0;
             });
     }
 }

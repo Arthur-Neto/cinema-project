@@ -32,6 +32,9 @@ namespace Theater.Application.MoviesModule
 
         public async Task<int> CreateAsync(MovieCreateCommand command)
         {
+            var moviesCountByName = await _repository.CountAsync(x => x.Title.Equals(command.Title));
+            Guard.Against(moviesCountByName > 1, ErrorType.Duplicating);
+
             var movie = _mapper.Map<Movie>(command);
             var createdMovie = await _repository.CreateAsync(movie);
 
@@ -107,8 +110,8 @@ namespace Theater.Application.MoviesModule
             var movie = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
             Guard.Against(movie, ErrorType.NotFound);
 
-            var titleCount = await _repository.CountAsync(x => x.Title.Equals(command.Title));
-            Guard.Against(titleCount > 1, ErrorType.Duplicating);
+            var moviesCountByName = await _repository.CountAsync(x => x.Title.Equals(command.Title));
+            Guard.Against(moviesCountByName > 1, ErrorType.Duplicating);
 
             movie = _mapper.Map<Movie>(command);
 

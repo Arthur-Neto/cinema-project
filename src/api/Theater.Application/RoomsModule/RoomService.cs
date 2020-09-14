@@ -26,6 +26,9 @@ namespace Theater.Application.RoomsModule
 
         public async Task<int> CreateAsync(RoomCreateCommand command)
         {
+            var roomsCountByName = await _repository.CountAsync(x => x.Name.Equals(command.Name));
+            Guard.Against(roomsCountByName > 1, ErrorType.Duplicating);
+
             var room = _mapper.Map<Room>(command);
             var createdRoom = await _repository.CreateAsync(room);
 
@@ -55,8 +58,8 @@ namespace Theater.Application.RoomsModule
             var room = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
             Guard.Against(room, ErrorType.NotFound);
 
-            var usernameCount = await _repository.CountAsync(x => x.Name.Equals(command.Name));
-            Guard.Against(usernameCount > 1, ErrorType.Duplicating);
+            var roomsCountByName = await _repository.CountAsync(x => x.Name.Equals(command.Name));
+            Guard.Against(roomsCountByName > 1, ErrorType.Duplicating);
 
             room = _mapper.Map<Room>(command);
 

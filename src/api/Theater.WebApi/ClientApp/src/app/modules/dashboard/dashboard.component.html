@@ -51,7 +51,7 @@
             </mat-card>
         </mat-grid-tile>
 
-        <mat-grid-tile *ngIf="noMovies"
+        <mat-grid-tile *ngIf="movies.length === 0"
                        [colspan]="1"
                        [rowspan]="2">
             <mat-card class="dashboard-card dashboard-card--nomovies">

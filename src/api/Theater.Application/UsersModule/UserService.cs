@@ -42,6 +42,9 @@ namespace Theater.Application.UsersModule
 
         public async Task<int> CreateAsync(UserCreateCommand command)
         {
+            var userCountByUsername = await _repository.CountAsync(x => x.Username.Equals(command.Username));
+            Guard.Against(userCountByUsername > 1, ErrorType.Duplicating);
+
             var user = _mapper.Map<User>(command);
             var createdUser = await _repository.CreateAsync(user);
 
@@ -61,8 +64,8 @@ namespace Theater.Application.UsersModule
             var user = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
             Guard.Against(user, ErrorType.NotFound);
 
-            var usernameCount = await _repository.CountAsync(x => x.Username.Equals(command.Username));
-            Guard.Against(usernameCount > 1, ErrorType.Duplicating);
+            var userCountByUsername = await _repository.CountAsync(x => x.Username.Equals(command.Username));
+            Guard.Against(userCountByUsername > 1, ErrorType.Duplicating);
 
             user = _mapper.Map<User>(command);
 
