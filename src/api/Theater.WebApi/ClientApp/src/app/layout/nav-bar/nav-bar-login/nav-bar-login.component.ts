@@ -41,7 +41,6 @@ export class NavBarLoginComponent implements OnInit, OnDestroy {
 
     public logout(): void {
         this.authenticationService.logout();
-        this.router.navigate(['auth/login']);
     }
 
     public editLogin(): void {

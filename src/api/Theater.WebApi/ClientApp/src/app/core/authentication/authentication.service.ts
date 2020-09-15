@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from '@env';
 
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -20,6 +21,7 @@ export class AuthenticationService {
 
     constructor(
         private localStorageService: LocalStorageService,
+        private router: Router,
         private http: HttpClient
     ) {
         this.userSubject = new BehaviorSubject<AuthenticatedUser>(this.getToken());
@@ -39,6 +41,7 @@ export class AuthenticationService {
     public logout(): void {
         this.localStorageService.removeItem('user');
         this.userSubject.next(null);
+        this.router.navigate(['auth/login']);
     }
 
     private getToken(): AuthenticatedUser {

@@ -13,7 +13,7 @@ import { MoviesDashboardODataService } from '../movies/shared/movies.service';
 })
 export class DashboardComponent {
     public isLoading = true;
-    public movies: IMovieDashboardModel[];
+    public movies: IMovieDashboardModel[] = [];
     public dayAndMonth: IDayAndMonth;
     public sessionsGroupByRoomName: any[];
     public audioType = AudioType;
