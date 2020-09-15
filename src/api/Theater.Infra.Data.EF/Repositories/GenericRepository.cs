@@ -67,7 +67,7 @@ namespace Theater.Infra.Data.EF.Repositories
         {
             var query = Context.Set<TEntity>().AsQueryable();
 
-            if (includeExpression == null)
+            if (includeExpression.Length == 0)
             {
                 if (tracking)
                 {
