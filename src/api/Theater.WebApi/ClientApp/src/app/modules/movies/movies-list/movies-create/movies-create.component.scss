@@ -4,7 +4,7 @@
 
 .movie-create-card {
   width: calc(400px);
-  margin: calc(15%) auto;
+  margin: calc(10%) auto;
 }
 
 .mat-card-header.movie-create-header {
@@ -22,4 +22,10 @@ button.room-create-btn {
 
 button.room-cancel-btn {
   width: calc(100px);
+}
+
+.file-select-button,
+.file-name {
+  display: inline-block;
+  margin: 8px;
 }

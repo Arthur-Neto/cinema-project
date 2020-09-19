@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env';
 
 import { Observable } from 'rxjs';
 
 import { IDayAndMonth } from '../../../shared/components/carousel-daypicker/carousel-daypicker.component';
-import { AudioType, IMovieCreateCommand, IMovieDashboardModel, IMovieModel, ScreenType } from './movies.model';
+import { AudioType, IMovieCoverUploadCommand, IMovieCreateCommand, IMovieDashboardModel, IMovieModel, ScreenType } from './movies.model';
 
 @Injectable()
 export class MoviesODataService {
@@ -68,5 +68,20 @@ export class MoviesApiService {
 
     public create(command: IMovieCreateCommand): Observable<number> {
         return this.http.post<number>(`${ this.apiUrl }`, command);
+    }
+
+    public updateCover(command: IMovieCoverUploadCommand): Observable<HttpEvent<any>> {
+        const formData: FormData = new FormData();
+        formData.append('id', command.movieId.toString());
+        formData.append('image', command.imgFile);
+
+        const request = new HttpRequest('POST', `${ this.apiUrl }/update-cover`, formData, {
+            reportProgress: true,
+            responseType: 'json'
+        });
+
+        request.headers.append('Content-type', 'application/octet-stream');
+
+        return this.http.request(request);
     }
 }

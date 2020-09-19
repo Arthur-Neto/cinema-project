@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { take } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
 
-import { AudioType, IMovieCreateCommand, ScreenType } from '../../shared/movies.model';
+import { AudioType, IMovieCoverUploadCommand, IMovieCreateCommand, ScreenType } from '../../shared/movies.model';
 import { MoviesApiService } from '../../shared/movies.service';
 
 @Component({
@@ -15,11 +15,17 @@ import { MoviesApiService } from '../../shared/movies.service';
 export class MoviesCreateComponent implements OnInit {
     public form: FormGroup;
 
+    public isLoading = true;
+
     public screenType: any = ScreenType;
     public audioType: any = AudioType;
 
+    public file: File | null = null;
+
     public screenTypeSelected: ScreenType = ScreenType.three_dimension;
     public audioTypeSelected: AudioType = AudioType.dubbed;
+
+    public showRequiredSelectedFile = false;
 
     public get showTitleRequiredError(): boolean {
         return this.form.controls['title'].hasError('required');
@@ -30,9 +36,17 @@ export class MoviesCreateComponent implements OnInit {
     public get showDescriptionRequiredError(): boolean {
         return this.form.controls['description'].hasError('required');
     }
+    public get showDescriptionMinLengthError(): boolean {
+        return this.form.controls['description'].hasError('minLength');
+    }
+    public get showDescriptionMaxLengthError(): boolean {
+        return this.form.controls['description'].hasError('maxLength');
+    }
     public get showDurationRequiredError(): boolean {
         return this.form.controls['duration'].hasError('required');
     }
+
+    @ViewChild('fileInput') fileInput: { nativeElement: { click: () => void; files: { [key: string]: File; }; }; };
 
     constructor(
         private fb: FormBuilder,
@@ -45,13 +59,23 @@ export class MoviesCreateComponent implements OnInit {
     public ngOnInit(): void {
         this.form = this.fb.group({
             title: [null, Validators.required],
-            description: [null, [Validators.required]],
+            description: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
             duration: [null, [Validators.required]],
         });
+
+        this.isLoading = false;
     }
 
     public onSubmit() {
         if (this.form.valid) {
+            if (!this.file) {
+                this.showRequiredSelectedFile = true;
+                return;
+            } else {
+                this.showRequiredSelectedFile = false;
+            }
+
+            this.isLoading = false;
             const command = <IMovieCreateCommand>{
                 title: this.form.controls['title'].value,
                 description: this.form.controls['description'].value,
@@ -70,13 +94,38 @@ export class MoviesCreateComponent implements OnInit {
         }
     }
 
+
+    public onClickFileInputButton(): void {
+        this.fileInput.nativeElement.click();
+    }
+
+    public onChangeFileInput(): void {
+        const files: { [key: string]: File } = this.fileInput.nativeElement.files;
+        this.file = files[0];
+        this.showRequiredSelectedFile = false;
+    }
+
     public onCanceClick(): void {
         this.backRoute();
     }
 
-    private onSuccessCallback(): void {
-        this.snackBar.open('Create success');
-        this.backRoute();
+    private onSuccessCallback(movieId: number): void {
+        const command = <IMovieCoverUploadCommand>{
+            movieId,
+            imgFile: this.file
+        };
+
+        this.movieApiService
+            .updateCover(command)
+            .pipe(
+                take(1),
+                finalize(() => this.isLoading = false))
+            .subscribe({
+                next: () => {
+                    this.snackBar.open('Create success');
+                    this.backRoute();
+                },
+            });
     }
 
     private onErrorCallback(error: string): void {

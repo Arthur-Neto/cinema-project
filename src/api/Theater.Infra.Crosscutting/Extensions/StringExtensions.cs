@@ -1,23 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Theater.Infra.Crosscutting.Extensions
 {
     public static class StringExtensions
     {
-        public static string FormatDurationFromMinutes(this string duration)
-        {
-            var ts = TimeSpan.FromMinutes(double.Parse(duration));
-            var hour = ts.Hours;
-            var minute = ts.Minutes;
-            var sb = new StringBuilder();
-            sb.Append(hour);
-            sb.Append(":");
-            sb.Append(minute.ToString("D2"));
-
-            return sb.ToString();
-        }
-
         public static string FormatDurationFromHourMinute(this string duration)
         {
             var spplitedDuration = duration.Split(":");
@@ -29,6 +17,13 @@ namespace Theater.Infra.Crosscutting.Extensions
             sb.Append("m");
 
             return sb.ToString();
+        }
+
+        public static string ConvertFilePathToBase64(this string filePath)
+        {
+            var bytes = File.ReadAllBytes(filePath);
+
+            return Convert.ToBase64String(bytes);
         }
     }
 }

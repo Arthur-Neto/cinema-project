@@ -11,7 +11,7 @@ export interface IMovieModel {
 
 export interface IMovieDashboardModel {
     id: number;
-    imagePath: string;
+    imageBase64: string;
     title: string;
     description: string;
     duration: string;
@@ -22,10 +22,15 @@ export interface IMovieDashboardModel {
 
 export interface IMovieCreateCommand {
     title: string;
-    description: number;
+    description: string;
     duration: number;
     screenType: ScreenType;
     audioType: AudioType;
+}
+
+export interface IMovieCoverUploadCommand {
+    movieId: number;
+    imgFile: File;
 }
 
 export enum ScreenType {

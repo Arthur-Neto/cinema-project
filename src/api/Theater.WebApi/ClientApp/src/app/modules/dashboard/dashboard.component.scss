@@ -14,6 +14,7 @@
   }
 
   .dashboard-card-content {
+    margin-top: calc(25px);
     justify-content: justify;
   }
 
@@ -23,5 +24,10 @@
 
   .dashboard-card-content-startTimes {
     display: inline;
+  }
+
+  .dashboard-card-image {
+    height: 50%;
+    width: 100%;
   }
 }

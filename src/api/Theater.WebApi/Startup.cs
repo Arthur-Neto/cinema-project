@@ -27,9 +27,10 @@ namespace Theater.WebApi
             services.AddCors(option =>
                 option.AddPolicy("TheaterCorsPolicy", builder =>
                 {
-                    builder.AllowAnyOrigin();
+                    builder.WithOrigins("http://localhost:4200");
                     builder.AllowAnyHeader();
                     builder.AllowAnyMethod();
+                    builder.AllowCredentials();
                 })
             );
 
@@ -61,8 +62,6 @@ namespace Theater.WebApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("TheaterCorsPolicy");
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -71,6 +70,10 @@ namespace Theater.WebApi
             {
                 app.UseHsts();
             }
+
+            app.UseHttpsRedirection();
+
+            app.UseCors("TheaterCorsPolicy");
 
             app.ConfigExceptionHandler();
 

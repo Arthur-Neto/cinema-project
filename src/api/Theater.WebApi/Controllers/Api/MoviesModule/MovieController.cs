@@ -27,6 +27,15 @@ namespace Theater.WebApi.Controllers.Api.MoviesModule
         }
 
         [AuthorizeRoles(Role.Manager)]
+        [HttpPost]
+        [Route("update-cover")]
+        [ProducesResponseType(typeof(bool), 200)]
+        public async Task<IActionResult> UpdateCoverAsync([FromForm] UpdateCoverCommand command)
+        {
+            return Ok(await _movieService.UpdateCoverAsync(command));
+        }
+
+        [AuthorizeRoles(Role.Manager)]
         [HttpPut]
         [ProducesResponseType(typeof(bool), 200)]
         public async Task<IActionResult> UpdateAsync(MovieUpdateCommand command)

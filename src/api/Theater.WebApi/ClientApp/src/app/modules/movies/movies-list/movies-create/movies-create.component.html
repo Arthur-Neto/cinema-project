@@ -1,3 +1,4 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
 <form [formGroup]="form"
       novalidate
       (ngSubmit)="onSubmit()">
@@ -32,6 +33,12 @@
                         <mat-error *ngIf="showDescriptionRequiredError">
                             Description is <strong>required</strong>
                         </mat-error>
+                        <mat-error *ngIf="showDescriptionMinLengthError">
+                            Description must have minimum 1 character
+                        </mat-error>
+                        <mat-error *ngIf="showDescriptionMaxLengthError">
+                            Description must have maximum 200 characters
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -39,6 +46,7 @@
                 <div class="col">
                     <mat-form-field class="full-width">
                         <input matInput
+                               type="number"
                                placeholder="Duration in minutes"
                                formControlName="duration">
                         <mat-error *ngIf="showDurationRequiredError">
@@ -75,6 +83,33 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-label>Cover image</mat-label>
+                    <input #fileInput
+                           style="display: none"
+                           accept="image/*"
+                           type="file"
+                           (change)="onChangeFileInput()">
+                    <button mat-raised-button
+                            color="primary"
+                            class="file-select-button"
+                            type='button'
+                            (click)="onClickFileInputButton()">
+                        <mat-icon>attach_file</mat-icon>
+                        Load
+                    </button>
+                    <p class="file-name"
+                       *ngIf="!file; else fileName">No file loaded
+                    </p>
+                    <mat-error *ngIf="showRequiredSelectedFile">
+                        Must select a file
+                    </mat-error>
+                    <ng-template #fileName>
+                        <p class="file-name">{{ file?.name }}</p>
+                    </ng-template>
                 </div>
             </div>
         </mat-card-content>

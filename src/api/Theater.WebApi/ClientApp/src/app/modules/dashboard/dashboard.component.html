@@ -21,7 +21,7 @@
         </mat-chip>
     </mat-chip-list>
     <mat-grid-list cols="4"
-                   rowHeight="350px">
+                   rowHeight="240px">
         <mat-grid-tile *ngFor="let movie of movies"
                        [colspan]="1"
                        [rowspan]="3">
@@ -31,8 +31,9 @@
                         {{movie.title}}
                     </mat-card-title>
                 </mat-card-header>
-                <img mat-card-image
-                     src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                <img mat-card-images
+                     class="dashboard-card-image"
+                     [src]="'data:image/png;base64,' + movie.imageBase64">
                 <mat-card-content class="dashboard-card-content">
                     <p>{{movie.description}}</p>
                     <div>
@@ -55,7 +56,7 @@
                        [colspan]="1"
                        [rowspan]="2">
             <mat-card class="dashboard-card dashboard-card--nomovies">
-                <mat-card-content class="dashboard-card-content">
+                <mat-card-content>
                     <p>No movies in this date</p>
                 </mat-card-content>
             </mat-card>

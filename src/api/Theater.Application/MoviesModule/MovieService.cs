@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Theater.Application.FilesManagerModule;
 using Theater.Application.MoviesModule.Commands;
 using Theater.Application.MoviesModule.Models;
 using Theater.Application.SessionsModule.Models;
@@ -20,14 +21,23 @@ namespace Theater.Application.MoviesModule
 
         Task<int> CreateAsync(MovieCreateCommand command);
         Task<bool> UpdateAsync(MovieUpdateCommand command);
+        Task<bool> UpdateCoverAsync(UpdateCoverCommand command);
         Task<bool> DeleteAsync(int id);
     }
 
     public class MovieService : AppServiceBase<IMovieRepository>, IMovieService
     {
-        public MovieService(IMovieRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly IFileManagerService _fileManagerService;
+
+        public MovieService(
+            IFileManagerService fileManagerService,
+            IMovieRepository repository,
+            IMapper mapper,
+            IUnitOfWork unitOfWork)
             : base(repository, mapper, unitOfWork)
-        { }
+        {
+            _fileManagerService = fileManagerService;
+        }
 
         public async Task<int> CreateAsync(MovieCreateCommand command)
         {
@@ -35,6 +45,8 @@ namespace Theater.Application.MoviesModule
             Guard.Against(moviesCountByName > 0, ErrorType.Duplicating);
 
             var movie = _mapper.Map<Movie>(command);
+            movie.ImagePath = $"{Environment.CurrentDirectory}\\wwwroot\\movies-imgs\\default.png";
+
             var createdMovie = await _repository.CreateAsync(movie);
 
             return await CommitAsync() > 0 ? createdMovie.ID : 0;
@@ -44,6 +56,8 @@ namespace Theater.Application.MoviesModule
         {
             var movie = await _repository.SingleOrDefaultAsync(x => x.ID == id, true, p => p.Sessions);
             Guard.Against(movie, ErrorType.NotFound);
+
+            _fileManagerService.RemoveCoverImage(id);
 
             await _repository.DeleteAsync(id);
 
@@ -111,6 +125,20 @@ namespace Theater.Application.MoviesModule
             Guard.Against(moviesCountByName > 0, ErrorType.Duplicating);
 
             movie = _mapper.Map<Movie>(command);
+
+            _repository.Update(movie);
+
+            return await CommitAsync() > 0;
+        }
+
+        public async Task<bool> UpdateCoverAsync(UpdateCoverCommand command)
+        {
+            var movie = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
+            Guard.Against(movie, ErrorType.NotFound);
+
+            await _fileManagerService.CreateCoverImageAsync(command.Image, command.ID);
+
+            movie.ImagePath = $"{Environment.CurrentDirectory}\\wwwroot\\movies-imgs\\{movie.ID}.png";
 
             _repository.Update(movie);
 

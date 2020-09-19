@@ -36,66 +36,19 @@ namespace Theater.WebApi.Extensions
                 NumberOfChairs = 50,
             };
 
-            var room2 = new Room()
-            {
-                Name = "Lorem ipsum dolor sit amet 2",
-                NumberOfChairs = 50,
-            };
-
-            var room3 = new Room()
-            {
-                Name = "Lorem ipsum dolor sit amet 3",
-                NumberOfChairs = 50,
-            };
-
             var movie = new Movie()
             {
                 AudioType = Domain.MoviesModule.Enums.AudioType.Dubbed,
                 Description = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
                 Duration = "1:30",
-                ImagePath = $"{Environment.CurrentDirectory}\\wwwroot\\movies-imgs\\1\\title.png",
+                ImagePath = $"{Environment.CurrentDirectory}\\wwwroot\\movies-imgs\\default.png",
                 ScreenType = Domain.MoviesModule.Enums.ScreenType.Two_Dimension,
                 Title = "At vero eos et accusamus et"
             };
 
             var session = new Session()
             {
-                Date = new DateTimeOffset(2020, 08, 31, 13, 30, 00, new TimeSpan()),
-                MovieId = 1,
-                RoomId = 1,
-            };
-
-            var session2 = new Session()
-            {
-                Date = new DateTimeOffset(2020, 09, 01, 15, 30, 00, new TimeSpan()),
-                MovieId = 1,
-                RoomId = 1,
-            };
-
-            var session3 = new Session()
-            {
-                Date = new DateTimeOffset(2020, 09, 01, 13, 30, 00, new TimeSpan()),
-                MovieId = 1,
-                RoomId = 2,
-            };
-
-            var session4 = new Session()
-            {
-                Date = new DateTimeOffset(2020, 09, 01, 13, 30, 00, new TimeSpan()),
-                MovieId = 1,
-                RoomId = 3,
-            };
-
-            var session5 = new Session()
-            {
-                Date = new DateTimeOffset(2020, 09, 01, 15, 30, 00, new TimeSpan()),
-                MovieId = 1,
-                RoomId = 3,
-            };
-
-            var session6 = new Session()
-            {
-                Date = new DateTimeOffset(2020, 09, 02, 15, 30, 00, new TimeSpan()),
+                Date = new DateTimeOffset(2020, 09, 19, 13, 30, 00, new TimeSpan()),
                 MovieId = 1,
                 RoomId = 1,
             };
@@ -103,17 +56,8 @@ namespace Theater.WebApi.Extensions
             context.Add(user);
 
             context.Add(room);
-            context.Add(room2);
-            context.Add(room3);
-
             context.Add(movie);
-
             context.Add(session);
-            context.Add(session2);
-            context.Add(session3);
-            context.Add(session4);
-            context.Add(session5);
-            context.Add(session6);
 
             context.SaveChanges();
         }

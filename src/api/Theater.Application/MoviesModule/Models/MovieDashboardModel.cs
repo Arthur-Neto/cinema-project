@@ -10,7 +10,7 @@ namespace Theater.Application.MoviesModule.Models
     public class MovieDashboardModel
     {
         public int ID { get; set; }
-        public string ImagePath { get; set; }
+        public string ImageBase64 { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Duration { get; set; }
@@ -23,16 +23,15 @@ namespace Theater.Application.MoviesModule.Models
     {
         public MovieDashboardModelMapping()
         {
-            CreateMap<MovieDashboardModel, Movie>()
+            CreateMap<Movie, MovieDashboardModel>()
                 .ForMember(m => m.ID, opts => opts.MapFrom(src => src.ID))
-                .ForMember(m => m.ImagePath, opts => opts.MapFrom(src => src.ImagePath))
+                .ForMember(m => m.ImageBase64, opts => opts.MapFrom(src => src.ImagePath.ConvertFilePathToBase64()))
                 .ForMember(m => m.Title, opts => opts.MapFrom(src => src.Title))
                 .ForMember(m => m.Description, opts => opts.MapFrom(src => src.Description))
                 .ForMember(m => m.Duration, opts => opts.MapFrom(src => src.Duration.FormatDurationFromHourMinute()))
                 .ForMember(m => m.ScreenType, opts => opts.MapFrom(src => src.ScreenType))
                 .ForMember(m => m.AudioType, opts => opts.MapFrom(src => src.AudioType))
-                .ForMember(m => m.Sessions, opts => opts.Ignore())
-                .ReverseMap();
+                .ForMember(m => m.Sessions, opts => opts.Ignore());
         }
     }
 }
