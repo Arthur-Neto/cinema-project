@@ -14,10 +14,9 @@ namespace Theater.Application.UsersModule.Commands
     {
         public UserCreateCommandMapping()
         {
-            CreateMap<User, UserCreateCommand>()
+            CreateMap<UserCreateCommand, User>()
                 .ForMember(m => m.Username, opts => opts.MapFrom(src => src.Username))
-                .ForMember(m => m.Password, opts => opts.MapFrom(src => src.Password))
-                .ReverseMap();
+                .ForMember(m => m.Password, opts => opts.MapFrom(src => src.Password));
         }
     }
 

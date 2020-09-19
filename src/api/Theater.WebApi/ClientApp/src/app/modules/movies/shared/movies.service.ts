@@ -5,7 +5,7 @@ import { environment } from '@env';
 import { Observable } from 'rxjs';
 
 import { IDayAndMonth } from '../../../shared/components/carousel-daypicker/carousel-daypicker.component';
-import { AudioType, IMovieDashboardModel, IMovieModel, ScreenType } from './movies.model';
+import { AudioType, IMovieCreateCommand, IMovieDashboardModel, IMovieModel, ScreenType } from './movies.model';
 
 @Injectable()
 export class MoviesODataService {
@@ -64,5 +64,9 @@ export class MoviesApiService {
 
     public getById(id: number): Observable<IMovieModel> {
         return this.http.get<IMovieModel>(`${ this.apiUrl }\\${ id }`);
+    }
+
+    public create(command: IMovieCreateCommand): Observable<number> {
+        return this.http.post<number>(`${ this.apiUrl }`, command);
     }
 }

@@ -14,10 +14,9 @@ namespace Theater.Application.RoomsModule.Commands
     {
         public RoomCreateCommandMapping()
         {
-            CreateMap<Room, RoomCreateCommand>()
+            CreateMap<RoomCreateCommand, Room>()
                 .ForMember(m => m.Name, opts => opts.MapFrom(src => src.Name))
-                .ForMember(m => m.NumberOfChairs, opts => opts.MapFrom(src => src.NumberOfChairs))
-                .ReverseMap();
+                .ForMember(m => m.NumberOfChairs, opts => opts.MapFrom(src => src.NumberOfChairs));
         }
     }
 

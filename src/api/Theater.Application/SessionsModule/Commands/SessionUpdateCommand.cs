@@ -15,10 +15,9 @@ namespace Theater.Application.SessionsModule.Commands
     {
         public SessionUpdateCommandMapping()
         {
-            CreateMap<Session, SessionUpdateCommand>()
+            CreateMap<SessionUpdateCommand, Session>()
                 .ForMember(m => m.ID, opts => opts.MapFrom(src => src.ID))
-                .ForMember(m => m.Date, opts => opts.MapFrom(src => src.Date))
-                .ReverseMap();
+                .ForMember(m => m.Date, opts => opts.MapFrom(src => src.Date));
         }
     }
 

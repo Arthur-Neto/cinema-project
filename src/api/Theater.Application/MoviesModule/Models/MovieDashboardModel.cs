@@ -3,6 +3,7 @@ using AutoMapper;
 using Theater.Application.SessionsModule.Models;
 using Theater.Domain.MoviesModule;
 using Theater.Domain.MoviesModule.Enums;
+using Theater.Infra.Crosscutting.Extensions;
 
 namespace Theater.Application.MoviesModule.Models
 {
@@ -22,12 +23,12 @@ namespace Theater.Application.MoviesModule.Models
     {
         public MovieDashboardModelMapping()
         {
-            CreateMap<Movie, MovieDashboardModel>()
+            CreateMap<MovieDashboardModel, Movie>()
                 .ForMember(m => m.ID, opts => opts.MapFrom(src => src.ID))
                 .ForMember(m => m.ImagePath, opts => opts.MapFrom(src => src.ImagePath))
                 .ForMember(m => m.Title, opts => opts.MapFrom(src => src.Title))
                 .ForMember(m => m.Description, opts => opts.MapFrom(src => src.Description))
-                .ForMember(m => m.Duration, opts => opts.MapFrom(src => src.Duration))
+                .ForMember(m => m.Duration, opts => opts.MapFrom(src => src.Duration.FormatDurationFromHourMinute()))
                 .ForMember(m => m.ScreenType, opts => opts.MapFrom(src => src.ScreenType))
                 .ForMember(m => m.AudioType, opts => opts.MapFrom(src => src.AudioType))
                 .ForMember(m => m.Sessions, opts => opts.Ignore())

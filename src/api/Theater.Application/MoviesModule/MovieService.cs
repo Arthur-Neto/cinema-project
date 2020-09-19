@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Theater.Application.MoviesModule.Commands;
@@ -33,7 +32,7 @@ namespace Theater.Application.MoviesModule
         public async Task<int> CreateAsync(MovieCreateCommand command)
         {
             var moviesCountByName = await _repository.CountAsync(x => x.Title.Equals(command.Title));
-            Guard.Against(moviesCountByName > 1, ErrorType.Duplicating);
+            Guard.Against(moviesCountByName > 0, ErrorType.Duplicating);
 
             var movie = _mapper.Map<Movie>(command);
             var createdMovie = await _repository.CreateAsync(movie);
@@ -59,7 +58,6 @@ namespace Theater.Application.MoviesModule
             foreach (var movie in movies)
             {
                 var movieModel = _mapper.Map<MovieModel>(movie);
-                movieModel.Duration = FormatDuration(movie.Duration);
                 movieModels.Add(movieModel);
             }
 
@@ -75,7 +73,6 @@ namespace Theater.Application.MoviesModule
             {
                 var movieModel = _mapper.Map<MovieDashboardModel>(movie);
                 movieModel.Sessions = new List<SessionDashboardModel>();
-                movieModel.Duration = FormatDuration(movie.Duration);
 
                 var sessionsGroupByRoom = movie.Sessions.GroupBy(p => p.RoomId);
                 var sessionsGroupByDate = movie.Sessions.GroupBy(p => p.Date);
@@ -110,26 +107,14 @@ namespace Theater.Application.MoviesModule
             var movie = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
             Guard.Against(movie, ErrorType.NotFound);
 
-            var moviesCountByName = await _repository.CountAsync(x => x.Title.Equals(command.Title));
-            Guard.Against(moviesCountByName > 1, ErrorType.Duplicating);
+            var moviesCountByName = await _repository.CountAsync(x => x.Title.Equals(command.Title) && x.ID != command.ID);
+            Guard.Against(moviesCountByName > 0, ErrorType.Duplicating);
 
             movie = _mapper.Map<Movie>(command);
 
             _repository.Update(movie);
 
             return await CommitAsync() > 0;
-        }
-
-        private string FormatDuration(string duration)
-        {
-            var spplitedDuration = duration.Split(":");
-            var sb = new StringBuilder();
-            sb.Append(spplitedDuration[0]);
-            sb.Append("h");
-            sb.Append(" ");
-            sb.Append(spplitedDuration[1]);
-            sb.Append("m");
-            return sb.ToString();
         }
     }
 }

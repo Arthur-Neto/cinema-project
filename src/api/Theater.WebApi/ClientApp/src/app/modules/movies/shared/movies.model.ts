@@ -20,6 +20,14 @@ export interface IMovieDashboardModel {
     sessions: ISessionDashboardModel[];
 }
 
+export interface IMovieCreateCommand {
+    title: string;
+    description: number;
+    duration: number;
+    screenType: ScreenType;
+    audioType: AudioType;
+}
+
 export enum ScreenType {
     two_dimension = 1,
     three_dimension = 2

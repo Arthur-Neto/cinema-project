@@ -14,9 +14,8 @@ namespace Theater.Application.SessionsModule.Commands
     {
         public SessionCreateCommandMapping()
         {
-            CreateMap<Session, SessionCreateCommand>()
-                .ForMember(m => m.Date, opts => opts.MapFrom(src => src.Date))
-                .ReverseMap();
+            CreateMap<SessionCreateCommand, Session>()
+                .ForMember(m => m.Date, opts => opts.MapFrom(src => src.Date));
         }
     }
 

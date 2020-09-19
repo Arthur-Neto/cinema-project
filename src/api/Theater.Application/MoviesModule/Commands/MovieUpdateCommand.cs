@@ -2,6 +2,7 @@
 using FluentValidation;
 using Theater.Domain.MoviesModule;
 using Theater.Domain.MoviesModule.Enums;
+using Theater.Infra.Crosscutting.Extensions;
 
 namespace Theater.Application.MoviesModule.Commands
 {
@@ -20,14 +21,13 @@ namespace Theater.Application.MoviesModule.Commands
     {
         public MovieUpdateCommandMapping()
         {
-            CreateMap<Movie, MovieUpdateCommand>()
+            CreateMap<MovieUpdateCommand, Movie>()
                 .ForMember(m => m.ID, opts => opts.MapFrom(src => src.ID))
                 .ForMember(m => m.Title, opts => opts.MapFrom(src => src.Title))
                 .ForMember(m => m.Description, opts => opts.MapFrom(src => src.Description))
-                .ForMember(m => m.Duration, opts => opts.MapFrom(src => src.Duration))
+                .ForMember(m => m.Duration, opts => opts.MapFrom(src => src.Duration.FormatDurationFromMinutes()))
                 .ForMember(m => m.ScreenType, opts => opts.MapFrom(src => src.ScreenType))
-                .ForMember(m => m.AudioType, opts => opts.MapFrom(src => src.AudioType))
-                .ReverseMap();
+                .ForMember(m => m.AudioType, opts => opts.MapFrom(src => src.AudioType));
         }
     }
 

@@ -21,29 +21,29 @@ export class MoviesListComponent implements OnInit {
     public headerNames: string[] = ['Title', 'Description', 'Duration', 'Screen type', 'Audio Type'];
     public displayedColumns: string[] = ['id', 'title', 'description', 'duration', 'screenName', 'audioName'];
     public actions: IActionModel[] = [
-        /* {
-             icon: 'add',
-             name: 'Add',
-             function: () => {
-                 this.router.navigate(['../create'], { relativeTo: this.route });
-             }
-         },
-         {
-             icon: 'edit',
-             name: 'Edit',
-             function: () => {
-                 if (!this.selectedMovie) {
-                     this.snackBar.open('Select a movie');
+        {
+            icon: 'add',
+            name: 'Add',
+            function: () => {
+                this.router.navigate(['../create'], { relativeTo: this.route });
+            }
+        },
+        /*{
+            icon: 'edit',
+            name: 'Edit',
+            function: () => {
+                if (!this.selectedMovie) {
+                    this.snackBar.open('Select a movie');
  
-                     return;
-                 }
+                    return;
+                }
  
-                 this.router.navigate(
-                     ['../edit', this.selectedMovie.id],
-                     { relativeTo: this.route, state: { movie: this.selectedMovie } }
-                 );
-             }
-         },*/
+                this.router.navigate(
+                    ['../edit', this.selectedMovie.id],
+                    { relativeTo: this.route, state: { movie: this.selectedMovie } }
+                );
+            }
+        },*/
         {
             icon: 'delete',
             name: 'Delete',

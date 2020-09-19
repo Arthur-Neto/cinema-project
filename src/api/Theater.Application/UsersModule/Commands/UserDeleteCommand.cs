@@ -13,9 +13,8 @@ namespace Theater.Application.UsersModule.Commands
     {
         public UserDeleteCommandMapping()
         {
-            CreateMap<User, UserDeleteCommand>()
-                .ForMember(m => m.ID, opts => opts.MapFrom(src => src.ID))
-                .ReverseMap();
+            CreateMap<UserDeleteCommand, User>()
+                .ForMember(m => m.ID, opts => opts.MapFrom(src => src.ID));
         }
     }
 

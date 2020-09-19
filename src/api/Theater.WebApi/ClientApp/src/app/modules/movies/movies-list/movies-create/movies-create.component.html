@@ -1,0 +1,96 @@
+<form [formGroup]="form"
+      novalidate
+      (ngSubmit)="onSubmit()">
+    <mat-card class="movie-create-card">
+        <mat-card-header class="movie-create-header">
+            <mat-card-title>Create movie</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <input matInput
+                               placeholder="Title"
+                               formControlName="title">
+                        <mat-error *ngIf="showTitleRequiredError">
+                            Title is <strong>required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="showTitleDuplicatedError">
+                            Movie with this title already exists
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <textarea matInput
+                                  type="description"
+                                  placeholder="Description"
+                                  formControlName="description">
+                        </textarea>
+                        <mat-error *ngIf="showDescriptionRequiredError">
+                            Description is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <input matInput
+                               placeholder="Duration in minutes"
+                               formControlName="duration">
+                        <mat-error *ngIf="showDurationRequiredError">
+                            Duration is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Screen Type</mat-label>
+                        <mat-select [(value)]="screenTypeSelected">
+                            <mat-option [value]="screenType.three_dimension">
+                                3D
+                            </mat-option>
+                            <mat-option [value]="screenType.two_dimension">
+                                2D
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Audio Type</mat-label>
+                        <mat-select [(value)]="audioTypeSelected">
+                            <mat-option [value]="audioType.dubbed">
+                                Dubbed
+                            </mat-option>
+                            <mat-option [value]="audioType.subtitled">
+                                Subtitled
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="movie-create-actions">
+            <button mat-raised-button
+                    class="movie-create-btn"
+                    color="primary"
+                    type="submit">
+                Save
+            </button>
+            <button mat-raised-button
+                    class="movie-cancel-btn"
+                    color="primary"
+                    (click)="onCanceClick()">
+                Cancel
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>
