@@ -21,8 +21,5 @@ import { RoomsApiService, RoomsODataService } from './shared/rooms.service';
         RoomsODataService,
         RoomsApiService,
     ],
-    exports: [
-        RoomsApiService
-    ]
 })
 export class RoomsModule { }

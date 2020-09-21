@@ -21,8 +21,5 @@ import { MoviesApiService, MoviesODataService } from './shared/movies.service';
         MoviesODataService,
         MoviesApiService,
     ],
-    exports: [
-        MoviesODataService
-    ]
 })
 export class MoviesModule { }
