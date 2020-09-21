@@ -16,7 +16,7 @@ namespace Theater.Application.MoviesModule
     public interface IMovieService
     {
         Task<IEnumerable<MovieModel>> RetrieveAllAsync();
-        Task<IEnumerable<MovieDashboardModel>> RetrieveMoviesDashboardAsync(DateTime date);
+        Task<IEnumerable<MovieDashboardModel>> RetrieveMoviesDashboardAsync(DateTimeOffset date);
 
 
         Task<int> CreateAsync(MovieCreateCommand command);
@@ -78,7 +78,7 @@ namespace Theater.Application.MoviesModule
             return movieModels;
         }
 
-        public async Task<IEnumerable<MovieDashboardModel>> RetrieveMoviesDashboardAsync(DateTime date)
+        public async Task<IEnumerable<MovieDashboardModel>> RetrieveMoviesDashboardAsync(DateTimeOffset date)
         {
             var movies = await _repository.RetrieveMoviesWithSessionsAndRooms();
 
@@ -136,9 +136,9 @@ namespace Theater.Application.MoviesModule
             var movie = await _repository.SingleOrDefaultAsync(x => x.ID == command.ID, tracking: false);
             Guard.Against(movie, ErrorType.NotFound);
 
-            await _fileManagerService.CreateCoverImageAsync(command.Image, command.ID);
+            var filePath = await _fileManagerService.CreateCoverImageAsync(command.Image, command.ID);
 
-            movie.ImagePath = $"{Environment.CurrentDirectory}\\wwwroot\\movies-imgs\\{movie.ID}.png";
+            movie.ImagePath = filePath;
 
             _repository.Update(movie);
 

@@ -1,3 +1,4 @@
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -5,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -46,6 +48,11 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
         MatSelectModule,
         MatRadioModule,
         MatChipsModule,
+        MatDatepickerModule,
+
+        NgxMatDatetimePickerModule,
+        NgxMatTimepickerModule,
+        NgxMatNativeDateModule
     ],
     declarations: [
         GridComponent,
@@ -76,7 +83,12 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
         MatGridListModule,
         MatSelectModule,
         MatRadioModule,
-        MatChipsModule
+        MatChipsModule,
+        MatDatepickerModule,
+
+        NgxMatDatetimePickerModule,
+        NgxMatTimepickerModule,
+        NgxMatNativeDateModule,
     ]
 })
 export class SharedModule { }

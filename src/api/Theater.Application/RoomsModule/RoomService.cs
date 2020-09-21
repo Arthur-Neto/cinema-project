@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -16,6 +17,7 @@ namespace Theater.Application.RoomsModule
         Task<int> CreateAsync(RoomCreateCommand command);
         Task<bool> UpdateAsync(RoomUpdateCommand command);
         Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<RoomModel>> AvailableRoomsAsync(AvailableRoomsCommand command);
     }
 
     public class RoomService : AppServiceBase<IRoomRepository>, IRoomService
@@ -66,6 +68,36 @@ namespace Theater.Application.RoomsModule
             _repository.Update(room);
 
             return await CommitAsync() > 0;
+        }
+
+        public async Task<IEnumerable<RoomModel>> AvailableRoomsAsync(AvailableRoomsCommand command)
+        {
+            var rooms = await _repository.RetrieveAllAsync(p => p.Sessions);
+
+            var roomsModels = new List<RoomModel>();
+            foreach (var room in rooms)
+            {
+                if (room.Sessions.Count() == 0 || room.Sessions.Select(p => IsDateOverlaping(command.MovieDuration, p.Date, command.Date)).All(p => p == false))
+                {
+                    roomsModels.Add(_mapper.Map<RoomModel>(room));
+                }
+            }
+
+            return roomsModels;
+        }
+
+        private bool IsDateOverlaping(string movieDuration, DateTimeOffset sessionDate, DateTimeOffset selectedDate)
+        {
+            var splittedDuration = movieDuration.Split(":");
+            var durationOnMinutes = int.Parse(splittedDuration[0]) * 60 + int.Parse(splittedDuration[1]);
+
+            var sessionStartDate = sessionDate;
+            var sessionEndDate = sessionDate.AddMinutes(durationOnMinutes);
+
+            var selectedStartDate = selectedDate;
+            var selectedEndDate = selectedDate.AddMinutes(durationOnMinutes);
+
+            return (sessionStartDate <= selectedEndDate) && (sessionEndDate >= selectedStartDate);
         }
     }
 }

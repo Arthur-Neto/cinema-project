@@ -20,6 +20,9 @@ import { RoomsApiService, RoomsODataService } from './shared/rooms.service';
     providers: [
         RoomsODataService,
         RoomsApiService,
+    ],
+    exports: [
+        RoomsApiService
     ]
 })
 export class RoomsModule { }

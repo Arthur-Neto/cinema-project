@@ -4,7 +4,7 @@ import { environment } from '@env';
 
 import { Observable } from 'rxjs';
 
-import { IRoomCreateCommand, IRoomsModel, IRoomUpdateCommand } from './rooms.model';
+import { IAvailableRoomsCommand, IRoomCreateCommand, IRoomsModel, IRoomUpdateCommand } from './rooms.model';
 
 @Injectable()
 export class RoomsODataService {
@@ -40,10 +40,14 @@ export class RoomsApiService {
     }
 
     public delete(id: number): Observable<boolean> {
-        return this.http.delete<boolean>(`${ this.apiUrl }\\${ id }`);
+        return this.http.delete<boolean>(`${ this.apiUrl }/${ id }`);
     }
 
     public getById(id: number): Observable<IRoomsModel> {
-        return this.http.get<IRoomsModel>(`${ this.apiUrl }\\${ id }`);
+        return this.http.get<IRoomsModel>(`${ this.apiUrl }/${ id }`);
+    }
+
+    public availableRooms(command: IAvailableRoomsCommand): Observable<IRoomsModel[]> {
+        return this.http.post<IRoomsModel[]>(`${ this.apiUrl }/available-rooms`, command);
     }
 }

@@ -7,7 +7,7 @@ namespace Theater.Application.FilesManagerModule
 {
     public interface IFileManagerService
     {
-        Task CreateCoverImageAsync(IFormFile file, int movieId);
+        Task<string> CreateCoverImageAsync(IFormFile file, int movieId);
         void RemoveCoverImage(int movieId);
     }
 
@@ -15,13 +15,13 @@ namespace Theater.Application.FilesManagerModule
     {
         private readonly string STORED_IMG_FOLDER = $"{Environment.CurrentDirectory}\\wwwroot\\movies-imgs\\";
 
-        public async Task CreateCoverImageAsync(IFormFile file, int movieId)
+        public async Task<string> CreateCoverImageAsync(IFormFile file, int movieId)
         {
             try
             {
                 if (file.Length > 0)
                 {
-                    var imgFilename = $"{movieId}.{Path.GetExtension(file.FileName)}";
+                    var imgFilename = $"{movieId}{Path.GetExtension(file.FileName)}";
                     var fullFilePath = Path.Combine(STORED_IMG_FOLDER, imgFilename);
 
                     if (!Directory.Exists(STORED_IMG_FOLDER))
@@ -31,7 +31,11 @@ namespace Theater.Application.FilesManagerModule
 
                     using var stream = new FileStream(fullFilePath, FileMode.Create);
                     await file.CopyToAsync(stream);
+
+                    return fullFilePath;
                 }
+
+                return null;
             }
             catch (Exception ex)
             {

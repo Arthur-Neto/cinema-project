@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Theater.Application.SessionsModule.Commands;
 using Theater.Application.SessionsModule.Models;
+using Theater.Domain.MoviesModule;
+using Theater.Domain.RoomsModule;
 using Theater.Domain.SessionsModule;
 using Theater.Infra.Crosscutting.Exceptions;
 using Theater.Infra.Crosscutting.Guards;
@@ -20,13 +22,33 @@ namespace Theater.Application.SessionsModule
 
     public class SessionService : AppServiceBase<ISessionRepository>, ISessionService
     {
-        public SessionService(ISessionRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly IRoomRepository _roomRepository;
+        private readonly IMovieRepository _movieRepository;
+
+        public SessionService(
+            IRoomRepository roomRepository,
+            IMovieRepository movieRepository,
+            ISessionRepository repository,
+            IMapper mapper,
+            IUnitOfWork unitOfWork)
             : base(repository, mapper, unitOfWork)
-        { }
+        {
+            _roomRepository = roomRepository;
+            _movieRepository = movieRepository;
+        }
 
         public async Task<int> CreateAsync(SessionCreateCommand command)
         {
+            var room = await _roomRepository.SingleOrDefaultAsync(p => p.ID == command.RoomId);
+            Guard.Against(room, ErrorType.NotFound);
+
+            var movie = await _movieRepository.SingleOrDefaultAsync(p => p.ID == command.MovieId);
+            Guard.Against(movie, ErrorType.NotFound);
+
             var session = _mapper.Map<Session>(command);
+            session.MovieId = movie.ID;
+            session.RoomId = room.ID;
+
             var createdSession = await _repository.CreateAsync(session);
 
             return await CommitAsync() > 0 ? createdSession.ID : 0;

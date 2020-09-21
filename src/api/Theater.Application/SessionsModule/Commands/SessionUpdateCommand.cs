@@ -8,7 +8,7 @@ namespace Theater.Application.SessionsModule.Commands
     public class SessionUpdateCommand
     {
         public int ID { get; set; }
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
     }
 
     public class SessionUpdateCommandMapping : Profile

@@ -14,14 +14,10 @@ import { MoviesApiService } from '../../shared/movies.service';
 })
 export class MoviesCreateComponent implements OnInit {
     public form: FormGroup;
-
     public isLoading = true;
-
+    public file: File | null = null;
     public screenType: any = ScreenType;
     public audioType: any = AudioType;
-
-    public file: File | null = null;
-
     public screenTypeSelected: ScreenType = ScreenType.three_dimension;
     public audioTypeSelected: AudioType = AudioType.dubbed;
 
@@ -75,7 +71,8 @@ export class MoviesCreateComponent implements OnInit {
                 this.showRequiredSelectedFile = false;
             }
 
-            this.isLoading = false;
+            this.isLoading = true;
+
             const command = <IMovieCreateCommand>{
                 title: this.form.controls['title'].value,
                 description: this.form.controls['description'].value,
@@ -132,6 +129,8 @@ export class MoviesCreateComponent implements OnInit {
         if (error.match('Duplicating')) {
             this.form.controls['title'].setErrors({ duplicated: true });
         }
+
+        this.isLoading = false;
     }
 
     private backRoute(): void {

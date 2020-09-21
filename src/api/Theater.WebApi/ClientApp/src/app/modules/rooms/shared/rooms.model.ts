@@ -14,3 +14,8 @@ export interface IRoomUpdateCommand {
     name: string;
     numberOfChairs: number;
 }
+
+export interface IAvailableRoomsCommand {
+    date: Date;
+    movieDuration: string;
+}

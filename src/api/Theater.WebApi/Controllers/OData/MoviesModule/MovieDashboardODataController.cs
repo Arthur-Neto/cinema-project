@@ -24,7 +24,7 @@ namespace Theater.WebApi.Controllers.OData.MoviesModule
         [HttpGet]
         [EnableQuery]
         [ProducesResponseType(typeof(IEnumerable<MovieDashboardModel>), 200)]
-        public async Task<IActionResult> RetrieveMoviesDashboardAsync(DateTime date)
+        public async Task<IActionResult> RetrieveMoviesDashboardAsync(DateTimeOffset date)
         {
             return Ok(await _movieService.RetrieveMoviesDashboardAsync(date));
         }

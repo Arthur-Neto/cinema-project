@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Theater.Application.RoomsModule;
 using Theater.Application.RoomsModule.Commands;
+using Theater.Application.RoomsModule.Models;
 using Theater.Domain.UsersModule.Enums;
 using Theater.WebApi.Attributes;
 
@@ -41,6 +43,15 @@ namespace Theater.WebApi.Controllers.Api.RoomsModule
         public async Task<IActionResult> DeleteAsync(int id)
         {
             return Ok(await _roomService.DeleteAsync(id));
+        }
+
+        [AuthorizeRoles(Role.Manager)]
+        [Route("available-rooms")]
+        [HttpPost]
+        [ProducesResponseType(typeof(IEnumerable<RoomModel>), 200)]
+        public async Task<IActionResult> AvailableRoomsAsync(AvailableRoomsCommand command)
+        {
+            return Ok(await _roomService.AvailableRoomsAsync(command));
         }
     }
 }

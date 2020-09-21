@@ -21,14 +21,14 @@ export class SessionsListComponent implements OnInit {
     public headerNames: string[] = ['Date', 'Movie', 'Room'];
     public displayedColumns: string[] = ['id', 'date', 'movieTitle', 'roomName'];
     public actions: IActionModel[] = [
-        /*{
+        {
             icon: 'add',
             name: 'Add',
             function: () => {
                 this.router.navigate(['../create'], { relativeTo: this.route });
             }
         },
-        {
+        /*{
             icon: 'edit',
             name: 'Edit',
             function: () => {

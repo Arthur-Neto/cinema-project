@@ -1,0 +1,100 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<form [formGroup]="form"
+      novalidate
+      (ngSubmit)="onSubmit()">
+    <mat-card class="session-create-card">
+        <mat-card-header class="session-create-header">
+            <mat-card-title>Create session</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <input matInput
+                               readonly
+                               placeholder="Choose a date"
+                               formControlName="dateTime"
+                               [ngxMatDatetimePicker]="picker"
+                               (dateInput)="onDateSelectedChanges()">
+                        <mat-datepicker-toggle matSuffix
+                                               [for]="picker">
+                        </mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #picker
+                                                 [showSeconds]="false">
+                        </ngx-mat-datetime-picker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Movie</mat-label>
+                        <mat-select formControlName="movie"
+                                    [(value)]="movieSelected"
+                                    (valueChange)="onMovieChanges()">
+                            <div *ngIf="movies?.length > 0">
+                                <mat-option *ngFor="let movie of movies"
+                                            [value]="movie">
+                                    {{movie.title}}
+                                </mat-option>
+                            </div>
+                            <mat-option disabled
+                                        *ngIf="movies?.length === 0">
+                                No available movies
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="showMovieRequiredError">
+                            Must select a movie
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Room</mat-label>
+                        <mat-select formControlName="room"
+                                    [(value)]="roomSelected">
+                            <div *ngIf="rooms?.length > 0">
+                                <mat-option *ngFor="let room of rooms"
+                                            [value]="room">
+                                    {{room.name}}
+                                </mat-option>
+                            </div>
+                            <mat-option disabled
+                                        *ngIf="rooms == undefined">
+                                Select a movie first
+                            </mat-option>
+                            <mat-option disabled
+                                        *ngIf="rooms?.length == 0">
+                                No available rooms
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="showRoomRequiredError">
+                            Must select a room
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-label>Ending time: {{endingTime}}</mat-label>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="session-create-actions">
+            <button mat-raised-button
+                    class="session-create-btn"
+                    color="primary"
+                    type="submit">
+                Save
+            </button>
+            <button mat-raised-button
+                    class="session-cancel-btn"
+                    color="primary"
+                    (click)="onCanceClick()">
+                Cancel
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

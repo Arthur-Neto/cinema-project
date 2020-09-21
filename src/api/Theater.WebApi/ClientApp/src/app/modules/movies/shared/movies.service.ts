@@ -59,11 +59,11 @@ export class MoviesApiService {
     }
 
     public delete(id: number): Observable<boolean> {
-        return this.http.delete<boolean>(`${ this.apiUrl }\\${ id }`);
+        return this.http.delete<boolean>(`${ this.apiUrl }/${ id }`);
     }
 
     public getById(id: number): Observable<IMovieModel> {
-        return this.http.get<IMovieModel>(`${ this.apiUrl }\\${ id }`);
+        return this.http.get<IMovieModel>(`${ this.apiUrl }/${ id }`);
     }
 
     public create(command: IMovieCreateCommand): Observable<number> {

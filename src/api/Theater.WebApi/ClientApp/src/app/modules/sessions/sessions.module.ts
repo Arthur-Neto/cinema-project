@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 
+import { MoviesODataService } from '../movies/shared/movies.service';
+import { RoomsApiService } from '../rooms/shared/rooms.service';
 import { SessionsCreateComponent } from './sessions-list/sessions-create/sessions-create.component';
 import { SessionsEditComponent } from './sessions-list/sessions-edit/sessions-edit.component';
 import { SessionsListComponent } from './sessions-list/sessions-list.component';
@@ -20,6 +22,8 @@ import { SessionsApiService, SessionsODataService } from './shared/sessions.serv
     providers: [
         SessionsODataService,
         SessionsApiService,
+        RoomsApiService,
+        MoviesODataService,
     ]
 })
 export class SessionsModule { }

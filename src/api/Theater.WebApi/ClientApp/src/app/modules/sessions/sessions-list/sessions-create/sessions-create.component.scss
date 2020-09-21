@@ -2,16 +2,16 @@
   width: 100%;
 }
 
-.room-create-card {
+.session-create-card {
   width: calc(400px);
-  margin: calc(15%) auto;
+  margin: calc(10%) auto;
 }
 
-.mat-card-header.room-create-header {
+.mat-card-header.session-create-header {
   justify-content: center;
 }
 
-.mat-card-actions.room-create-actions {
+.mat-card-actions.session-create-actions {
   justify-content: center;
   display: flex;
 }
@@ -22,4 +22,10 @@ button.room-create-btn {
 
 button.room-cancel-btn {
   width: calc(100px);
+}
+
+.file-select-button,
+.file-name {
+  display: inline-block;
+  margin: 8px;
 }

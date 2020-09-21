@@ -13,3 +13,9 @@ export interface ISessionDashboardModel {
     roomID: number;
     roomName: string;
 }
+
+export interface ISessionCreateCommand {
+    date: Date;
+    movieId: number;
+    roomId: number;
+}
