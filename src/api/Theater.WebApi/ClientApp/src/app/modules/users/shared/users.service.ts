@@ -4,7 +4,7 @@ import { environment } from '@env';
 
 import { Observable } from 'rxjs';
 
-import { UserUpdateCommand } from './users.model';
+import { UserCreateCommand, UserUpdateCommand } from './users.model';
 
 @Injectable()
 export class UsersApiService {
@@ -14,6 +14,10 @@ export class UsersApiService {
         private http: HttpClient
     ) {
         this.apiUrl = `${ environment.apiUrl }api/users`;
+    }
+
+    public create(command: UserCreateCommand): Observable<number> {
+        return this.http.post<number>(`${ this.apiUrl }`, command);
     }
 
     public update(command: UserUpdateCommand): Observable<boolean> {

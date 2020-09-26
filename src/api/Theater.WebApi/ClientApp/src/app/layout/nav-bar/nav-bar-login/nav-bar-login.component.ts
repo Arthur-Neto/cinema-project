@@ -44,6 +44,6 @@ export class NavBarLoginComponent implements OnInit, OnDestroy {
     }
 
     public editLogin(): void {
-        this.router.navigate(['auth/edit-login']);
+        this.router.navigate(['auth/edit']);
     }
 }

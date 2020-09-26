@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticateCommand } from '@app/authentication/authentication-models';
 import { AuthenticationService } from '@app/authentication/authentication.service';
 
@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private router: Router,
+        private route: ActivatedRoute,
         private authenticationService: AuthenticationService,
     ) {
         if (this.authenticationService.userValue) {
@@ -66,6 +67,10 @@ export class LoginComponent implements OnInit {
                     error: this.onErrorCallback.bind(this)
                 });
         }
+    }
+
+    public onCreateNewUser() {
+        this.router.navigate(['../create'], { relativeTo: this.route });
     }
 
     private onSuccessCallback(): void {

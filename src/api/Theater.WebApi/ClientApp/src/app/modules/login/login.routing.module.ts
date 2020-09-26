@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/guards/authentication.guard';
 
+import { LoginCreateComponent } from './login-create/login-create.component';
 import { LoginEditComponent } from './login-edit/login-edit.component';
 import { LoginComponent } from './login.component';
 
@@ -19,7 +20,11 @@ const routes: Routes = [
                 component: LoginComponent,
             },
             {
-                path: 'edit-login',
+                path: 'create',
+                component: LoginCreateComponent,
+            },
+            {
+                path: 'edit',
                 component: LoginEditComponent,
                 canActivate: [AuthGuard],
             },

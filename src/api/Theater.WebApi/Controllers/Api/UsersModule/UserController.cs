@@ -40,7 +40,7 @@ namespace Theater.WebApi.Controllers.Api.UsersModule
             return Ok(await _userService.RetrieveByIDAsync(id));
         }
 
-        [AuthorizeRoles(Role.Manager)]
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(typeof(int), 200)]
         public async Task<IActionResult> CreateAsync(UserCreateCommand command)

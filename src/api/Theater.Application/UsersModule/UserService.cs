@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Theater.Application.UsersModule.Commands;
 using Theater.Application.UsersModule.Models;
 using Theater.Domain.UsersModule;
+using Theater.Domain.UsersModule.Enums;
 using Theater.Infra.Crosscutting.Exceptions;
 using Theater.Infra.Crosscutting.Guards;
 
@@ -46,6 +47,8 @@ namespace Theater.Application.UsersModule
             Guard.Against(userCountByUsername > 0, ErrorType.Duplicating);
 
             var user = _mapper.Map<User>(command);
+            user.Role = Role.Client;
+
             var createdUser = await _repository.CreateAsync(user);
 
             return await CommitAsync() > 0 ? createdUser.ID : 0;
