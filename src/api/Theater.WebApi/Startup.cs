@@ -73,6 +73,8 @@ namespace Theater.WebApi
                 app.UseHsts();
             }
 
+            app.CreateSqlServerDatabase(Configuration);
+
             app.UseHttpsRedirection();
 
             app.UseCors("TheaterCorsPolicy");

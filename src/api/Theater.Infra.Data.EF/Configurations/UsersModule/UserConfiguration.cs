@@ -14,13 +14,15 @@ namespace Theater.Infra.Data.EF.Configurations.UsersModule
                 .ValueGeneratedOnAdd();
 
             builder.Property(p => p.Username)
-                .HasColumnType("varchar")
-                .HasMaxLength(50)
+                .HasColumnType("varchar(50)")
                 .IsRequired();
 
             builder.Property(p => p.Password)
-                .HasColumnType("varchar")
-                .HasMaxLength(50)
+                .HasColumnType("varchar(50)")
+                .IsRequired();
+
+            builder.Property(p => p.Role)
+                .HasColumnType("tinyint")
                 .IsRequired();
         }
     }

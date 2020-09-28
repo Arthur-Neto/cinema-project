@@ -34,6 +34,7 @@ namespace Theater.WebApi.Extensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDatabaseContext, ApiContext>();
+            services.AddHttpContextAccessor();
         }
 
         private static Assembly[] GetAssemblies()

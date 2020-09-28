@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Theater.Application.SessionsModule.Commands;
 using Theater.Application.SessionsModule.Models;
 using Theater.Domain.MoviesModule;
@@ -27,8 +29,10 @@ namespace Theater.Application.SessionsModule
         private readonly IRoomRepository _roomRepository;
         private readonly IMovieRepository _movieRepository;
         private readonly IOccupiedChairRepository _occupiedChairRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SessionService(
+            IHttpContextAccessor httpContextAccessor,
             IRoomRepository roomRepository,
             IMovieRepository movieRepository,
             IOccupiedChairRepository occupiedChairRepository,
@@ -37,6 +41,7 @@ namespace Theater.Application.SessionsModule
             IUnitOfWork unitOfWork)
             : base(repository, mapper, unitOfWork)
         {
+            _httpContextAccessor = httpContextAccessor;
             _roomRepository = roomRepository;
             _movieRepository = movieRepository;
             _occupiedChairRepository = occupiedChairRepository;
@@ -108,7 +113,8 @@ namespace Theater.Application.SessionsModule
                 var occupiedChair = new OccupiedChair()
                 {
                     Number = number,
-                    SessionId = session.ID
+                    SessionId = session.ID,
+                    UserId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value)
                 };
 
                 await _occupiedChairRepository.CreateAsync(occupiedChair);

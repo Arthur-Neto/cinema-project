@@ -14,23 +14,19 @@ namespace Theater.Infra.Data.EF.Configurations.MoviesModule
                 .ValueGeneratedOnAdd();
 
             builder.Property(u => u.ImagePath)
-                .HasColumnType("varchar")
-                .HasMaxLength(int.MaxValue)
+                .HasColumnType("varchar(MAX)")
                 .IsRequired();
 
             builder.Property(u => u.Title)
-                .HasColumnType("varchar")
-                .HasMaxLength(50)
+                .HasColumnType("varchar(50)")
                 .IsRequired();
 
             builder.Property(u => u.Description)
-                .HasColumnType("varchar")
-                .HasMaxLength(250)
+                .HasColumnType("varchar(250)")
                 .IsRequired();
 
             builder.Property(u => u.Duration)
-                .HasColumnType("varchar")
-                .HasMaxLength(50)
+                .HasColumnType("varchar(50)")
                 .IsRequired();
 
             builder.Property(u => u.ScreenType)

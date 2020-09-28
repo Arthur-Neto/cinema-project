@@ -25,7 +25,7 @@ namespace Theater.WebApi.Extensions
                     }
                     else
                     {
-                        await context.Response.WriteAsync($"{exceptionHandlingFeature?.Error.Message}");
+                        await context.Response.WriteAsync($"{exceptionHandlingFeature?.Error.InnerException.Message}");
                     }
                 });
             });

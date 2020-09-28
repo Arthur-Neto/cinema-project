@@ -14,8 +14,7 @@ namespace Theater.Infra.Data.EF.Configurations.RoomsModule
                 .ValueGeneratedOnAdd();
 
             builder.Property(p => p.Name)
-                .HasColumnType("varchar")
-                .HasMaxLength(50)
+                .HasColumnType("varchar(50)")
                 .IsRequired();
 
             builder.Property(p => p.NumberOfChairs)
