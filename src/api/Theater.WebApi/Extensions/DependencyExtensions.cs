@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Theater.Application;
 using Theater.Domain;
@@ -35,8 +34,6 @@ namespace Theater.WebApi.Extensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IDatabaseContext, ApiContext>();
-
-            services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("Template"));
         }
 
         private static Assembly[] GetAssemblies()

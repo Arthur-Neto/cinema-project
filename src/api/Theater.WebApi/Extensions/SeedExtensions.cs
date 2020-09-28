@@ -1,9 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Theater.Domain.MoviesModule;
-using Theater.Domain.RoomsModule;
-using Theater.Domain.SessionsModule;
 using Theater.Domain.UsersModule;
 using Theater.Domain.UsersModule.Enums;
 using Theater.Infra.Data.EF.Context;
@@ -30,34 +26,7 @@ namespace Theater.WebApi.Extensions
                 Role = Role.Manager
             };
 
-            var room = new Room()
-            {
-                Name = "Lorem ipsum dolor sit amet",
-                NumberOfChairs = 50,
-            };
-
-            var movie = new Movie()
-            {
-                AudioType = Domain.MoviesModule.Enums.AudioType.Dubbed,
-                Description = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-                Duration = "1:30",
-                ImagePath = $"{Environment.CurrentDirectory}\\wwwroot\\movies-imgs\\default.png",
-                ScreenType = Domain.MoviesModule.Enums.ScreenType.Two_Dimension,
-                Title = "At vero eos et accusamus et"
-            };
-
-            var session = new Session()
-            {
-                Date = new DateTimeOffset(2020, 09, 19, 13, 30, 00, new TimeSpan()),
-                MovieId = 1,
-                RoomId = 1,
-            };
-
             context.Add(user);
-
-            context.Add(room);
-            context.Add(movie);
-            context.Add(session);
 
             context.SaveChanges();
         }

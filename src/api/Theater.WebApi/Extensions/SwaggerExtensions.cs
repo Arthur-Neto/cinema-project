@@ -41,7 +41,7 @@ namespace Theater.WebApi.Extensions
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Template API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Theater API");
                 c.DocumentTitle = "Theater API";
             });
         }

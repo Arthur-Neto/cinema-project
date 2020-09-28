@@ -6,7 +6,7 @@ using Theater.Infra.Crosscutting.Exceptions;
 
 namespace Theater.WebApi.Extensions
 {
-    public static class GlobalExceptionHandlerExntesions
+    public static class GlobalExceptionHandlerExtensions
     {
         public static void ConfigExceptionHandler(this IApplicationBuilder app)
         {

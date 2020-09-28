@@ -45,6 +45,8 @@ namespace Theater.WebApi
 
             services.AddDependencies();
 
+            services.AddDatabaseContext(Configuration);
+
             services.AddODataConfig();
 
             services.AddSwagger();
