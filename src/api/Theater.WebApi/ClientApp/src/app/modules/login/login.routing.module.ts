@@ -25,8 +25,8 @@ const routes: Routes = [
             },
             {
                 path: 'edit',
-                component: LoginEditComponent,
                 canActivate: [AuthGuard],
+                component: LoginEditComponent,
             },
         ],
     }

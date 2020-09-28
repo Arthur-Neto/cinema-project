@@ -41,11 +41,15 @@
                     </div>
                 </mat-card-content>
                 <mat-card-actions>
-                    <div *ngFor="let session of movie.sessions">
-                        {{session.roomName}} <br>
-                        <div *ngFor="let date of session.startTimes"
+                    <div *ngFor="let room of movie.rooms">
+                        {{room.name}} <br>
+                        <div *ngFor="let session of room.sessions"
                              class="dashboard-card-content-startTimes">
-                            <button mat-button>{{date | date:'h:mm'}}</button>
+                            <button mat-button
+                                    [disabled]="!userLogged"
+                                    (click)="onSessionDateSelect(movie, session, room, session.date)">
+                                {{session.date | date:'h:mm'}}
+                            </button>
                         </div>
                     </div>
                 </mat-card-actions>

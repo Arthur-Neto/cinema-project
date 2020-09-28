@@ -1,0 +1,44 @@
+.mat-stepper-horizontal {
+  width: 85%;
+  margin: calc(15%) auto;
+  margin-top: 5%;
+}
+
+.session-ticket-buy {
+  &__step-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__review {
+      &-room {
+        margin-top: 0.5%;
+        margin-bottom: 0.5%;
+      }
+
+      &-image {
+        width: 20%;
+      }
+    }
+
+    &__chairs {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 0.5%;
+      margin-left: 38%;
+      margin-right: 38%;
+    }
+
+    &__confirmation {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__confirm-button {
+      margin-top: 1%;
+      width: 20%;
+    }
+  }
+}

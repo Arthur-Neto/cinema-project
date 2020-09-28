@@ -29,9 +29,9 @@ namespace Theater.Infra.Data.EF.Repositories.MoviesModule
             return GenericRepository.DeleteAsync(key);
         }
 
-        public Task<IEnumerable<Movie>> RetrieveAllAsync(params Expression<Func<Movie, object>>[] includeExpression)
+        public Task<IEnumerable<Movie>> RetrieveAllAsync(Expression<Func<Movie, bool>> expression = null, params Expression<Func<Movie, object>>[] includeExpression)
         {
-            return GenericRepository.RetrieveAllAsync(includeExpression);
+            return GenericRepository.RetrieveAllAsync(expression, includeExpression);
         }
 
         public async Task<IEnumerable<Movie>> RetrieveMoviesWithSessionsAndRooms()

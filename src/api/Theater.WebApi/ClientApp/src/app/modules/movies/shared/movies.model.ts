@@ -1,4 +1,4 @@
-import { ISessionDashboardModel } from '../../sessions/shared/sessions.model';
+import { IRoomDashboardModel } from '../../rooms/shared/rooms.model';
 
 export interface IMovieModel {
     id: number;
@@ -17,7 +17,7 @@ export interface IMovieDashboardModel {
     duration: string;
     screenType: ScreenType;
     audioType: AudioType;
-    sessions: ISessionDashboardModel[];
+    rooms: IRoomDashboardModel[];
 }
 
 export interface IMovieCreateCommand {

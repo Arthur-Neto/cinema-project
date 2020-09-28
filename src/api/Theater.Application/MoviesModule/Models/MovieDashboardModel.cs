@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using Theater.Application.SessionsModule.Models;
+using Theater.Application.RoomsModule.Models;
 using Theater.Domain.MoviesModule;
 using Theater.Domain.MoviesModule.Enums;
 using Theater.Infra.Crosscutting.Extensions;
@@ -16,7 +16,7 @@ namespace Theater.Application.MoviesModule.Models
         public string Duration { get; set; }
         public ScreenType ScreenType { get; set; }
         public AudioType AudioType { get; set; }
-        public IList<SessionDashboardModel> Sessions { get; set; }
+        public IList<RoomDashboardModel> Rooms { get; set; }
     }
 
     public class MovieDashboardModelMapping : Profile
@@ -31,7 +31,7 @@ namespace Theater.Application.MoviesModule.Models
                 .ForMember(m => m.Duration, opts => opts.MapFrom(src => src.Duration.FormatDurationFromHourMinute()))
                 .ForMember(m => m.ScreenType, opts => opts.MapFrom(src => src.ScreenType))
                 .ForMember(m => m.AudioType, opts => opts.MapFrom(src => src.AudioType))
-                .ForMember(m => m.Sessions, opts => opts.Ignore());
+                .ForMember(m => m.Rooms, opts => opts.Ignore());
         }
     }
 }

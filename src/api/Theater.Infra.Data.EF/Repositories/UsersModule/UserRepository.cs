@@ -28,9 +28,9 @@ namespace Theater.Infra.Data.EF.Repositories.UsersModule
             return GenericRepository.DeleteAsync(id);
         }
 
-        public Task<IEnumerable<User>> RetrieveAllAsync(params Expression<Func<User, object>>[] includeExpression)
+        public Task<IEnumerable<User>> RetrieveAllAsync(Expression<Func<User, bool>> expression = null, params Expression<Func<User, object>>[] includeExpression)
         {
-            return GenericRepository.RetrieveAllAsync(includeExpression);
+            return GenericRepository.RetrieveAllAsync(expression, includeExpression);
         }
 
         public Task<User> RetrieveByIDAsync(int id)

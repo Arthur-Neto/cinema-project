@@ -72,7 +72,7 @@ namespace Theater.Application.RoomsModule
 
         public async Task<IEnumerable<RoomModel>> AvailableRoomsAsync(AvailableRoomsCommand command)
         {
-            var rooms = await _repository.RetrieveAllAsync(p => p.Sessions);
+            var rooms = await _repository.RetrieveAllAsync(null, p => p.Sessions);
 
             var roomsModels = new List<RoomModel>();
             foreach (var room in rooms)

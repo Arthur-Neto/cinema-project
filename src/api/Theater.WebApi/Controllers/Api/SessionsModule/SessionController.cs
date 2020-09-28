@@ -11,11 +11,11 @@ namespace Theater.WebApi.Controllers.Api.SessionModules
     [Route("api/sessions")]
     public class SessionController : ControllerBase
     {
-        private readonly ISessionService _SessionService;
+        private readonly ISessionService _sessionService;
 
         public SessionController(ISessionService SessionService)
         {
-            _SessionService = SessionService;
+            _sessionService = SessionService;
         }
 
         [AuthorizeRoles(Role.Manager)]
@@ -23,7 +23,7 @@ namespace Theater.WebApi.Controllers.Api.SessionModules
         [ProducesResponseType(typeof(int), 200)]
         public async Task<IActionResult> CreateAsync(SessionCreateCommand command)
         {
-            return Ok(await _SessionService.CreateAsync(command));
+            return Ok(await _sessionService.CreateAsync(command));
         }
 
         [AuthorizeRoles(Role.Manager)]
@@ -31,7 +31,7 @@ namespace Theater.WebApi.Controllers.Api.SessionModules
         [ProducesResponseType(typeof(bool), 200)]
         public async Task<IActionResult> UpdateAsync(SessionUpdateCommand command)
         {
-            return Ok(await _SessionService.UpdateAsync(command));
+            return Ok(await _sessionService.UpdateAsync(command));
         }
 
         [AuthorizeRoles(Role.Manager)]
@@ -40,7 +40,16 @@ namespace Theater.WebApi.Controllers.Api.SessionModules
         [ProducesResponseType(typeof(bool), 200)]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            return Ok(await _SessionService.DeleteAsync(id));
+            return Ok(await _sessionService.DeleteAsync(id));
+        }
+
+        [AuthorizeRoles(Role.Manager, Role.Client)]
+        [HttpPost]
+        [Route("occupied-chairs")]
+        [ProducesResponseType(typeof(int), 200)]
+        public async Task<IActionResult> CreateOcupiedChairsAsync(OccupiedChairsCommand command)
+        {
+            return Ok(await _sessionService.CreateOccupiedChairsAsync(command));
         }
     }
 }

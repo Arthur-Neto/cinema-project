@@ -6,6 +6,7 @@ using AutoMapper;
 using Theater.Application.FilesManagerModule;
 using Theater.Application.MoviesModule.Commands;
 using Theater.Application.MoviesModule.Models;
+using Theater.Application.RoomsModule.Models;
 using Theater.Application.SessionsModule.Models;
 using Theater.Domain.MoviesModule;
 using Theater.Infra.Crosscutting.Exceptions;
@@ -86,28 +87,24 @@ namespace Theater.Application.MoviesModule
             foreach (var movie in movies)
             {
                 var movieModel = _mapper.Map<MovieDashboardModel>(movie);
-                movieModel.Sessions = new List<SessionDashboardModel>();
+                movieModel.Rooms = new List<RoomDashboardModel>();
 
-                var sessionsGroupByRoom = movie.Sessions.GroupBy(p => p.RoomId);
-                var sessionsGroupByDate = movie.Sessions.GroupBy(p => p.Date);
+                var sessionsGroupByRoom = movie.Sessions.Where(p => p.Date.Date == date.ToLocalTime().Date).GroupBy(p => p.RoomId);
                 foreach (var sessionGroupByRoom in sessionsGroupByRoom)
                 {
-                    var sessionID = sessionGroupByRoom.Select(p => p.ID).First();
-                    var roomID = sessionGroupByRoom.Key;
+                    var roomId = sessionGroupByRoom.Key;
                     var roomName = sessionGroupByRoom.Select(p => p.Room.Name).First();
-                    var dates = sessionGroupByRoom
-                        .Select(p => p.Date)
-                        .Intersect(sessionsGroupByDate
-                            .Select(p => p.Key))
-                        .Where(p => p.Date == date.Date);
+                    var numberOfChairs = sessionGroupByRoom.Select(p => p.Room.NumberOfChairs).First();
 
-                    if (dates.Count() > 0)
+                    var sessions = _mapper.Map<IEnumerable<SessionDashboardModel>>(sessionGroupByRoom.Select(p => p));
+
+                    if (sessions.Any())
                     {
-                        movieModel.Sessions.Add(new SessionDashboardModel() { ID = sessionID, RoomID = roomID, RoomName = roomName, StartTimes = dates });
+                        movieModel.Rooms.Add(new RoomDashboardModel() { ID = roomId, Name = roomName, NumberOfChairs = numberOfChairs, Sessions = sessions });
                     }
                 }
 
-                if (movieModel.Sessions.Count > 0)
+                if (movieModel.Rooms.Any())
                 {
                     movieModels.Add(movieModel);
                 }

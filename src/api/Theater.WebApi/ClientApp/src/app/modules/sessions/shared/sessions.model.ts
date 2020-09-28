@@ -9,13 +9,21 @@ export interface ISessionModel {
 
 export interface ISessionDashboardModel {
     id: number;
-    startTimes: Date[];
-    roomID: number;
-    roomName: string;
+    date: Date;
 }
 
 export interface ISessionCreateCommand {
     date: Date;
     movieId: number;
     roomId: number;
+}
+
+export interface ICreateOccupiedChairsCommand {
+    chairsNumbers: number[];
+    sessionId: number;
+}
+
+export interface IOccupiedChair {
+    number: number;
+    sessionId: number;
 }

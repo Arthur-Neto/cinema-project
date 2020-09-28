@@ -18,16 +18,20 @@ namespace Theater.Application.SessionsModule
         Task<int> CreateAsync(SessionCreateCommand command);
         Task<bool> UpdateAsync(SessionUpdateCommand command);
         Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<OccupiedChairModel>> GetOccupiedChairsAsync();
+        Task<bool> CreateOccupiedChairsAsync(OccupiedChairsCommand command);
     }
 
     public class SessionService : AppServiceBase<ISessionRepository>, ISessionService
     {
         private readonly IRoomRepository _roomRepository;
         private readonly IMovieRepository _movieRepository;
+        private readonly IOccupiedChairRepository _occupiedChairRepository;
 
         public SessionService(
             IRoomRepository roomRepository,
             IMovieRepository movieRepository,
+            IOccupiedChairRepository occupiedChairRepository,
             ISessionRepository repository,
             IMapper mapper,
             IUnitOfWork unitOfWork)
@@ -35,6 +39,7 @@ namespace Theater.Application.SessionsModule
         {
             _roomRepository = roomRepository;
             _movieRepository = movieRepository;
+            _occupiedChairRepository = occupiedChairRepository;
         }
 
         public async Task<int> CreateAsync(SessionCreateCommand command)
@@ -69,7 +74,7 @@ namespace Theater.Application.SessionsModule
 
         public async Task<IEnumerable<SessionModel>> RetrieveAllAsync()
         {
-            var sessions = await _repository.RetrieveAllAsync(p => p.Movie, p => p.Room);
+            var sessions = await _repository.RetrieveAllAsync(null, p => p.Movie, p => p.Room);
 
             return _mapper.Map<IEnumerable<SessionModel>>(sessions);
         }
@@ -82,6 +87,32 @@ namespace Theater.Application.SessionsModule
             session = _mapper.Map<Session>(command);
 
             _repository.Update(session);
+
+            return await CommitAsync() > 0;
+        }
+
+        public async Task<IEnumerable<OccupiedChairModel>> GetOccupiedChairsAsync()
+        {
+            var occupiedChairs = await _occupiedChairRepository.RetrieveAllAsync();
+
+            return _mapper.Map<IEnumerable<OccupiedChairModel>>(occupiedChairs);
+        }
+
+        public async Task<bool> CreateOccupiedChairsAsync(OccupiedChairsCommand command)
+        {
+            var session = await _repository.SingleOrDefaultAsync(p => p.ID == command.SessionId);
+            Guard.Against(session, ErrorType.NotFound);
+
+            foreach (var number in command.ChairsNumbers)
+            {
+                var occupiedChair = new OccupiedChair()
+                {
+                    Number = number,
+                    SessionId = session.ID
+                };
+
+                await _occupiedChairRepository.CreateAsync(occupiedChair);
+            }
 
             return await CommitAsync() > 0;
         }

@@ -1,0 +1,105 @@
+<app-spinner [isLoading]="isLoading"></app-spinner>
+<mat-horizontal-stepper #stepper>
+    <mat-step label="Review">
+        <section class="session-ticket-buy__step-content">
+            <mat-label>
+                {{movie.title}}
+            </mat-label>
+            <img mat-card-images
+                 class="session-ticket-buy__step-content__review-image"
+                 [src]="'data:image/png;base64,' + movie.imageBase64">
+            <div class="session-ticket-buy__step-content__review-room">
+                <mat-label>
+                    {{room.name}} -
+                    <mat-chip *ngIf="movie.screenType === screenType.three_dimension"
+                              disableRipple
+                              color="primary">
+                        3D
+                    </mat-chip>
+                    <mat-chip *ngIf="movie.screenType === screenType.two_dimension"
+                              disableRipple
+                              color="primary">
+                        2D
+                    </mat-chip>
+                    <mat-chip *ngIf="movie.audioType === audioType.dubbed"
+                              disableRipple
+                              color="primary">
+                        Dubbed
+                    </mat-chip>
+                    <mat-chip *ngIf="movie.audioType === audioType.subtitled"
+                              disableRipple
+                              color="primary">
+                        Subtitled
+                    </mat-chip>
+                </mat-label>
+            </div>
+            <mat-label>
+                Time: {{selectedDate | date:'h:mm'}}-{{endingTime}}
+            </mat-label>
+            <button mat-raised-button
+                    matStepperNext
+                    color="primary"
+                    class="session-ticket-buy__step-content__confirm-button">
+                Confirm
+            </button>
+        </section>
+    </mat-step>
+    <mat-step label="Select chairs"
+              errorMessage="Must select at least one chair"
+              [hasError]="showNoChairsSelectedError">
+        <section class="session-ticket-buy__step-content">
+            <div class="session-ticket-buy__step-content__chairs">
+                <button *ngFor="let chair of chairs; let i = index"
+                        mat-raised-button
+                        class="session-ticket-buy__step-content__chairs__button"
+                        [style.background-color]="getBackgroundColor(i)"
+                        (click)="onChairSelect(i)">
+                    {{i+1}}
+                </button>
+            </div>
+            <mat-label>
+                Number of chairs selected: {{chairsSelected.length}}
+            </mat-label>
+            <mat-label>
+                Price: {{price | currency}}
+            </mat-label>
+            <button mat-raised-button
+                    matStepperNext
+                    color="primary"
+                    class="session-ticket-buy__step-content__confirm-button">
+                Confirm
+            </button>
+        </section>
+    </mat-step>
+    <mat-step label="Confirmation">
+        <section class="session-ticket-buy__step-content">
+            <div class="session-ticket-buy__step-content__confirmation">
+                <mat-label>
+                    Movie: {{movie.title}}
+                </mat-label>
+                <mat-label>
+                    Room: {{room.name}}
+                </mat-label>
+                <mat-label>
+                    Time: {{selectedDate | date:'h:mm'}}-{{endingTime}}
+                </mat-label>
+                <mat-label>
+                    Chairs:
+                    <li *ngFor="let chair of chairsSelected">
+                        {{chair+1}}
+                    </li>
+                </mat-label>
+                <mat-label>
+                    Price: {{price | currency}}
+                </mat-label>
+            </div>
+            <button mat-raised-button
+                    matStepperNext
+                    color="primary"
+                    class="session-ticket-buy__step-content__confirm-button"
+                    (click)="onSubmit()">
+                Buy
+            </button>
+        </section>
+    </mat-step>
+</mat-horizontal-stepper>

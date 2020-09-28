@@ -6,6 +6,7 @@ import { RoomsApiService } from '../rooms/shared/rooms.service';
 import { SessionsCreateComponent } from './sessions-list/sessions-create/sessions-create.component';
 import { SessionsEditComponent } from './sessions-list/sessions-edit/sessions-edit.component';
 import { SessionsListComponent } from './sessions-list/sessions-list.component';
+import { SessionsBuyTicketComponent } from './sessions-ticket-buy/sessions-ticket-buy.component';
 import { SessionsRoutingModule } from './sessions.routing.module';
 import { SessionsApiService, SessionsODataService } from './shared/sessions.service';
 
@@ -18,6 +19,7 @@ import { SessionsApiService, SessionsODataService } from './shared/sessions.serv
         SessionsListComponent,
         SessionsCreateComponent,
         SessionsEditComponent,
+        SessionsBuyTicketComponent,
     ],
     providers: [
         SessionsODataService,

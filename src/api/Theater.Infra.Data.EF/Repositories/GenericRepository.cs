@@ -42,13 +42,21 @@ namespace Theater.Infra.Data.EF.Repositories
             return await Context.Set<TEntity>().FindAsync(key);
         }
 
-        public async Task<IEnumerable<TEntity>> RetrieveAllAsync(params Expression<Func<TEntity, object>>[] includeExpression)
+        public async Task<IEnumerable<TEntity>> RetrieveAllAsync(Expression<Func<TEntity, bool>> expression = null, params Expression<Func<TEntity, object>>[] includeExpression)
         {
             var query = Context.Set<TEntity>().AsQueryable();
 
-            if (includeExpression == null) { return await query.ToListAsync(); }
+            if (includeExpression.Length == 0)
+            {
+                if (expression == null)
+                {
+                    return await query.AsNoTracking().ToListAsync();
+                }
 
-            return includeExpression.Aggregate(query, (current, include) => current.Include(include));
+                return await query.AsNoTracking().Where(expression).ToListAsync();
+            }
+
+            return includeExpression.Aggregate(query, (current, include) => current.AsNoTracking().Include(include));
         }
 
         public void Update(TEntity entity)

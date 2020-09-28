@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Theater.Application.SessionsModule;
 using Theater.Application.SessionsModule.Models;
+using Theater.Domain.UsersModule.Enums;
+using Theater.WebApi.Attributes;
 
 namespace Theater.WebApi.Controllers.OData.SessionsModule
 {
@@ -12,11 +14,11 @@ namespace Theater.WebApi.Controllers.OData.SessionsModule
     [Route("odata/sessions")]
     public class SessionODataController : ControllerBase
     {
-        private readonly ISessionService _SessionService;
+        private readonly ISessionService _sessionService;
 
-        public SessionODataController(ISessionService SessionService)
+        public SessionODataController(ISessionService sessionService)
         {
-            _SessionService = SessionService;
+            _sessionService = sessionService;
         }
 
         [AllowAnonymous]
@@ -25,7 +27,17 @@ namespace Theater.WebApi.Controllers.OData.SessionsModule
         [ProducesResponseType(typeof(IEnumerable<SessionModel>), 200)]
         public async Task<IActionResult> RetrieveAllAsync()
         {
-            return Ok(await _SessionService.RetrieveAllAsync());
+            return Ok(await _sessionService.RetrieveAllAsync());
+        }
+
+        [AuthorizeRoles(Role.Manager, Role.Client)]
+        [HttpGet]
+        [Route("occupied-chairs")]
+        [EnableQuery]
+        [ProducesResponseType(typeof(IEnumerable<OccupiedChairModel>), 200)]
+        public async Task<IActionResult> GetOccupiedChairsAsync()
+        {
+            return Ok(await _sessionService.GetOccupiedChairsAsync());
         }
     }
 }

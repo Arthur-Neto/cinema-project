@@ -17,7 +17,7 @@ namespace Theater.Application.SessionsModule.Commands
         public SessionCreateCommandMapping()
         {
             CreateMap<SessionCreateCommand, Session>()
-                .ForMember(m => m.Date, opts => opts.MapFrom(src => src.Date));
+                .ForMember(m => m.Date, opts => opts.MapFrom(src => src.Date.ToLocalTime()));
         }
     }
 

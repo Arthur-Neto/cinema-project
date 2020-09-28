@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Theater.Domain.MoviesModule;
 using Theater.Domain.RoomsModule;
 
@@ -13,5 +14,7 @@ namespace Theater.Domain.SessionsModule
         // Reverse Navigation
         public virtual Movie Movie { get; set; }
         public virtual Room Room { get; set; }
+        public virtual IEnumerable<OccupiedChair> OccupiedChairs { get; set; }
+
     }
 }

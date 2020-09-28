@@ -28,9 +28,9 @@ namespace Theater.Infra.Data.EF.Repositories.SessionsModule
             return GenericRepository.DeleteAsync(key);
         }
 
-        public Task<IEnumerable<Session>> RetrieveAllAsync(params Expression<Func<Session, object>>[] includeExpression)
+        public Task<IEnumerable<Session>> RetrieveAllAsync(Expression<Func<Session, bool>> expression = null, params Expression<Func<Session, object>>[] includeExpression)
         {
-            return GenericRepository.RetrieveAllAsync(includeExpression);
+            return GenericRepository.RetrieveAllAsync(expression, includeExpression);
         }
 
         public Task<Session> SingleOrDefaultAsync(Expression<Func<Session, bool>> expression, bool tracking = true, params Expression<Func<Session, object>>[] includeExpression)

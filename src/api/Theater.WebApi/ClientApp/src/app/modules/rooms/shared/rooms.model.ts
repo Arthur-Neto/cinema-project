@@ -1,3 +1,5 @@
+import { ISessionDashboardModel } from '../../sessions/shared/sessions.model';
+
 export interface IRoomsModel {
     id: number;
     name: string;
@@ -18,4 +20,11 @@ export interface IRoomUpdateCommand {
 export interface IAvailableRoomsCommand {
     date: Date;
     movieDuration: string;
+}
+
+export interface IRoomDashboardModel {
+    id: number;
+    name: string;
+    numberOfChairs: number;
+    sessions: ISessionDashboardModel[];
 }
