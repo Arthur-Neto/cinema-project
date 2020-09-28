@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -11,7 +11,7 @@ import { IActionModel } from './shared/grid.model';
     templateUrl: './grid.component.html',
     styleUrls: ['./grid.component.scss']
 })
-export class GridComponent<T> implements AfterViewInit {
+export class GridComponent<T> implements OnInit, AfterViewInit {
     @Input() public headerNames: string[];
     @Input() public displayedColumns: string[];
     @Input() public dataSource: MatTableDataSource<T>;
@@ -23,8 +23,15 @@ export class GridComponent<T> implements AfterViewInit {
     @ViewChild(MatSort, { static: false }) sort: MatSort;
     @ViewChild(MatTable, { static: false }) table: MatTable<T>;
 
+    public headers: string[];
     public selection = new SelectionModel<T>(false, []);
     public noRowsMsg = 'No data';
+    public hasIdColumn: boolean;
+
+    public ngOnInit(): void {
+        this.hasIdColumn = this.displayedColumns[0] === 'id';
+        this.headers = this.hasIdColumn ? this.displayedColumns.slice(1) : this.displayedColumns;
+    }
 
     public ngAfterViewInit(): void {
         this.dataSource.paginator = this.paginator;

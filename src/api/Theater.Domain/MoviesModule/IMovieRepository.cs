@@ -12,5 +12,6 @@ namespace Theater.Domain.MoviesModule
         ICountRepository<Movie>
     {
         Task<IEnumerable<Movie>> RetrieveMoviesWithSessionsAndRooms();
+        Task<IEnumerable<Movie>> RetrieveMoviesWithSessionsAndOccupiedChairs();
     }
 }

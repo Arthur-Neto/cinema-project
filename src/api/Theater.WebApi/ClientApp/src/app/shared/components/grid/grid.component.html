@@ -37,7 +37,7 @@
             </td>
         </ng-container>
 
-        <ng-container *ngFor="let header of displayedColumns | slice:1; let i = index"
+        <ng-container *ngFor="let header of headers; let i = index"
                       [matColumnDef]="header">
             <th mat-header-cell
                 mat-sort-header
