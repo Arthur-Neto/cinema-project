@@ -75,8 +75,6 @@ namespace Theater.WebApi
 
             app.CreateSqlServerDatabase(Configuration);
 
-            app.UseHttpsRedirection();
-
             app.UseCors("TheaterCorsPolicy");
 
             app.ConfigExceptionHandler();
