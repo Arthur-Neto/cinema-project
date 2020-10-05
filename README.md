@@ -1,8 +1,8 @@
-# Cinema Project
+# Movie Theater Project
 
 [![Build Status](https://netoarthur.visualstudio.com/Cinema/_apis/build/status/Arthur-Neto.cinema-project?branchName=master)](https://netoarthur.visualstudio.com/Cinema/_build/latest?definitionId=6&branchName=master)
 
-Project made for a job interview using the lastest(08/2020) .NET technologies.
+Project made for a job interview using the lastest (08/2020) .NET technologies.
 
 Full development process: https://netoarthur.visualstudio.com/Cinema
 
@@ -18,6 +18,7 @@ Full development process: https://netoarthur.visualstudio.com/Cinema
 >> * Microsoft.EntityFrameworkCore 3.1.6
 >> * Microsoft.EntityFrameworkCore.InMemory 3.1.6
 >> * Microsoft.EntityFrameworkCore.Relational 3.1.6
+>> * Microsoft.EntityFrameworkCore.SqlServer 3.1.8
 >> * Swashbuckle.AspNetCore.Swagger 5.5.1
 >> * Swashbuckle.AspNetCore.SwaggerGen 5.5.1
 >> * Swashbuckle.AspNetCore.SwaggerUI 5.5.1
@@ -26,9 +27,14 @@ Full development process: https://netoarthur.visualstudio.com/Cinema
 >> * NUnit3TestAdapter 3.17.0
 
 > Frontend
->> * Angular 10
+>> * @angular 10.0.14
 >> * @angular/material 10.1.3
->> * typescript 3.9.7
+>> * typescript 3.9.6
+>> * bootstrap 4.5.2
+>> * express 4.17.1
+>> * jquery 3.5.1
+>> * moment 2.27.0
+>> * rxjs 6.6.2
 
 ## How to run
 
